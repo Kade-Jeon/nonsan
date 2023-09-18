@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        function validateForm() {
+            var minusPointField = document.getElementById("minusPointField");
+            var minusPointError = document.getElementById("minusPointError");
+
+            // 입력값이 비어 있는지 확인
+            if (minusPointField.value.trim() === "") {
+                minusPointError.textContent = "포인트 입력해라.";
+                return false; // 폼 제출 중지
+            }
+
+            // 유효성 검사를 통과하면 오류 메시지 삭제
+            minusPointError.textContent = "";
+            return true; // 폼 제출 허용
+        }
+    </script>
+</head>
+<body>
+<h1>출금 신청</h1>
+<form method="POST" th:action="@{/mypage/withdraw}" onsubmit="return validateForm()">
+    <input type="hidden" name="id" th:value="${withdraw.id}" >
+    계좌번호 정보: 477002-xx-xxxxxx<br>
+    은행명 : 국민은행 <br>
+    내 포인트 :<td th:text="${withdraw.point}"></td><br>
+    현금 전환: <input type="number" name="minusPoint" min="0" id="minusPointField">
+    <span id="minusPointError" style="color: red;"></span>
+    <input type="submit" value="출금하기"><br>
+    출금시 바로 현금 입금 처리됩니다<br>
+    <button type="button" onclick="location.href='/mypage'">돌아가기</button>
+
+</form>
+
+</body>
+</html>

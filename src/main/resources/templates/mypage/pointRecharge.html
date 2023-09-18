@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        function validateForm() {
+            var addPointField = document.getElementById("addPointField");
+            var addPointError = document.getElementById("addPointError");
+
+            // 입력값이 비어 있는지 확인
+            if (addPointField.value.trim() === "") {
+                addPointError.textContent = "포인트 입력해라.";
+                return false; // 폼 제출 중지
+            }
+
+            // 유효성 검사를 통과하면 오류 메시지 삭제
+            addPointError.textContent = "";
+            return true; // 폼 제출 허용
+        }
+    </script>
+</head>
+<body>
+<h1>포인트 충전</h1>
+<form method="POST" th:action="@{/mypage/recharge}" onsubmit="return validateForm()">
+    <input type="hidden" name="id" th:value="${myPoint.id}">
+    <span style="color: orange;" th:text="${myPoint.nickName}"></span>님 반갑습니다
+    &nbsp;&nbsp;&nbsp; <a href="pointDeposit.html">로그아웃</a> <br>
+    보유 머니 : <span style="color: orange;" th:text="${myPoint.point}"></span><br>
+    충전 포인트: <input type="number" name="addPoint" min="0" id="addPointField">
+    <span id="addPointError" style="color: red;"></span>
+
+    <input type="submit" value="충전하기"><br>
+    <button type="button" onclick="location.href='/mypage/depositPage'">입금하기</button> &nbsp;
+    <button type="button" onclick="location.href='/mypage/withdrawPage'">출금하기</button>
+</form>
+</body>
+</html>

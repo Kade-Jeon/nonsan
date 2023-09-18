@@ -34,8 +34,8 @@ public class DepositPointController {
     }
 
     @GetMapping("/mypage/depositPage")
-    public String deposit(Model model){
-        Integer userId=1;
+    public String deposit(Model model) {
+        Integer userId = 1;
         MyPointDTO deposit = pointService.deposit(userId);
         model.addAttribute("deposit", deposit);
 
@@ -44,7 +44,8 @@ public class DepositPointController {
 
     @GetMapping("/mypage/withdrawPage")
     public String withdrawPage(Model model) {
-        Integer userId=1;
+
+        Integer userId = 1;
         MyPointDTO withdraw = pointService.withdrawPage(userId);
         model.addAttribute("withdraw", withdraw);
 

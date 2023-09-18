@@ -10,7 +10,7 @@ public class PointService {
 
     private PointRepository pointRepository;
 
-    public PointService(PointRepository pointRepository){
+    public PointService(PointRepository pointRepository) {
         this.pointRepository = pointRepository;
     }
 
@@ -54,7 +54,7 @@ public class PointService {
 
         return myPointDTO;
     }
-    
+
     public MyPointDTO withdrawPage(Integer userId) {
         Point point = pointRepository.findById(userId).orElse(new Point());
 
@@ -82,6 +82,8 @@ public class PointService {
         // 엔티티 저장
         pointRepository.save(existingPoint);
     }
+
+
 }
 
 

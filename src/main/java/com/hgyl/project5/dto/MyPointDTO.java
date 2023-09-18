@@ -23,9 +23,9 @@ public class MyPointDTO {
         this.point = point.getPoint();
         this.addPoint = point.getAddPoint();
         this.id = point.getId();
-        this.minusPoint=point.getMinusPoint();
-        this.nickName=point.getNickName();
-        this.uid=point.getUid();
+        this.minusPoint = point.getMinusPoint();
+        this.nickName = point.getNickName();
+        this.uid = point.getUid();
 
         return this;
     }

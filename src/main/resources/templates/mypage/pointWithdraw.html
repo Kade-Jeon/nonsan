@@ -11,9 +11,25 @@
 
             // 입력값이 비어 있는지 확인
             if (minusPointField.value.trim() === "") {
-                minusPointError.textContent = "포인트 입력해라.";
+                minusPointError.textContent = "포인트를 입력하세요";
                 return false; // 폼 제출 중지
             }
+
+            var maxValue = 10000000000;
+            var inputValue = parseInt(minusPointField.value, 10);
+            if (inputValue > maxValue) {
+                minusPointError.textContent = "최대 100억까지 가능합니다";
+                return false; // 폼 제출 중지
+            } else if (inputValue === maxValue) {
+                minusPointError.textContent = "최대 100억까지 가능합니다"; // 최대값과 같을 때 경고 메시지
+                return false; // 폼 제출 중지
+            }
+
+            if (inputValue > currentBalance) {
+                minusPointError.textContent = "출금 금액이 현재 보유 머니를 초과합니다";
+                return false; // 폼 제출 중지
+            }
+
 
             // 유효성 검사를 통과하면 오류 메시지 삭제
             minusPointError.textContent = "";
@@ -24,10 +40,11 @@
 <body>
 <h1>출금 신청</h1>
 <form method="POST" th:action="@{/mypage/withdraw}" onsubmit="return validateForm()">
-    <input type="hidden" name="id" th:value="${withdraw.id}" >
+    <input type="hidden" name="id" th:value="${withdraw.id}">
     계좌번호 정보: 477002-xx-xxxxxx<br>
     은행명 : 국민은행 <br>
-    내 포인트 :<td th:text="${withdraw.point}"></td><br>
+
+    보유 머니 : <div data-th-text="${#numbers.formatInteger(withdraw.point, 3, 'COMMA') + ' 포인트'}"></div>
     현금 전환: <input type="number" name="minusPoint" min="0" id="minusPointField">
     <span id="minusPointError" style="color: red;"></span>
     <input type="submit" value="출금하기"><br>

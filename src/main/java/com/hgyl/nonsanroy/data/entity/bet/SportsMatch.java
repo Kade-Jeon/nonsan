@@ -1,4 +1,4 @@
-package com.hgyl.nonsanroy.data.entity;
+package com.hgyl.nonsanroy.data.entity.bet;
 
 import com.hgyl.nonsanroy.data.entity.BaseEntity;
 import lombok.*;
@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Table(name = "betting")
-public class Betting extends BaseEntity {
+@Table(name = "sportsMatch")
+public class SportsMatch extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

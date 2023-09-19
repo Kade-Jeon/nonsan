@@ -17,16 +17,16 @@ public class SportsMatch extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long gameNo;
+	private Integer gameNo;
 
 	@Column(nullable = false)
-	private int AwayScore;
+	private Integer AwayScore;
 
 	@Column(nullable = false)
 	private String AwayTeam;
 
 	@Column(nullable = false)
-	private int HomeScore;
+	private Integer HomeScore;
 
 	@Column(nullable = false)
 	private String HomeTeam;

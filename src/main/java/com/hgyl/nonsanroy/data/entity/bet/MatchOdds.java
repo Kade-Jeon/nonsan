@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Table(name = "gameOdds")
-public class GameOdds extends BaseEntity {
+@Table(name = "matchOdds")
+public class MatchOdds extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long gameNo;
+	private Integer gameNo;
 
 	@Column(nullable = false)
 	private double awayTeamOdds;

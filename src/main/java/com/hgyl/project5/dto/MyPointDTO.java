@@ -1,10 +1,13 @@
 package com.hgyl.project5.dto;
 
 import com.hgyl.project5.entity.Point;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Repository;
+
+import javax.validation.constraints.Min;
 
 @NoArgsConstructor
 @Getter
@@ -13,8 +16,14 @@ public class MyPointDTO {
 
     private Integer id;
     private String uid;
+
+    @Min(value = 0, message = " oint cannot be negative.")
     private Integer point;
+
+    @Min(value = 0, message = "Add point cannot be negative.")
     private Integer addPoint;
+
+    @Min(value = 0, message = "Minus point cannot be negative.")
     private Integer minusPoint;
     private String nickName;
 

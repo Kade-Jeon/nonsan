@@ -8,6 +8,7 @@
         function validateForm() {
             var minusPointField = document.getElementById("minusPointField");
             var minusPointError = document.getElementById("minusPointError");
+            var currentBalanceElement = document.getElementById("currentBalance");
 
             // 입력값이 비어 있는지 확인
             if (minusPointField.value.trim() === "") {
@@ -17,23 +18,28 @@
 
             var maxValue = 10000000000;
             var inputValue = parseInt(minusPointField.value, 10);
+
+            // 현재 보유 머니
+            var currentBalanceValue = parseInt(currentBalanceElement.replace(" 포인트", "").replace(/,/g, ""), 10);
+
             if (inputValue > maxValue) {
                 minusPointError.textContent = "최대 100억까지 가능합니다";
-                return false; // 폼 제출 중지
+                return false;
+            } else if (inputValue > currentBalanceValue ) {
+                minusPointError.textContent = "출금 금액이 현재 보유 머니를 초과합니다";
+                return false;
             } else if (inputValue === maxValue) {
                 minusPointError.textContent = "최대 100억까지 가능합니다"; // 최대값과 같을 때 경고 메시지
-                return false; // 폼 제출 중지
+                return false;
             }
 
-            if (inputValue > currentBalance) {
-                minusPointError.textContent = "출금 금액이 현재 보유 머니를 초과합니다";
-                return false; // 폼 제출 중지
+            // 입력값이 보유 금액보다 적을 때 오류 메시지 삭제
+            if (inputValue < currentBalance) {
+                minusPointError.textContent = "";
             }
 
+            return true; // 유효성 검사를 통과하면 폼 제출 허용
 
-            // 유효성 검사를 통과하면 오류 메시지 삭제
-            minusPointError.textContent = "";
-            return true; // 폼 제출 허용
         }
     </script>
 </head>
@@ -44,7 +50,8 @@
     계좌번호 정보: 477002-xx-xxxxxx<br>
     은행명 : 국민은행 <br>
 
-    보유 머니 : <div data-th-text="${#numbers.formatInteger(withdraw.point, 3, 'COMMA') + ' 포인트'}"></div>
+    보유 머니 : <div id="currentBalance" data-th-text=
+        "${#numbers.formatInteger(currentPoint, 3, 'COMMA') + ' 포인트'}"></div>
     현금 전환: <input type="number" name="minusPoint" min="0" id="minusPointField">
     <span id="minusPointError" style="color: red;"></span>
     <input type="submit" value="출금하기"><br>

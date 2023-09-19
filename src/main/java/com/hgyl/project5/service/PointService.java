@@ -36,6 +36,7 @@ public class PointService {
         Point existingPoint = pointRepository.findById(userId).orElse(new Point());
 
         // 기존 포인트에 추가 포인트 더하기
+        // 기존 포인트가 'null' 이라면 기본값 0으로 설정
         Integer currentPoint = existingPoint.getPoint() != null ? existingPoint.getPoint() : 0;
         existingPoint.setPoint(currentPoint + depositAmount);
 
@@ -84,6 +85,10 @@ public class PointService {
     }
 
 
+    public int currentPoint(Integer userId) {
+        Point point = pointRepository.findById(userId).orElse(new Point());
+        return point.getPoint(); // 사용자의 현재 포인트 반환
+    }
 }
 
 

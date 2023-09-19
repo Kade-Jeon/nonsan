@@ -21,13 +21,7 @@ public class MainController {
         this.mainServerService = mainServerService;
     }
 
-   /* @PostMapping("/join")
-    public String userJoin(@RequestBody UserDto userDto){
-        System.out.println(userDto);
-        mainServerService.save(userDto);
-        return "main";
-    }*/
-
+    /*main으로부터 정보 받아 회원가입 처리*/
     @PostMapping("/join")
     public ResponseEntity<String> userJoin(@RequestBody UserDto userDto){
         System.out.println("회원가입: server 1777");
@@ -38,7 +32,7 @@ public class MainController {
         }
         return ResponseEntity.status(HttpStatus.OK).body("main");
     }
-
+    /*main으로부터 정보 받아 로그인 후, dto리턴*/
     @PostMapping("/login")
     public ResponseEntity<UserDto> userLogin(@RequestBody UserDto userDto){
         System.out.println("로그인: server 1777");
@@ -47,6 +41,7 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK).body(checkedUser);
     }
 
+    /*[테스트용] uid 요청하면 dto리턴*/
     @PostMapping("/user/{uId}")
     public ResponseEntity<UserDto> userInfo(@PathVariable String uId){
         UserDto info = mainServerService.findByUId(uId);

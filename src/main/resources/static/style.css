@@ -1,0 +1,119 @@
+.icons {
+    margin: 0px 100px 0px 100px;
+}
+
+table {
+    display: flex;
+    justify-content: center;
+}
+
+#logo {
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.search {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+#searchBar {
+    height: 30px;
+    font-size: 20px;
+}
+
+#searchBtn {
+    height: 40px;
+    font-size: 20px;
+}
+
+.apps {
+    text-align: center;
+}
+
+html {
+    font-family: 'NanumSquareNeoExtraBold';
+}
+
+footer{
+    background-color: gray;
+    text-align: center;
+    color: white;
+    width: 100%;
+    word-spacing: 50px;
+}
+
+header {
+    background-color: rgb(90, 120, 200);
+    text-align: center;
+    justify-content: center;
+}
+
+input[type="text"] {
+    /* 테두리 */
+    border: 1px solid rgb(90, 120, 200);
+    /* 테두리 모서리 둥글게 */
+    border-radius: 10px;
+    /* 배경색 */
+    background-color: #ffffff;
+    /* 글꼴 */
+    font-size: 16px;
+    /* 글꼴 색상 */
+    color: #000000;
+    /* 검색입력 텍스트 앞 공백*/
+    padding-left: 20px;
+  }
+
+  input[type="text"]:focus {
+    /* 테두리 색상 */
+    outline: 1px solid rgb(90, 120, 200);
+   
+  }
+
+
+
+  input[type="button"] {
+    /* 테두리 */
+    border: 1px solid rgba(0, 0, 0, 0);
+    /* 테두리 모서리 둥글게 */
+    border-radius: 5px;
+    /* 배경색 */
+    background-color: rgb(90, 120, 200);
+    /* 글꼴 */
+    font-size: 16px;
+    /* 글꼴 색상 */
+    color: #ffffff;
+  }
+
+  #headerTable1 {
+      color: white;
+    text-align: left;
+    padding: 0px 200px 0px 0px;
+    height: 20px;
+  }
+
+  #headerTable2{
+      color: white;
+    text-align: center;
+    padding: 0px 200px 0px 200px;
+    height: 20px;
+  }
+  .headerTable3 {
+      color: white;
+    text-align: right;
+    padding: 0px 0px 0px 200px;
+    height: 20px;
+  }
+.headerTable4 {
+    color: white;
+    text-align: right;
+    padding: 0px 0px 0px 200px;
+    height: 20px;
+}
+#serviceTable{
+    padding-bottom: 20px;
+}

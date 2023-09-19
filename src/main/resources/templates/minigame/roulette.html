@@ -1,15 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
-  <script type="text/javascript" th:src="@{/js/roulette.js}"></script>
+    <meta charset="UTF-8">
+    <title>Roulette</title>
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /*룰렛 바깥 설정 css*/
+        .roulette-outer {
+            position: relative;
+            overflow: hidden;
+
+            width: 500px;
+            height: 500px;
+
+            font-size: 30px;
+
+            margin-left: auto;
+            margin-right: auto;
+
+            /*모서리 둥글게 설정*/
+            border-radius: 50%;
+        }
+
+        /*룰렛판 css*/
+        .roulette-outer > .roulette {
+            /*가득 체우기*/
+            position: absolute;
+
+            top: 5%;
+            left: 5%;
+            right: 5%;
+            bottom: 5%;
+
+            background: aqua;
+
+            border-radius: 50%;
+
+            border: 2px solid black;
+        }
+
+        .roulette-outer > .roulette-pin {
+            position: absolute;
+            top: 0;
+            left: 50%;
+
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 23px 5px 0 5px;
+            border-color: #ff0000 transparent transparent transparent;
+        }
+
+    </style>
+
 </head>
 <body>
-<div>
-  <canvas width="380" height="380"></canvas>
-  <button onclick="rotate()">룰렛 돌리기</button>
+
+<div id="app">
+    <h1>인생은 한방</h1>
 </div>
+<!--룰렛 바깥 영역-->
+<div class="roulette-outer">
+    <!--룰렛 핀 설정-->
+    <div class="roulette-pin"></div>
+    <!--룰렛판 설정-->
+    <div class="roulette"></div>
+</div>
+</script>
 </body>
 </html>

@@ -1,52 +1,65 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
-
-* {
-    font-family: Pretendard;
-}
-
-body {
-    background: #f7f8fc;
-}
-
-canvas {
-    transition: 2s;
-}
-
-button {
-    background: #febf00;
-    margin-top: 1rem;
-    padding: .8rem 1.8rem;
-    border: none;
-    font-size: 1.5rem;
-    font-weight: bold;
-    border-radius: 5px;
-    transition: .2s;
-    cursor: pointer;
-}
-
-button:active {
-    background: #444;
-    color: #f9f9f9;
-}
-
-div {
-    width: 380px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.rouletter {
     position: relative;
+    width: 400px;
+    height: 400px;
 }
-
-div::before {
-    content: "";
+.rouletter-bg {
     position: absolute;
-    width: 10px;
-    height: 50px;
-    border-radius: 5px;
-    background: #000;
-    top: -20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+    height: 350px;
+    border-radius: 350px;
+    overflow: hidden;
+}
+.rouletter-wacu {
+    width: 100%;
+    height: 100%;
+    background: #f5f5f2
+    url("https://m.lifeplanet.co.kr:444/commons/slink/administrator/openInnovation/img/MO)%20360%ED%94%8C%EB%9E%98%EB%8B%9B_%EB%A3%B0%EB%A0%9B%ED%8C%90_476x476_201026.png")
+    no-repeat;
+    background-size: 100%;
+    transform-origin: center;
+}
+.rouletter-arrow {
+    position: absolute;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 22;
+    width: 1px;
+    height: 1px;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    border-top: 40px solid red;
+    border-bottom: 0px solid transparent;
+}
+.rouletter-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 80px;
+    background: #fff;
+    border-image: linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa);
+    border: 2px solid;
+}
+.on {
+    animation-name: ani;
+    animation-duration: 0.1s;
+    /*animation-fill-mode: forwards;*/
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+}
+
+@keyframes ani {
+    0% {
+        transform: rotate(0deg);
+        transition-timing-function: ease-in-out;
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

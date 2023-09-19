@@ -14,11 +14,10 @@ public class PointService {
         this.pointRepository = pointRepository;
     }
 
-    public MyPointDTO myPoint(Integer userId) {
+    public MyPointDTO myPoint(String userId) {
         Point point = pointRepository.findById(userId).orElse(new Point());
 
         MyPointDTO myPointDTO = new MyPointDTO();
-        myPointDTO.setId(point.getId());
         myPointDTO.setUid(point.getUid());
         myPointDTO.setPoint(point.getPoint());
         myPointDTO.setAddPoint(point.getAddPoint());
@@ -29,7 +28,7 @@ public class PointService {
 
     public void recharge(MyPointDTO myPointDTO) {
 
-        Integer userId = myPointDTO.getId();
+        String userId = myPointDTO.getUid();
         Long depositAmount = myPointDTO.getAddPoint();
 
         // 기존 포인트 엔티티를 찾거나 새로 생성
@@ -44,11 +43,10 @@ public class PointService {
         pointRepository.save(existingPoint);
     }
 
-    public MyPointDTO deposit(Integer userId) {
+    public MyPointDTO deposit(String userId) {
         Point point = pointRepository.findById(userId).orElse(new Point());
 
         MyPointDTO myPointDTO = new MyPointDTO();
-        myPointDTO.setId(point.getId());
         myPointDTO.setUid(point.getUid());
         myPointDTO.setPoint(point.getPoint());
         myPointDTO.setNickName(point.getNickName());
@@ -56,11 +54,10 @@ public class PointService {
         return myPointDTO;
     }
 
-    public MyPointDTO withdrawPage(Integer userId) {
+    public MyPointDTO withdrawPage(String userId) {
         Point point = pointRepository.findById(userId).orElse(new Point());
 
         MyPointDTO myPointDTO = new MyPointDTO();
-        myPointDTO.setId(point.getId());
         myPointDTO.setUid(point.getUid());
         myPointDTO.setPoint(point.getPoint());
         myPointDTO.setMinusPoint(point.getAddPoint());
@@ -70,7 +67,7 @@ public class PointService {
     }
 
     public void withdraw(MyPointDTO myPointDTO) {
-        Integer userId = myPointDTO.getId();
+        String userId = myPointDTO.getUid();
         Long depositAmount = myPointDTO.getMinusPoint();
 
         // 기존 포인트 엔티티를 찾거나 새로 생성
@@ -85,7 +82,7 @@ public class PointService {
     }
 
 
-    public Long currentPoint(Integer userId) {
+    public Long currentPoint(String userId) {
         Point point = pointRepository.findById(userId).orElse(new Point());
         return point.getPoint(); // 사용자의 현재 포인트 반환
     }

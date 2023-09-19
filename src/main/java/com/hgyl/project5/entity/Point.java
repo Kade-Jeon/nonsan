@@ -16,13 +16,12 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Point {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
 
+    @Id
     @Column(length = 100)
     private String uid;
 
+    @Column
     private Long point;
 
     private Long addPoint;

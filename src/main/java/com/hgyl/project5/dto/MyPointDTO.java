@@ -14,7 +14,6 @@ import javax.validation.constraints.Min;
 @Setter
 public class MyPointDTO {
 
-    private Integer id;
     private String uid;
 
     @Min(value = 0, message = " point cannot be negative.")
@@ -31,7 +30,6 @@ public class MyPointDTO {
     public MyPointDTO mypoint(Point point) {
         this.point = point.getPoint();
         this.addPoint = point.getAddPoint();
-        this.id = point.getId();
         this.minusPoint = point.getMinusPoint();
         this.nickName = point.getNickName();
         this.uid = point.getUid();

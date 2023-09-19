@@ -41,7 +41,7 @@
 <h1>포인트 충전</h1>
 <form method="POST" th:action="@{/mypage/recharge}" onsubmit="return validateForm()">
     <!--id 값 명시해줘야한다-->
-    <input type="hidden" name="id" th:value="${myPoint.id}">
+    <input type="hidden" name="id" th:value="${myPoint.uid}">
     <span style="color: orange;" th:text="${myPoint.nickName}"></span>님 반갑습니다
     &nbsp;&nbsp;&nbsp;
     <button type="button" onclick="location.href='/mypage'">로그아웃</button> <br>

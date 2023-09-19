@@ -21,7 +21,7 @@ public class DepositPointController {
     @GetMapping("/mypage")
     public String myPoint(@Valid Model model) {
 
-        Integer userId = 1;
+        String userId = "uid1";
         MyPointDTO myPoint = pointService.myPoint(userId);
 
         model.addAttribute("myPoint", myPoint);
@@ -38,7 +38,7 @@ public class DepositPointController {
 
     @GetMapping("/mypage/depositPage")
     public String deposit(@Valid Model model) {
-        Integer userId = 1;
+        String userId = "uid1";
         MyPointDTO deposit = pointService.deposit(userId);
         model.addAttribute("deposit", deposit);
 
@@ -47,7 +47,7 @@ public class DepositPointController {
 
     @GetMapping("/mypage/withdrawPage")
     public String withdrawPage(Model model) {
-        Integer userId = 1;
+        String userId = "uid1";
 
         Long currentPoint = pointService.currentPoint(userId); // 현재 보유 머니 조회
         MyPointDTO withdraw = pointService.withdrawPage(userId);
@@ -60,7 +60,7 @@ public class DepositPointController {
 
     @PostMapping("/mypage/withdraw")
     public String withdraw(@ModelAttribute @Valid MyPointDTO myPointDTO, Model model) {
-        Integer userId = 1;
+        String userId = "uid1";
         Long currentPoint = pointService.currentPoint(userId);
 
         // 출금 금액이 현재 보유 머니를 초과하는지 검증

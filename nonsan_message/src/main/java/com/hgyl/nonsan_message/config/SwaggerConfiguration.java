@@ -25,7 +25,7 @@ public class SwaggerConfiguration {
             .build();
     }
 
-    private ApiInfo apiInfo() {
+    private ApiInfo apiInfo() {//test
         return new ApiInfoBuilder()
             .title("nonsan_message Test with Swagger")
             .description("설명 부분")

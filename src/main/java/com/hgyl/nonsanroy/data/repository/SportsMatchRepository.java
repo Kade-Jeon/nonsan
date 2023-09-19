@@ -10,4 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SportsMatchRepository extends JpaRepository<SportsMatch, Integer> {
 
+	SportsMatch getByMatchNo(Integer matchNo);
 }

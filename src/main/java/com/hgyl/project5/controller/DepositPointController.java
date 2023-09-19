@@ -49,7 +49,7 @@ public class DepositPointController {
     public String withdrawPage(Model model) {
         Integer userId = 1;
 
-        int currentPoint = pointService.currentPoint(userId); // 현재 보유 머니 조회
+        Long currentPoint = pointService.currentPoint(userId); // 현재 보유 머니 조회
         MyPointDTO withdraw = pointService.withdrawPage(userId);
 
         model.addAttribute("currentPoint", currentPoint);
@@ -61,7 +61,7 @@ public class DepositPointController {
     @PostMapping("/mypage/withdraw")
     public String withdraw(@ModelAttribute @Valid MyPointDTO myPointDTO, Model model) {
         Integer userId = 1;
-        int currentPoint = pointService.currentPoint(userId);
+        Long currentPoint = pointService.currentPoint(userId);
 
         // 출금 금액이 현재 보유 머니를 초과하는지 검증
         if (myPointDTO.getMinusPoint() > currentPoint) {

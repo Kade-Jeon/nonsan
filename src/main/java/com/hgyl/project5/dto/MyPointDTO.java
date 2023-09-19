@@ -17,14 +17,14 @@ public class MyPointDTO {
     private Integer id;
     private String uid;
 
-    @Min(value = 0, message = " oint cannot be negative.")
-    private Integer point;
+    @Min(value = 0, message = " point cannot be negative.")
+    private Long point;
 
     @Min(value = 0, message = "Add point cannot be negative.")
-    private Integer addPoint;
+    private Long addPoint;
 
     @Min(value = 0, message = "Minus point cannot be negative.")
-    private Integer minusPoint;
+    private Long minusPoint;
     private String nickName;
 
 

@@ -23,14 +23,11 @@ public class Point {
     @Column(length = 100)
     private String uid;
 
-    @Column(length = 100)
-    private Integer point;
+    private Long point;
 
-    @Column(length = 100)
-    private Integer addPoint;
+    private Long addPoint;
 
-    @Column(length = 100)
-    private Integer minusPoint;
+    private Long minusPoint;
 
     @Column(length = 300)
     private String nickName;

@@ -6,6 +6,10 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * @author 명원식
+ * @note 경기 내기 관련 Entity
+ */
 @Entity
 @Getter
 @Setter

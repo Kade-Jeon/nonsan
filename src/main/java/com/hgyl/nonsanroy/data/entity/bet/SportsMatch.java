@@ -5,7 +5,10 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
+/**
+ * @author 명원식
+ * @note 스포츠 경기 관련 Entity
+ */
 @Entity
 @Getter
 @Setter

@@ -30,7 +30,7 @@ public class MessageServiceImpl implements MessageService {
     // 메시지 발신 DB 기록
     @Override
     public String send(Message message) throws Exception {
-
+        // 임의로 넣은 발신자 아이디
         message.setSendId("one");
         message.setUid("one");
 
@@ -44,5 +44,11 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> receiveList(String receiveId) throws Exception {
 
         return messageRepository.findAllByReceiveId(receiveId);
+    }
+
+    // 수신 메시지 목록 -> 수신 메시지 상세조회
+    @Override
+    public Message receiveRead(Long id) {
+        return messageRepository.findById(id).get();
     }
 }

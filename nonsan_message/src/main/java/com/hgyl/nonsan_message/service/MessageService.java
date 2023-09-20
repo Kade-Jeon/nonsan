@@ -10,4 +10,6 @@ public interface MessageService {
 
     List<Message> receiveList(String receiveId) throws Exception;
 
+    Message receiveRead(Long id);
+
 }

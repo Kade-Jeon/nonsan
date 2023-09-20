@@ -30,10 +30,12 @@ public class MessageController {
     // 메시지 전송 처리
     @PostMapping("/send")
     public String send(Message message) throws Exception {
+        // 전송 값 테스트 콘솔 출력
         System.out.println("수신아이디: "+message.getReceiveId());
         System.out.println("발신제목: " +message.getTitle());
         System.out.println("발신내용: " +message.getContent());
 
+        // 반환값 아직 안 줬습니다.. (예외처리 미 구현..)
         String result = messageService.send(message);
 
         return "redirect:/receivelist";
@@ -46,6 +48,13 @@ public class MessageController {
         model.addAttribute("list", messageService.receiveList("two"));
 
         return "/message/receiveList";
+    }
+
+    // 수신 메시지 상세조회
+    @GetMapping("/message/receiveRead")
+    public String receiveRead(Model model, Long id){
+        model.addAttribute("receive",messageService.receiveRead(id));
+        return "/message/receiveRead";
     }
 
 }

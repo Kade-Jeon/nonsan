@@ -24,7 +24,7 @@
         <td th:text="${message.id}"></td>
         <td th:text="${message.sendId}"></td>
         <td>
-          <a th:href="@{/message/receiveRead(id=${message.id})}" th:text="${message.title}"></a>
+          <a th:href="@{/receiveRead(id=${message.id})}" th:text="${message.title}"></a>
         </td>
         <td th:text="${message.sendDate}"></td>
         <td >check</td>

@@ -5,7 +5,55 @@
     <meta charset="UTF-8">
     <title>Loading</title>
 </head>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    let appName = /*[[${appName}]]*/;
+    let backUrl ="/hgyr";
+    let fwdUrl = "";
+    if(appName == "blog"){
+        alert("블로그 이동할 코드 추가");
+        document.location = backUrl;
+    }
+    if(appName == "game"){
+        alert("게임 이동할 코드 추가");
+        document.location = backUrl;
+    }
+    if(appName == "sport"){
+        fwdUrl ="http://localhost:8099/chat/room";
+    }
+    if(appName == "msg"){
+        alert("쪽지 이동할 코드 추가");
+        document.location = backUrl;
+    }
+    if(appName == "bet"){
+        alert("베팅 이동할 코드 추가");
+        document.location = backUrl;
+    }
+    $(function(){
+        alert(appName);
+            var user = /*[[${session.user}]]*/;
+            $.ajax({
+                type : "POST",
+                url : "http://localhost:8099/chat/valid", // 1. 요청
+                contentType : "application/json",
+                data : JSON.stringify(user),    // 2. JSON을 문자열로 반환
+                success: function(data, textStatus){
+                    location.href = fwdUrl + "?uid="+user.uid;
+                },
+                error : function(data, textStatus){
+                    alert('세션 정보에 문제가 발생하였습니다. \n다시 시도해주세요.')
+                    document.location = backUrl;
+                },
+                complete : function (data, textStatus) {
 
+                }
+            }); //ajax END
+    }); // function END
+
+</script>
+
+
+<!--
 <script type="text/javascript" th:inline="javascript">
     var appName = /*[[${appName}]]*/;
     window.onload = function (){
@@ -25,5 +73,5 @@
             alert("베팅 이동할 코드 추가");
         }
     }
-</script>
+</script>-->
 </html>

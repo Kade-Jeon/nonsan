@@ -16,11 +16,6 @@ public class ChatRoomController {
 
     private final ChatRoomRepository chatRoomRepository;
 
-    @GetMapping("/tests")
-    public String test() {
-        return "tests";
-    }
-
     //채팅리스트 화면
     @GetMapping("/room")
     public String rooms() {

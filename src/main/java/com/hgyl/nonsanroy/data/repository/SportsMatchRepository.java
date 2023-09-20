@@ -4,8 +4,8 @@ import com.hgyl.nonsanroy.data.entity.bet.SportsMatch;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
+ * @classNote SportsMatchRepository Pattern for interacting with DB
  * @author 명원식
- * @note
  */
 
 public interface SportsMatchRepository extends JpaRepository<SportsMatch, Integer> {

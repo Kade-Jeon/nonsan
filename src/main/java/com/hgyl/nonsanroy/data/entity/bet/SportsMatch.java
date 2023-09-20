@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
+ * @classNote 스포츠 경기 관련 Entity
  * @author 명원식
- * @note 스포츠 경기 관련 Entity
  */
 @Entity
 @Getter

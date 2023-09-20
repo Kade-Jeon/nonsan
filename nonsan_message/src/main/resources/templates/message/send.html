@@ -1,89 +1,71 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-xmlns:layout="http://www.ultrq.net.nz/thymeleaf/layout"
-layout:decorator="fragments/default_layout">
+      xmlns:layout="http://www.ultrq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/default_layout">
+<meta charset="UTF-8">
 <th:block layout:fragment="content">
-<!--<head>
-    <title>쪽지 보내기</title>
-</head>-->
+    <!--<head>
+        <title>쪽지 보내기</title>
+    </head>-->
 
-<body>
+    <body>
 
-<!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
-<div class="container" style="margin-top: 60px">
-    <!-- 내용을 작성하는 부분 입니다. -->
-    <div class="row">
-        <div class="col-sm-8">
-        </div>
-        <div class="col-sm-8">
-            <div class="container justify-content-center">
-                <h3>메시지 발신</h3>
-            </div>
-            <!-- 폼 시작  -->
-            <form action="/send" method="post">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <div class="form-group mb-3">
-                            <label>수신 아이디</label>
-                            <div class="input-group">
-                                <input type="text" id="sendId" name="sendId" class="form-control" required />
+    <!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
+    <div class="container" style="margin-top: 60px">
+        <!-- 내용을 작성하는 부분 입니다. -->
+        <div class="row">
 
-                                <button type="button" class="btn btn-warning" id="btn-checkId" onclick="fn_checkId()">중복확인</button>
-
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <p id="checkResult" style="color: blue;"></p>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label >비밀번호</label>
-                            <input type="password" id="inputPw" name="userPw" class="form-control" required />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label >비밀번호 확인</label>
-                            <input type="password" id="inputPwCfm" class="form-control" required/>
-                        </div>
-                        <div class="form-group ">
-                            <p id="checkPw" style="color: blue;"></p>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="full_name">이름</label>
-                            <input type="text" id="full_name" name="userName" class="form-control" required />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="birthdate">생년월일</label>
-                            <input type="date" id="birthdate" name="userBirth" class="form-control" required />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="tel">전화번호</label>
-                            <input type="text" id="tel" name="userTel" placeholder="010-0000-0000" class="form-control" required />
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="email">이메일</label>
-                            <input type="email" id="email" name="userEmail" class="form-control" required />
-                        </div>
-                        <div class="form-group d-flex justify-content-end align-items-center">
-                            <div class="mb-3">
-                                <div class="text-right">
-                                    <button type="reset" class="btn btn-outline-secondary" id="reset">다시입력</button>
-                                    <button type="submit" class="btn btn-warning" id="signupBtn">회원가입</button>
+            <div class="col-sm-8">
+                <div class="container justify-content-center">
+                    <h3>메시지 발신</h3>
+                </div>
+                <!-- 폼 시작  -->
+                <form action="/send" method="post">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="form-group mb-3">
+                                <label for="sendId">수신 아이디</label>
+                                <div class="input-group">
+                                    <input type="text" id="sendId" name="sendId" class="form-control" required />
                                 </div>
                             </div>
-                        </div>
-            </form>
+                            <!--<div class="form-group ">
+                                <p id="checkResult" style="color: blue;"></p>
+                            </div>-->
+
+                            <div class="form-group mb-3">
+                                <label for="title">제목</label>
+                                <input type="text" id="title" name="title" class="form-control" required />
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="content">내용</label>
+                                <textarea class="form-control" style="width:100%; height:200px; resize:none;" cols="50" rows="5" id="content" name="content">
+
+                                </textarea>
+                            </div>
+                            <div class="form-group d-flex justify-content-end align-items-center">
+                                <div class="mb-3">
+                                    <div class="text-right">
+                                        <button type="reset" class="btn btn-outline-secondary" id="reset">다시입력</button>
+                                        <button type="submit" class="btn btn-warning" id="send">전송</button>
+                                    </div>
+                                </div>
+                            </div>
+                </form>
+            </div>
+            </div>
+            </div>
+                <div class="col-sm-3"></div>
+            </div>
         </div>
     </div>
-</div>
-<div class="col-sm-3"></div>
-</div>
-</div>
-</div>
 
 
-</div> <!-- 내용 끝나는 부분 -->
+    </div> <!-- 내용 끝나는 부분 -->
 
 
 
-</body>
+    </body>
 </th:block>
 </html>

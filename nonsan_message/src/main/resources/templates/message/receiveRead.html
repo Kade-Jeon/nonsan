@@ -39,7 +39,8 @@
                                 <div class="mb-3">
                                     <div class="text-right">
                                         <button type="button" class="btn btn-outline-secondary" id="back" onclick="goBack()">돌아가기</button>
-                                        <button type="button" class="btn btn-warning" id="button1">삭제</button>
+                                        <a th:href="@{/message/moveTrash(id=${receive.id})}" class="btn btn-warning">삭제</a>
+                                        <!--<input type="button" class="btn btn-warning" th:id="${receive.id}" value="삭제" onclick="goTrash()" />-->
                                         <!--th:href="@{/message/moveTrash(id=${receive.id})}"-->
                                     </div>
                                 </div>
@@ -50,6 +51,13 @@
                                 function goBack() {
                                     window.history.back();
                                 }
+
+                                // 휴지통 이동
+                                /*function goTrash(id){
+                                    const url = '/message/moveTrash?id='+id;
+
+                                    window.location.href = url;
+                                }*/
                             </script>
                         </div>
                     </div>

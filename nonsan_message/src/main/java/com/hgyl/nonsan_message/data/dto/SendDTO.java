@@ -3,7 +3,9 @@ package com.hgyl.nonsan_message.data.dto;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
@@ -20,8 +22,11 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@ToString
+@Component
 public class SendDTO {
-    @NonNull
+
+
     private String sendId;
 
     @NonNull

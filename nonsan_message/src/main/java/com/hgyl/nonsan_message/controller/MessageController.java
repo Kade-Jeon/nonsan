@@ -18,14 +18,18 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
+    // 메시지 전송 폼으로 이동
     @GetMapping("/message/send")
     public String sendForm() {
         return "message/send";
     }
 
+    // 메시지 전송 처리
     @PostMapping("/send")
-    public ModelAndView send(SendDTO sendDTO) throws Exception {
-
+    public String send(SendDTO sendDTO) throws Exception {
+        System.out.println("수신아이디: "+sendDTO.getSendId());
+        System.out.println("발신제목: " +sendDTO.getTitle());
+        System.out.println("발신내용: " +sendDTO.getContent());
 
         return null;
     }

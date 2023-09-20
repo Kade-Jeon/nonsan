@@ -1,4 +1,5 @@
 <!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <title>Websocket Chat</title>
@@ -11,15 +12,23 @@
             display: none;
         }
     </style>
+    <script type="text/javascript" th:inline="javascript">
+        var uid = /*[[${uid}]]*/;
+        var nickName = /*[[${nickName}]]*/;
+        window.onload = function (){
+            alert(uid);
+            alert(nickName);
+        }
+    </script>
 </head>
 <body>
-<h1>${session.user}</h1>
 <div class="container" id="app" v-cloak>
     <div class="row">
         <div class="col-md-12">
             <h3>채팅방 리스트</h3>
         </div>
     </div>
+    <th:block th:if="${uid == 'admin'}">
     <div class="input-group">
         <div class="input-group-prepend">
             <label class="input-group-text">방제목</label>
@@ -29,6 +38,7 @@
             <button class="btn btn-primary" type="button" @click="createRoom">채팅방 개설</button>
         </div>
     </div>
+    </th:block>
     <ul class="list-group">
         <li class="list-group-item list-group-item-action" v-for="item in chatrooms" v-bind:key="item.roomId" v-on:click="enterRoom(item.roomId)">
             {{item.name}}
@@ -38,6 +48,7 @@
 <!-- JavaScript -->
 <script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
 <script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
+
 <script>
     var vm = new Vue({
         el: '#app',
@@ -51,7 +62,7 @@
         },
         methods: {
             findAllRoom: function() {
-                axios.get('/chat/rooms').then(response => { this.chatrooms = response.data; });
+                axios.get('/chat/rooms').then(response => { this.chatrooms = response.data;});
             },
             createRoom: function() {
                 if("" === this.room_name) {
@@ -72,7 +83,7 @@
                 }
             },
             enterRoom: function(roomId) {
-                var sender = prompt('대화명을 입력해 주세요.');
+                var sender = nickName;
                 if(sender != "") {
                     localStorage.setItem('wschat.sender',sender);
                     localStorage.setItem('wschat.roomId',roomId);

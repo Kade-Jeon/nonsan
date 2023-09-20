@@ -1,27 +1,70 @@
 package com.hgyr.chatting.controller;
 
 import com.hgyr.chatting.data.ChatRoom;
+import com.hgyr.chatting.data.UserDto;
 import com.hgyr.chatting.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
+import javax.servlet.http.HttpSession;
+import java.util.*;
+
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/chat")
 public class ChatRoomController {
 
     private final ChatRoomRepository chatRoomRepository;
+    private Set<Map<String, String>> userList = new HashSet<>();
+
+    @Autowired
+    private HttpSession userSession;
+
+    //유저 정보 받아오기
+    @PostMapping("/valid")
+    @ResponseBody
+    public void checkUser(@RequestBody UserDto userDto) throws Exception {
+        System.out.println(userDto);
+        if(userDto == null){
+            throw new Exception();
+        }
+        Map<String, String> temp = new HashMap<>();
+        temp.put(userDto.getUid(), userDto.getNickName());
+        System.out.println(temp);
+        userList.add(temp);
+    }
 
 
     //채팅리스트 화면
     @GetMapping("/room")
-    public String rooms() {
+    public String rooms(@RequestParam String uid, Model model) {
+        System.out.println(uid);
+        String nick = null;
+        Iterator iterator = userList.iterator();
+        while (iterator.hasNext()) {
+            Map<String,String> map = (Map<String, String>) iterator.next();
+            System.out.println(map);
+            if(!map.get(uid).isBlank()){
+                nick = map.get(uid);
+                break;
+            }
+            }
+        model.addAttribute("uid", uid);
+        model.addAttribute("nickName", nick);
         return "/chat/room";
-    }
+            }
+
+
+
+
 
     //모든 채팅방 목록 반환
     @GetMapping("/rooms")

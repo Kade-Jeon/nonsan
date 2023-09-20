@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 
 public interface MessageService {
-    public String send(Message message) throws Exception;
+    String send(Message message) throws Exception;
+
+    Message receiveList(String receiveId) throws Exception;
 
 }

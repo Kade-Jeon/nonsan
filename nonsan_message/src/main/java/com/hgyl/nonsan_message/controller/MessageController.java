@@ -36,4 +36,13 @@ public class MessageController {
         return null;
     }
 
+    // 수신 메시지 목록
+    @GetMapping("/message/receivelist")
+    public ModelAndView receiveList(Message message) throws Exception{
+        message.setReceiveId("two");
+
+
+        return mav;
+    }
+
 }

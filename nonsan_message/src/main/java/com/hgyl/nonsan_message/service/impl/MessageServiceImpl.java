@@ -27,7 +27,7 @@ public class MessageServiceImpl implements MessageService {
         this.messageRepository = messageRepository;
     }
 
-
+    // 메시지 발신 DB 기록
     @Override
     public String send(Message message) throws Exception {
         LocalDateTime sendDate = LocalDateTime.now();
@@ -39,6 +39,13 @@ public class MessageServiceImpl implements MessageService {
         messageRepository.save(message);
 
 
+        return null;
+    }
+
+    // 로그인 후 수신 메시지 조회
+    @Override
+    public Message receiveList(String receiveId) throws Exception {
+        messageRepository.findAll(receiveId);
         return null;
     }
 }

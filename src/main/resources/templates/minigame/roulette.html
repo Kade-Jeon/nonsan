@@ -3,74 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <title>Roulette</title>
-    <style>
 
+    <style>
         html, body {
             margin: 0;
             padding: 0;
         }
 
-        /*룰렛 바깥 설정 css*/
+        /* 룰렛 바깥 설정 css */
+        /* 룰렛 바깥 설정 css */
         .roulette-outer {
             position: relative;
             overflow: hidden;
-
             width: 500px;
             height: 500px;
-
             font-size: 30px;
-
             margin-left: auto;
             margin-right: auto;
-
-            /*모서리 둥글게 설정*/
-            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end; /* 룰렛 가운데 아래로 버튼을 배치 */
         }
 
-        /*룰렛판 css*/
+        /* 룰렛판 css */
         .roulette-outer > .roulette {
-            /*가득 체우기*/
+            /* 가득 체우기 */
             position: absolute;
-
             top: 5%;
             left: 5%;
             right: 5%;
             bottom: 5%;
-
             background: aqua;
-
             border-radius: 50%;
-
             border: 2px solid black;
         }
 
         .roulette-outer > .roulette-pin {
             position: absolute;
-            top: 0;
+            top: 3px;
             left: 50%;
-
             width: 0;
             height: 0;
             border-style: solid;
             border-width: 23px 5px 0 5px;
             border-color: #ff0000 transparent transparent transparent;
+            /* 룰렛핀 가운데로 이동 */
+            margin-left: -4.5px;
         }
 
-    </style>
+        .roulette-outer > .roulette > .item-wrapper > .item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-top: 10%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
 
+        /* 글자 회전 처리 */
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(1) {
+            transform: rotate(0deg);
+        }
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(2) {
+            transform: rotate(90deg);
+        }
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(3) {
+            transform: rotate(180deg);
+        }
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(4) {
+            transform: rotate(270deg);
+        }
+
+        /* 룰렛 선 설정 */
+        .roulette-outer > .roulette > .line-wrapper > .line {
+            position: absolute;
+            top: 0;
+            bottom: 50%;
+            left: 50%;
+            width: 3px;
+            margin-left: -1px;
+            background: black;
+
+            /*회원 선 위치조정*/
+            transform-origin: bottom;
+        }
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(1){
+            transform: rotate(45deg);
+        }
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(2){
+            transform: rotate(135deg);
+        }
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(3){
+            transform: rotate(225deg);
+        }
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(4){
+            transform: rotate(315deg);
+        }
+
+        /* 버튼 스타일 */
+        button {
+            margin-top: 20px; /* 버튼 위 여백 조정 */
+        }
+
+        body {
+            text-align: center; /* 텍스트를 수평 중앙 정렬 */
+            padding: 50px 0; /* 상단과 하단에 여백을 줌으로써 상단 가운데에 위치시킵니다. */
+        }
+
+
+    </style>
 </head>
 <body>
-
 <div id="app">
     <h1>인생은 한방</h1>
 </div>
-<!--룰렛 바깥 영역-->
+<!-- 룰렛 바깥 영역 -->
 <div class="roulette-outer">
-    <!--룰렛 핀 설정-->
+    <!-- 룰렛 핀 설정 -->
     <div class="roulette-pin"></div>
-    <!--룰렛판 설정-->
-    <div class="roulette"></div>
+    <!-- 룰렛판 설정 -->
+    <div class="roulette">
+        <!-- 룰렛판 글자 영역 -->
+        <div class ="item-wrapper">
+            <div class="item">100점</div>
+            <div class="item">200점</div>
+            <div class="item">300점</div>
+            <div class="item">400점</div>
+        </div>
+        <!-- 룰렛 선 설정 -->
+        <div class="line-wrapper">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </div>
+    <button onclick="startRoulette()">돌려 돌려</button>
 </div>
+
+<script>
+    // roulette 룰렛 설정후 요소 할당
+    const roulette = document.querySelector('.roulette');
+    // 변수 초기화
+    let rotationAngle = 0;
+
+    /*각도 회전*/
+    function rotateRoulette() {
+        rotationAngle += Math.floor(Math.random() * 360) + 3000; // 랜덤 각도를 추가하여 회전
+        roulette.style.transition = 'transform 5s ease-out';  // 시간 설정
+        roulette.style.transform = `rotate(${rotationAngle}deg)`; // 회전 각도 설정
+    }
+
+    // 버튼 눌러서 작동
+    document.getElementById('rotateButton').addEventListener('click', startRoulette);
+
+    // 버튼 id
+    function startRoulette() {
+        roulette.style.transition = 'none'; // 회전 애니메이션을 제거하고 즉시 회전
+        setTimeout(rotateRoulette, 10); // 약간의 지연 후 회전
+    }
 </script>
+
 </body>
-</html>

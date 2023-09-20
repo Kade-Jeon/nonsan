@@ -73,14 +73,13 @@ public class PointService {
         // 기존 포인트 엔티티를 찾거나 새로 생성
         Point existingPoint = pointRepository.findById(userId).orElse(new Point());
 
-        // 기존 포인트에 추가 포인트 더하기
+        // 기존 포인트에 포인트 마이너스
         Long currentPoint = existingPoint.getPoint() != null ? existingPoint.getPoint() : 0;
         existingPoint.setPoint(currentPoint - depositAmount);
 
         // 엔티티 저장
         pointRepository.save(existingPoint);
     }
-
 
     public Long currentPoint(String userId) {
         Point point = pointRepository.findById(userId).orElse(new Point());

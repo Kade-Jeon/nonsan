@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @NoArgsConstructor
 @Getter
@@ -16,29 +19,37 @@ public class MyPointDTO {
 
     private String uid;
 
-    @Min(value = 0, message = " point cannot be negative.")
+    @Min(value = 0, message = " point 는 음수 불가.")
     private Long point;
 
-    @Min(value = 0, message = "Add point cannot be negative.")
+    @Max(value = 100_000_000L, message = "Point 최대값 100억.")
+    @Min(value = 0, message = "Add point 는 음수 불가.")
     private Long addPoint;
 
-    @Min(value = 0, message = "Minus point cannot be negative.")
+    @Max(value = 100_000_000L, message = "Point 최대값 100억.")
+    @Min(value = 0, message = "minus point 는 음수 불가.")
     private Long minusPoint;
     private String nickName;
+    private LocalTime insertDateTime;
 
-
-    public MyPointDTO mypoint(Point point) {
-        this.point = point.getPoint();
-        this.addPoint = point.getAddPoint();
-        this.minusPoint = point.getMinusPoint();
-        this.nickName = point.getNickName();
-        this.uid = point.getUid();
-
-        return this;
+    @Builder
+    public MyPointDTO(String uid, Long point, Long addPoint, Long minusPoint, String nickName, LocalTime insertDateTime) {
+        this.uid = uid;
+        this.point = point;
+        this.addPoint = addPoint;
+        this.minusPoint = minusPoint;
+        this.nickName = nickName;
+        this.insertDateTime = insertDateTime;
     }
 
     public static MyPointDTO pointFactory(Point point) {
-        MyPointDTO myPointDTO = new MyPointDTO();
-        return myPointDTO.mypoint(point);
+        return MyPointDTO.builder()
+                .uid(point.getUid())
+                .point(point.getPoint())
+                .addPoint(point.getAddPoint())
+                .minusPoint(point.getMinusPoint())
+                .nickName(point.getNickName())
+                .insertDateTime(LocalTime.now()) // 원하는 값으로 설정
+                .build();
     }
 }

@@ -57,4 +57,13 @@ public class MessageController {
         return "/message/receiveRead";
     }
 
+    // 휴지통 목록 조회
+    @GetMapping("/deletelist")
+    public String deleteList(Model model) throws Exception{
+
+        model.addAttribute("list", messageService.deleteList("two"));
+
+        return "/message/deleteList";
+    }
+
 }

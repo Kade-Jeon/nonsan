@@ -52,4 +52,12 @@ public class MessageServiceImpl implements MessageService {
     public Message receiveRead(Long id) {
         return messageRepository.findById(id).get();
     }
+
+    // 휴지통 목록
+    @Override
+    public List<Message> deleteList(String receiveId) throws Exception {
+        Boolean deleteStatus = true;
+
+        return messageRepository.findAllByReceiveIdAndDeleteStatus(receiveId, deleteStatus);
+    }
 }

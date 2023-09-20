@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Loading</title>
+</head>
+
+<script type="text/javascript" th:inline="javascript">
+    var appName = /*[[${appName}]]*/;
+    window.onload = function (){
+        if(appName == "blog"){
+            alert("블로그 이동할 코드 추가");
+        }
+        if(appName == "game"){
+            alert("게임 이동할 코드 추가");
+        }
+        if(appName == "sport"){
+            location.href ="http://localhost:8099/chat/room"
+        }
+        if(appName == "msg"){
+            alert("쪽지 이동할 코드 추가");
+        }
+        if(appName == "bet"){
+            alert("베팅 이동할 코드 추가");
+        }
+    }
+</script>
+</html>

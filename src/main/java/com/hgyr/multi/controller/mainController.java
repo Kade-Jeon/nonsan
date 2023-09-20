@@ -2,15 +2,17 @@ package com.hgyr.multi.controller;
 
 import com.hgyr.multi.dto.UserDto;
 import com.hgyr.multi.service.MainRestService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping("/hgyr")
@@ -42,6 +44,14 @@ public class mainController {
     @GetMapping("/login")
     public String moveToLogin() {
         return "login";
+    }
+
+    /*각 서비스 누를 시 각 서비스로 이동*/
+    @GetMapping("/service/{app}")
+    public String moveToService(@PathVariable String app, Model model) {
+        model.addAttribute("appName",app);
+        System.out.println(app);
+        return "app";
     }
 
     /*회원가입 페이지에서 정보 입력 후 제출하면 서버로 전송 후 결과리턴

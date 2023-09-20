@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>error</title>
 </head>
+
 <body>
     <h1 style="text-align: center;">잘못된 경로로 접근하였습니다.</h1>
     <hr>
     <img style="display: block; margin: 0 auto; width: 50%;" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAzMTJfMjU3%2FMDAxNTgzOTc4MTg2NDc3._kh70fP7anTHb5jw_tCqAS59mUJ2jJTYgN3g9Lj2j-cg.3KW1NGopyQwObJPxW0lbbRM3CsoQD4FOJqCkVa22apYg.JPEG.yyso88%2Fdksehoehfdkrk.jpg&type=sc960_832">
-    <p style="text-align: center;"><a href="#" onclick="{(event)=>{
-        event.defaultPrevented;
-        history.back();
-    }}">돌아가기</a></p>
+    <p style="text-align: center;"><a th:href="@{/hgyr}">돌아가기</a></p>
 </body>
 </html>

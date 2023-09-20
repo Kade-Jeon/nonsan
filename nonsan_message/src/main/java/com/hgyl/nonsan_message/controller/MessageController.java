@@ -36,7 +36,7 @@ public class MessageController {
 
         String result = messageService.send(message);
 
-        return null;
+        return "/message/receivelist";
     }
 
     // 수신 메시지 목록
@@ -45,7 +45,7 @@ public class MessageController {
 
         model.addAttribute("list", messageService.receiveList("two"));
 
-        return "/message/receivelist";
+        return "/message/receiveListF";
     }
 
 }

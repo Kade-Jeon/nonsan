@@ -9,7 +9,7 @@
   <!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
   <div class="container mt-3">
     <h2>수신 메시지</h2>
-    <table class="table table-dark">
+    <table class="table table-hover">
       <thead>
       <tr>
         <th>index</th>
@@ -23,7 +23,9 @@
       <tr th:each="message : ${list}">
         <td th:text="${message.id}"></td>
         <td th:text="${message.sendId}"></td>
-        <td th:text="${message.title}"></td>
+        <td>
+          <a th:href="@{/message/receiveRead(id=${message.id})}" th:text="${message.title}"></a>
+        </td>
         <td th:text="${message.sendDate}"></td>
         <td >check</td>
       </tr>

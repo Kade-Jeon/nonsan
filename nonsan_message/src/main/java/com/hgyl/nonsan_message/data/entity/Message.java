@@ -49,7 +49,7 @@ public class Message {
     private String content;
 
     @CreationTimestamp
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime sendDate;
 
     @Column

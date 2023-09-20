@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -29,15 +30,11 @@ public class MessageServiceImpl implements MessageService {
     // 메시지 발신 DB 기록
     @Override
     public String send(Message message) throws Exception {
-        LocalDateTime sendDate = LocalDateTime.now();
-        message.setSendDate(sendDate);
 
         message.setSendId("one");
         message.setUid("one");
 
-
         messageRepository.save(message);
-
 
         return null;
     }

@@ -30,22 +30,22 @@ public class MessageController {
     // 메시지 전송 처리
     @PostMapping("/send")
     public String send(Message message) throws Exception {
-        System.out.println("수신아이디: "+message.getSendId());
+        System.out.println("수신아이디: "+message.getReceiveId());
         System.out.println("발신제목: " +message.getTitle());
         System.out.println("발신내용: " +message.getContent());
 
         String result = messageService.send(message);
 
-        return "/message/receivelist";
+        return "redirect:/receivelist";
     }
 
     // 수신 메시지 목록
-    @GetMapping("/message/receivelist")
+    @GetMapping("/receivelist")
     public String receiveList(Model model) throws Exception{
 
         model.addAttribute("list", messageService.receiveList("two"));
 
-        return "/message/receiveListF";
+        return "/message/receiveList";
     }
 
 }

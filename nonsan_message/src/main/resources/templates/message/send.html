@@ -1,90 +1,89 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultrq.net.nz/thymeleaf/layout"
+layout:decorator="fragments/default_layout">
+<th:block layout:fragment="content">
+<!--<head>
     <title>쪽지 보내기</title>
-</head>
-<link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-        crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script
-        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-<script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
-        crossorigin="anonymous"></script>
+</head>-->
+
 <body>
 
-<!-- Bootstrap 5 Contact Form Snippet -->
+<!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
+<div class="container" style="margin-top: 60px">
+    <!-- 내용을 작성하는 부분 입니다. -->
+    <div class="row">
+        <div class="col-sm-8">
+        </div>
+        <div class="col-sm-8">
+            <div class="container justify-content-center">
+                <h3>메시지 발신</h3>
+            </div>
+            <!-- 폼 시작  -->
+            <form action="/send" method="post">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label>수신 아이디</label>
+                            <div class="input-group">
+                                <input type="text" id="sendId" name="sendId" class="form-control" required />
 
-<div class="container px-5 my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card border-0 rounded-3 shadow-lg">
-                <div class="card-body p-4">
-                    <div class="text-center">
-                        <div class="h1 fw-light">메시지 보내기</div>
-                        <p class="mb-4 text-muted">A functional, Bootstrap 5 contact form with validation built using SB Forms. Try it out!</p>
-                    </div>
+                                <button type="button" class="btn btn-warning" id="btn-checkId" onclick="fn_checkId()">중복확인</button>
 
-                    <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-
-                        <!-- Name Input -->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="name" type="text" placeholder="Name" data-sb-validations="required" />
-                            <label for="name">Name</label>
-                            <div class="invalid-feedback" data-sb-feedback="name:required">Name is required.</div>
-                        </div>
-
-                        <!-- Email Input -->
-                        <div class="form-floating mb-3">
-                            <input class="form-control" id="emailAddress" type="email" placeholder="Email Address" data-sb-validations="required,email" />
-                            <label for="emailAddress">Email Address</label>
-                            <div class="invalid-feedback" data-sb-feedback="emailAddress:required">Email Address is required.</div>
-                            <div class="invalid-feedback" data-sb-feedback="emailAddress:email">Email Address Email is not valid.</div>
-                        </div>
-
-                        <!-- Message Input -->
-                        <div class="form-floating mb-3">
-                            <textarea class="form-control" id="message" type="text" placeholder="Message" style="height: 10rem;" data-sb-validations="required"></textarea>
-                            <label for="message">Message</label>
-                            <div class="invalid-feedback" data-sb-feedback="message:required">Message is required.</div>
-                        </div>
-
-                        <!-- Submit success message -->
-                        <div class="d-none" id="submitSuccessMessage">
-                            <div class="text-center mb-3">
-                                <div class="fw-bolder">Form submission successful!</div>
-                                <p>To activate this form, sign up at</p>
-                                <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
                             </div>
                         </div>
-
-                        <!-- Submit error message -->
-                        <div class="d-none" id="submitErrorMessage">
-                            <div class="text-center text-danger mb-3">Error sending message!</div>
+                        <div class="form-group ">
+                            <p id="checkResult" style="color: blue;"></p>
                         </div>
-
-                        <!-- Submit button -->
-                        <div class="d-grid">
-                            <button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button>
+                        <div class="form-group mb-3">
+                            <label >비밀번호</label>
+                            <input type="password" id="inputPw" name="userPw" class="form-control" required />
                         </div>
-                    </form>
-                    <!-- End of contact form -->
-
-                </div>
-            </div>
+                        <div class="form-group mb-3">
+                            <label >비밀번호 확인</label>
+                            <input type="password" id="inputPwCfm" class="form-control" required/>
+                        </div>
+                        <div class="form-group ">
+                            <p id="checkPw" style="color: blue;"></p>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="full_name">이름</label>
+                            <input type="text" id="full_name" name="userName" class="form-control" required />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="birthdate">생년월일</label>
+                            <input type="date" id="birthdate" name="userBirth" class="form-control" required />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="tel">전화번호</label>
+                            <input type="text" id="tel" name="userTel" placeholder="010-0000-0000" class="form-control" required />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email">이메일</label>
+                            <input type="email" id="email" name="userEmail" class="form-control" required />
+                        </div>
+                        <div class="form-group d-flex justify-content-end align-items-center">
+                            <div class="mb-3">
+                                <div class="text-right">
+                                    <button type="reset" class="btn btn-outline-secondary" id="reset">다시입력</button>
+                                    <button type="submit" class="btn btn-warning" id="signupBtn">회원가입</button>
+                                </div>
+                            </div>
+                        </div>
+            </form>
         </div>
     </div>
 </div>
+<div class="col-sm-3"></div>
+</div>
+</div>
+</div>
 
-<!-- CDN Link to SB Forms Scripts -->
-<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+</div> <!-- 내용 끝나는 부분 -->
+
+
+
 </body>
+</th:block>
 </html>

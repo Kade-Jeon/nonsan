@@ -25,6 +25,9 @@ public class MatchOdds extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer matchNo;
 
+	@Column
+	private Integer betNo;
+
 	@Column(nullable = false)
 	private double awayTeamOdds;
 

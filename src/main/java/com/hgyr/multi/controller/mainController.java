@@ -50,7 +50,10 @@ public class mainController {
     public String save(UserDto userDto){
         String result = mainRestService.postSave(userDto);
         System.out.println("회원가입 : 서버 1888");
-        return result;
+        if(result.equals("main")){
+            return "redirect:/hgyr";
+        }
+        return "error";
     }
 
     /*로그인 내용 입력 후, 서버로 전송 후 결과 리턴

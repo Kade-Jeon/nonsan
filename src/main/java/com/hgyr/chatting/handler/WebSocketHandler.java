@@ -1,3 +1,4 @@
+/*
 package com.hgyr.chatting.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,10 +28,13 @@ public class WebSocketHandler extends TextWebSocketHandler {
         room.handleActions(session, chatMessage, chatService);
     }
 
-    /* @Override
+    */
+/* @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
         TextMessage textMessage = new TextMessage("Welcome to Chatting server");
         session.sendMessage(textMessage);
-    }*/
+    }*//*
+
 }
+*/

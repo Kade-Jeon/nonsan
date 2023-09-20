@@ -1,27 +1,27 @@
 package com.hgyr.chatting.controller;
 
+import com.hgyr.chatting.data.ChatMessage;
 import com.hgyr.chatting.data.ChatRoom;
-import com.hgyr.chatting.service.ChatService;
+
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("/chat")
+@Controller
 public class ChatController {
 
-    private final ChatService chatService;
+    private final SimpMessageSendingOperations messageTemplate;
 
-    @PostMapping
-    public ChatRoom createRoom(@RequestParam String name) {
-        System.out.println(name);
-        return chatService.createRoom(name);
-    }
-
-    @GetMapping
-    public List<ChatRoom> findAllRoom() {
-        return chatService.findAllRoom();
+    @MessageMapping("chat/message")
+    public void message(ChatMessage message){
+        if (ChatMessage.MessageType.JOIN.equals(message.getType())) {
+            message.setMessage(message.getSender() + " 님이 입장하셨습니다.");
+        }
+        messageTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
 }

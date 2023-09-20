@@ -60,6 +60,44 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars.bower/bootstrap -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars.bower/axios -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>axios</artifactId>
+            <version>0.17.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!-- vue -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>vue</artifactId>
+            <version>2.5.16</version>
+        </dependency>
+
+        <!-- sockJS -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>sockjs-client</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+
+        <!-- stomp -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>stomp-websocket</artifactId>
+            <version>2.3.3-1</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -42,8 +42,9 @@ public class MessageServiceImpl implements MessageService {
     // 로그인 후 수신 메시지 조회
     @Override
     public List<Message> receiveList(String receiveId) throws Exception {
+        Boolean deleteStatus = false;
 
-        return messageRepository.findAllByReceiveId(receiveId);
+        return messageRepository.findAllByReceiveIdAndDeleteStatus(receiveId, deleteStatus);
     }
 
     // 수신 메시지 목록 -> 수신 메시지 상세조회

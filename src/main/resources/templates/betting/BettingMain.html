@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Betting Main</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex; /* flex = 2열 레이아웃 */
+        }
+
+        .sidebar {
+            width: 250px; /* 사이드 메뉴 (구매) 넓이 */
+            background-color: #333; /* 사이드 메뉴 배경색 */
+            color: #fff; /* 사이드 메뉴 글자색 */
+            padding: 20px;
+        }
+
+        .content {
+            flex: 1; /* container 의 남은 공간 채우기 */
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>MATCH SCHEDULE</h1>
+<div class="container">
+    <div class="content">
+        context text
+    </div>
+    <div class="sidebar">
+        side text
+    </div>
+</div>
+</body>
+</html>

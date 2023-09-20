@@ -34,4 +34,7 @@ public class MatchOdds extends BaseEntity {
 	@Column(nullable = false)
 	private double winningPot;
 
+	@Column(nullable = false)
+	private long betAmount;
+
 }

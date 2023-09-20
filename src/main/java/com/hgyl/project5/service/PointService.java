@@ -17,53 +17,50 @@ public class PointService {
     public MyPointDTO myPoint(String userId) {
         Point point = pointRepository.findById(userId).orElse(new Point());
 
-        MyPointDTO myPointDTO = new MyPointDTO();
-        myPointDTO.setUid(point.getUid());
-        myPointDTO.setPoint(point.getPoint());
-        myPointDTO.setAddPoint(point.getAddPoint());
-        myPointDTO.setNickName(point.getNickName());
-
-        return myPointDTO;
+        return MyPointDTO.builder()
+                .uid(point.getUid())
+                .point(point.getPoint())
+                .addPoint(point.getAddPoint())
+                .nickName(point.getNickName())
+                .build();
     }
 
     public void recharge(MyPointDTO myPointDTO) {
-
         String userId = myPointDTO.getUid();
-        Long depositAmount = myPointDTO.getAddPoint();
+        if (userId == null) {
+            throw new IllegalArgumentException("유저 아이디 Null");
+        }
 
-        // 기존 포인트 엔티티를 찾거나 새로 생성
+        Long depositAmount = myPointDTO.getAddPoint();
         Point existingPoint = pointRepository.findById(userId).orElse(new Point());
 
-        // 기존 포인트에 추가 포인트 더하기
-        // 기존 포인트가 'null' 이라면 기본값 0으로 설정
         Long currentPoint = existingPoint.getPoint() != null ? existingPoint.getPoint() : 0;
         existingPoint.setPoint(currentPoint + depositAmount);
 
-        // 엔티티 저장
         pointRepository.save(existingPoint);
     }
 
     public MyPointDTO deposit(String userId) {
         Point point = pointRepository.findById(userId).orElse(new Point());
 
-        MyPointDTO myPointDTO = new MyPointDTO();
-        myPointDTO.setUid(point.getUid());
-        myPointDTO.setPoint(point.getPoint());
-        myPointDTO.setNickName(point.getNickName());
+        return MyPointDTO.builder()
+                .uid(point.getUid())
+                .point(point.getPoint())
+                .nickName(point.getNickName())
+                .build();
 
-        return myPointDTO;
+
     }
 
     public MyPointDTO withdrawPage(String userId) {
         Point point = pointRepository.findById(userId).orElse(new Point());
 
-        MyPointDTO myPointDTO = new MyPointDTO();
-        myPointDTO.setUid(point.getUid());
-        myPointDTO.setPoint(point.getPoint());
-        myPointDTO.setMinusPoint(point.getAddPoint());
-        myPointDTO.setNickName(point.getNickName());
-
-        return myPointDTO;
+        return MyPointDTO.builder()
+                .uid(point.getUid())
+                .point(point.getPoint())
+                .minusPoint(point.getMinusPoint())
+                .nickName(point.getNickName())
+                .build();
     }
 
     public void withdraw(MyPointDTO myPointDTO) {
@@ -80,6 +77,7 @@ public class PointService {
         // 엔티티 저장
         pointRepository.save(existingPoint);
     }
+
 
     public Long currentPoint(String userId) {
         Point point = pointRepository.findById(userId).orElse(new Point());

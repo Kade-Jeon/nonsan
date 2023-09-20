@@ -11,7 +11,6 @@ import javax.validation.constraints.Min;
 @NoArgsConstructor
 @Getter
 @Setter
-@Builder
 public class RouletteDTO {
 
     private String uid;

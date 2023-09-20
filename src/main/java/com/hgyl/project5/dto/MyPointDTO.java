@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @NoArgsConstructor
@@ -49,7 +48,7 @@ public class MyPointDTO {
                 .addPoint(point.getAddPoint())
                 .minusPoint(point.getMinusPoint())
                 .nickName(point.getNickName())
-                .insertDateTime(LocalTime.now()) // 원하는 값으로 설정
+                .insertDateTime(LocalTime.now())
                 .build();
     }
 }

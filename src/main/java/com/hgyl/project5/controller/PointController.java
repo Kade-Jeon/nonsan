@@ -13,22 +13,25 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.Valid;
 
 @Controller
-public class DepositPointController {
+public class PointController {
 
     @Autowired
     PointService pointService;
 
+    // 메인 페이지 - 충전
     @GetMapping("/mypage")
     public String myPoint(@Valid Model model) {
 
         String userId = "uid1";
         MyPointDTO myPoint = pointService.myPoint(userId);
+        System.out.println(userId+"controller!!!");
 
         model.addAttribute("myPoint", myPoint);
 
         return "mypage/pointRecharge";
     }
 
+    // 충전 처리 메서드
     @PostMapping("/mypage/recharge")
     public String rechargePoint(@ModelAttribute @Valid MyPointDTO myPointDTO) {
 
@@ -36,6 +39,7 @@ public class DepositPointController {
         return "redirect:/mypage/";
     }
 
+    // 입금 페이지
     @GetMapping("/mypage/depositPage")
     public String deposit(@Valid Model model) {
         String userId = "uid1";
@@ -45,6 +49,8 @@ public class DepositPointController {
         return "mypage/pointDeposit";
     }
 
+
+    // 출금 페이지
     @GetMapping("/mypage/withdrawPage")
     public String withdrawPage(Model model) {
         String userId = "uid1";
@@ -58,6 +64,7 @@ public class DepositPointController {
         return "mypage/pointWithdraw";
     }
 
+    // 출금 처리 메서드
     @PostMapping("/mypage/withdraw")
     public String withdraw(@ModelAttribute @Valid MyPointDTO myPointDTO, Model model) {
         String userId = "uid1";

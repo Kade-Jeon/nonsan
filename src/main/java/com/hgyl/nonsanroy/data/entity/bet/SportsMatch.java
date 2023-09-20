@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * @classNote 스포츠 경기 관련 Entity
+ * @classNote sportsMatch (스포츠 경기 관련 Entity)
+ * @purpose
+ * @requiredFor
  * @author 명원식
  */
 @Entity
@@ -20,27 +22,30 @@ public class SportsMatch extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer gameNo;
+	private Integer matchNo;
 
 	@Column(nullable = false)
-	private Integer AwayScore;
+	private String matchType;
 
 	@Column(nullable = false)
-	private String AwayTeam;
+	private Integer awayScore;
 
 	@Column(nullable = false)
-	private Integer HomeScore;
+	private String awayTeam;
 
 	@Column(nullable = false)
-	private String HomeTeam;
+	private Integer homeScore;
 
 	@Column(nullable = false)
-	private LocalDateTime StartTime;
+	private String homeTeam;
 
 	@Column(nullable = false)
-	private LocalDateTime EndTime;
+	private LocalDateTime startTime;
 
 	@Column(nullable = false)
-	private String Result;
+	private LocalDateTime endTime;
+
+	@Column(nullable = false)
+	private String result;
 
 }

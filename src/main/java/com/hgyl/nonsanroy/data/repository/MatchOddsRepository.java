@@ -4,7 +4,9 @@ import com.hgyl.nonsanroy.data.entity.bet.MatchOdds;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * @classNote SportsMatchRepository Pattern for interacting with DB
+ * @classNote MatchOddsRepository
+ * @purpose Repository pattern for interacting with DB (MatchOdds table)
+ * @requiredFor
  * @author 명원식
  */
 

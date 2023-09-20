@@ -1,15 +1,13 @@
 package com.hgyl.nonsan_message.data.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+
 
 /**
  * 로그인 사용자 불러오기 위한 임시 entity
@@ -21,26 +19,75 @@ import javax.persistence.Id;
  *
  * **/
 
-@Getter
+@Entity
+@Builder
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+@ToString
+@EqualsAndHashCode(callSuper = true)
+public class User extends BaseEntity{
 
+    /* Primiary key
+     * Auto_Increment
+     * */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long uid;
+    private Long id;
+
+    /* null 허용 x, update 허용(수정불가)
+     *  "", " " 허용 x
+     * 아이디 길이 최소 5 ~ 최대 50
+     * */
+    @Column(nullable = false, updatable = false)
+    @NotBlank
+    @Size(min = 4, max = 50)
+    private String uid;
+
+    /* null 허용 x
+     *  "", " " 허용 x
+     * */
+    @Column(nullable = false)
+    @NotBlank
+    private String nickName;
 
     @Column(nullable = false)
+    @NotBlank
     private String password;
 
     @Column(nullable = false)
-    private String userName;
+    @NotBlank
+    private String name;
+
+    /* null 허용 x, update 허용(수정불가)
+     *  "", " " 허용 x
+     * 양수만 허용
+     * 나이 최소값 0
+     * */
+    @Column(nullable = false)
+    @PositiveOrZero
+    @Min(value = 0)
+    private Integer age;
 
     @Column(nullable = false)
-    private int age;
+    @PositiveOrZero
+    @Min(value = 0)
+    private Integer point;
 
-    @Column
-    private int point;
+    /*public User fromDto(UserDto userDto){
+        this.uid = userDto.getUid();
+        this.nickName = userDto.getNickName();
+        this.password = userDto.getPassword();
+        this.name = userDto.getName();
+        this.age = userDto.getAge();
+        this.point = userDto.getPoint();
+        return this;
+    }
 
+    public static User dtoToEntity(@Valid UserDto userDto) {
+        User user = new User();
+        user.fromDto(userDto);
+        return user;
+    }*/
 }

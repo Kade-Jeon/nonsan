@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 
 /**
  * DB table Message
- * uid : auto_increment 고유번호
+ * id : auto_increment 고유번호
+ * uid : 로그인 아이디
  * sendId : 발송아이디
  * receiveId : 수신아이디 (로그인 사용자 조회 값)
  * title : 제목
@@ -27,10 +28,12 @@ import java.time.LocalDateTime;
 @Table
 public class Message {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long uid;
+    private Long id;
+
+    @Column(nullable = false, length = 100)
+    private String uid;
 
     @Column(nullable = false)
     private String sendId;

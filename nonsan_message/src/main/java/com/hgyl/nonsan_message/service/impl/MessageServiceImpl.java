@@ -1,6 +1,7 @@
 package com.hgyl.nonsan_message.service.impl;
 
 import com.hgyl.nonsan_message.data.dto.SendDTO;
+import com.hgyl.nonsan_message.data.entity.Message;
 import com.hgyl.nonsan_message.data.repository.MessageRepository;
 import com.hgyl.nonsan_message.service.MessageService;
 import org.slf4j.Logger;
@@ -28,8 +29,14 @@ public class MessageServiceImpl implements MessageService {
 
 
     @Override
-    public String send(SendDTO sendDTO) throws Exception {
+    public String send(Message message) throws Exception {
         LocalDateTime sendDate = LocalDateTime.now();
+        message.setSendDate(sendDate);
+        message.setSendId("one");
+        message.setUid("one");
+
+
+        messageRepository.save(message);
 
 
         return null;

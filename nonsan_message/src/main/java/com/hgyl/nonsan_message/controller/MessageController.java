@@ -26,10 +26,12 @@ public class MessageController {
 
     // 메시지 전송 처리
     @PostMapping("/send")
-    public String send(SendDTO sendDTO) throws Exception {
-        System.out.println("수신아이디: "+sendDTO.getSendId());
-        System.out.println("발신제목: " +sendDTO.getTitle());
-        System.out.println("발신내용: " +sendDTO.getContent());
+    public String send(Message message) throws Exception {
+        System.out.println("수신아이디: "+message.getSendId());
+        System.out.println("발신제목: " +message.getTitle());
+        System.out.println("발신내용: " +message.getContent());
+
+        String result = messageService.send(message);
 
         return null;
     }

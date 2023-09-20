@@ -51,7 +51,7 @@ public class MessageController {
     }
 
     // 수신 메시지 상세조회
-    @GetMapping("/message/receiveRead")
+    @GetMapping("/receiveRead")
     public String receiveRead(Model model, Long id){
         model.addAttribute("receive",messageService.receiveRead(id));
         return "/message/receiveRead";

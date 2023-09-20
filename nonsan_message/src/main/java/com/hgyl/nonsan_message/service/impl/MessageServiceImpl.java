@@ -60,4 +60,15 @@ public class MessageServiceImpl implements MessageService {
 
         return messageRepository.findAllByReceiveIdAndDeleteStatus(receiveId, deleteStatus);
     }
+
+    // 글 -> 휴지통 목록으로 이동
+    @Override
+    public void moveTrash(long id) {
+        Message message = messageRepository.findById(id).get();
+
+        message.setDeleteStatus(true);
+        messageRepository.save(message);
+    }
+
+
 }

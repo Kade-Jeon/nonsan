@@ -18,4 +18,7 @@ public interface MessageService {
     // 휴지통 목록
     List<Message> deleteList(String receiveId) throws Exception;
 
+    // 쪽지 휴지통으로 이동
+    void moveTrash(long id);
+
 }

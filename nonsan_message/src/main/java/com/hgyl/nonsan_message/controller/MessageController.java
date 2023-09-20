@@ -66,4 +66,11 @@ public class MessageController {
         return "/message/deleteList";
     }
 
+    // 상세 글 -> 휴지통으로 이동
+    @GetMapping("/moveTrash")
+    public String moveTrash(Long id) {
+        messageService.moveTrash(id);
+
+        return "redirect:/deletelist";
+    }
 }

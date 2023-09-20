@@ -4,7 +4,7 @@
       layout:decorator="fragments/default_layout">
 <meta charset="UTF-8">
 <th:block layout:fragment="content">
-    <body>
+
 
     <!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
     <div class="container" style="margin-top: 60px">
@@ -19,15 +19,21 @@
                         <th class="text-center d-none d-md-table-cell">삭제</th>
                     </tr>
                 </thead>
-                <th:block th:each=" : ${}">
+
                 <tbody>
-                    <td class="text-center d-none d-md-table-cell"><</td>
+                <tr th:each="message : ${list}">
+                    <td class="text-center d-none d-md-table-cell" th:text="${message.id}"></td>
+                    <td class="text-center d-none d-md-table-cell" th:text="${message.sendId}"></td>
+                    <td class="text-center d-none d-md-table-cell" th:text="${message.title}"></td>
+                    <td class="text-center d-none d-md-table-cell" th:text="${message.sendDate}"></td>
+                    <td class="text-center d-none d-md-table-cell" >check</td>
+                </tr>
                 </tbody>
-                </th:block>
+
             </table>
         </div>
     </div> <!-- 내용 끝나는 부분 -->
 
-    </body>
+
 </th:block>
 </html>

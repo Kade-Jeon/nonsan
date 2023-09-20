@@ -5,11 +5,14 @@ import com.hgyl.nonsan_message.data.entity.Message;
 import com.hgyl.nonsan_message.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 
 @Controller
@@ -38,9 +41,9 @@ public class MessageController {
 
     // 수신 메시지 목록
     @GetMapping("/message/receivelist")
-    public String receiveList(Message message) throws Exception{
-        message.setReceiveId("two");
+    public String receiveList(Model model) throws Exception{
 
+        model.addAttribute("list", messageService.receiveList("two"));
 
         return "/message/receivelist";
     }

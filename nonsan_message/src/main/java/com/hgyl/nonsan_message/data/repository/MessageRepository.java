@@ -4,9 +4,11 @@ import com.hgyl.nonsan_message.data.entity.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 // Repository 작동을 위한 클래스
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    //void findAll(String receiveId);
+    List<Message> findAllByReceiveId(String receiveId);
 }

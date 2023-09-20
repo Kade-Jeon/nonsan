@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * @classNote sportsMatch (스포츠 경기 관련 Entity)
+ * @classNote Match (스포츠 경기 및 내기 정보 관련 Entity)
  * @purpose
  * @requiredFor
  * @author 명원식
@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Table(name = "sportsMatch")
-public class SportsMatch extends BaseEntity {
+@Table(name = "match")
+public class Match extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,24 +28,27 @@ public class SportsMatch extends BaseEntity {
 	private String matchType;
 
 	@Column(nullable = false)
-	private Integer awayScore;
-
-	@Column(nullable = false)
 	private String awayTeam;
 
+	/**
+	 * @columnNote awayOdds (Hometeam 패배 확률)
+	 * @purpose
+	 * @requiredFor
+	 * @author 명원식
+	 */
 	@Column(nullable = false)
-	private Integer homeScore;
+	private double awayOdds;
 
 	@Column(nullable = false)
 	private String homeTeam;
 
 	@Column(nullable = false)
-	private LocalDateTime startTime;
+	private double homeOdds;
 
 	@Column(nullable = false)
-	private LocalDateTime endTime;
+	private LocalDateTime matchStart;
 
 	@Column(nullable = false)
-	private String result;
+	private LocalDateTime matchEnd;
 
 }

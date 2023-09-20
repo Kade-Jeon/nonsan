@@ -4,7 +4,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 /**
- * @classNote SportsMatchDto
+ * @classNote BetDto
  * @purpose
  * @requiredFor
  * @author 명원식
@@ -13,24 +13,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SportsMatchDto {
+public class BetDto {
 
-	private Integer matchNo;
-
-	private String matchType;
+	private Integer betNo;
 
 	private Integer awayScore;
 
-	private String awayTeam;
-
 	private Integer homeScore;
 
-	private String homeTeam;
+	private double payout;
 
-	private LocalDateTime startTime;
+	private long betAmount;
 
-	private LocalDateTime endTime;
+	private LocalDateTime betDate;
 
-	private String result;
+	private String chosenResult;
 
+	private String matchResult;
+
+	private String status;
 }

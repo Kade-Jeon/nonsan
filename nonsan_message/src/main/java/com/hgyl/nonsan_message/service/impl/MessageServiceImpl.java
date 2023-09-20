@@ -45,7 +45,7 @@ public class MessageServiceImpl implements MessageService {
     // 로그인 후 수신 메시지 조회
     @Override
     public Message receiveList(String receiveId) throws Exception {
-        messageRepository.findAll(receiveId);
+        //messageRepository.findAll();
         return null;
     }
 }

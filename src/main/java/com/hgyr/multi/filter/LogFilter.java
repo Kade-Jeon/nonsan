@@ -19,10 +19,10 @@ public class LogFilter implements Filter {
         String uuid = UUID.randomUUID().toString();
 
         try{
-            logger.info("REQUEST [{}], [{}]", uuid, requestURI);
+            logger.info("[Port:1888]REQUEST [{}], [{}]", uuid, requestURI);
             filterChain.doFilter(servletRequest, servletResponse);
         }catch(Exception e){
-            logger.info("REQUEST EXCEPTION [{}], [{}], [{}]", uuid, requestURI, e.getMessage());
+            logger.info("[Port:1888]REQUEST EXCEPTION [{}], [{}], [{}]", uuid, requestURI, e.getMessage());
         }
     }
 }

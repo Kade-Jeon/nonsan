@@ -5,7 +5,6 @@ import com.hgyr.multi.service.MainRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.naming.Context;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,9 +19,9 @@ import java.time.Period;
 
 @Controller
 @RequestMapping("/hgyr")
-public class mainController {
+public class MainController {
 
-    private final Logger logger = LoggerFactory.getLogger(mainController.class);
+    private final Logger logger = LoggerFactory.getLogger(MainController.class);
 
     @Autowired
     HttpSession session;
@@ -32,7 +29,7 @@ public class mainController {
     MainRestService mainRestService;
 
     @Autowired
-    public mainController(MainRestService mainRestService) {
+    public MainController(MainRestService mainRestService) {
         this.mainRestService = mainRestService;
     }
     
@@ -61,7 +58,6 @@ public class mainController {
         int age = Period.between(userInfo.getBirthDate().toLocalDate(), LocalDate.now()).getYears();
         model.addAttribute("appName",app);
         model.addAttribute("age", age);
-        System.out.println(app);
         return "app";
     }
 
@@ -70,7 +66,7 @@ public class mainController {
     @PostMapping("/join")
     public String save(UserDto userDto){
         String result = mainRestService.postSave(userDto);
-        logger.info("[Port:1888][mainController] 회원가입");
+        logger.info("[Port:1888][MainController] 회원가입");
         if(result.equals("main")){
             return "redirect:/hgyr";
         }
@@ -84,7 +80,7 @@ public class mainController {
     public String login(UserDto userDto){
         UserDto userInfo = mainRestService.login(userDto);
         if(userInfo != null){
-            logger.info("[Port:1888][mainController] 로그인 : "+userDto);
+            logger.info("[Port:1888][MainController] 로그인 : "+userDto);
             session.setAttribute("user", userInfo);
             return "redirect:/hgyr";
         }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/default_layout">
+<meta charset="UTF-8">
+<th:block layout:fragment="content">
+  <body>
+
+  <!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
+  <div class="container mt-3">
+    <h2>수신 메시지</h2>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>index</th>
+        <th>발신아이디</th>
+        <th>제목</th>
+        <th>수신시간</th>
+        <th>선택</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="message : ${list}">
+        <td th:text="${message.id}"></td>
+        <td th:text="${message.sendId}"></td>
+        <td>
+          <a th:href="@{/receiveRead(id=${message.id})}" th:text="${message.title}"></a>
+        </td>
+        <td th:text="${message.sendDate}"></td>
+        <td >check</td>
+      </tr>
+      </tbody>
+    </table>
+  </div><!-- 내용 끝나는 부분 -->
+
+  </body>
+</th:block>
+</html>

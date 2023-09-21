@@ -1,6 +1,5 @@
 package com.hgyl.nonsan_message.controller;
 
-import com.hgyl.nonsan_message.data.dto.SendDTO;
 import com.hgyl.nonsan_message.data.dto.UserDto;
 import com.hgyl.nonsan_message.data.entity.Message;
 import com.hgyl.nonsan_message.service.MessageService;

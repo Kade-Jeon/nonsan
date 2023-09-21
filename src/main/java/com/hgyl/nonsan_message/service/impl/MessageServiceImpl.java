@@ -1,7 +1,10 @@
 package com.hgyl.nonsan_message.service.impl;
 
+import com.hgyl.nonsan_message.data.dto.ResponseDTO;
 import com.hgyl.nonsan_message.data.entity.ReceiveMessage;
-import com.hgyl.nonsan_message.data.repository.MessageRepository;
+import com.hgyl.nonsan_message.data.entity.SendMessage;
+import com.hgyl.nonsan_message.data.repository.ReceiveMsgRepository;
+import com.hgyl.nonsan_message.data.repository.SendMsgRepository;
 import com.hgyl.nonsan_message.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,20 +21,28 @@ import java.util.List;
 public class MessageServiceImpl implements MessageService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(MessageServiceImpl.class);
-    private MessageRepository messageRepository;
+    private ReceiveMsgRepository messageRepository;
+    private SendMsgRepository sendMsgRepository;
 
     @Autowired
-    public MessageServiceImpl(MessageRepository messageRepository) {
+    public MessageServiceImpl(ReceiveMsgRepository messageRepository,
+                              SendMsgRepository sendMsgRepository) {
         this.messageRepository = messageRepository;
+        this.sendMsgRepository = sendMsgRepository;
+
     }
 
     // 메시지 발신 DB 기록
     @Override
-    public String send(ReceiveMessage message) throws Exception {
-        // 임의로 넣은 발신자 아이디
-        //message.setSendId(message.getSendId());
+    public String send(ResponseDTO message) throws Exception {
+        SendMessage sendMessage = message.toSend();
+        sendMsgRepository.save(sendMessage);
 
-        messageRepository.save(message);
+        ReceiveMessage receiveMessage = message.toReceive();
+        messageRepository.save(receiveMessage);
+
+        /*messageRepository.save(message);
+        sendMsgRepository.save(message);*/
 
         return null;
     }
@@ -50,7 +61,7 @@ public class MessageServiceImpl implements MessageService {
         return messageRepository.findById(id).get();
     }
 
-    // 휴지통 목록
+    /*// 휴지통 목록
     @Override
     public List<ReceiveMessage> deleteList(String receiveId) throws Exception {
         Boolean deleteStatus = true;
@@ -65,7 +76,7 @@ public class MessageServiceImpl implements MessageService {
 
         message.setDeleteStatus(true);
         messageRepository.save(message);
-    }
+    }*/
 
 
 }

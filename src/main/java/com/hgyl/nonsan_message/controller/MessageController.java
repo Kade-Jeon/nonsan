@@ -1,19 +1,17 @@
 package com.hgyl.nonsan_message.controller;
 
-import com.hgyl.nonsan_message.data.dto.SendDTO;
 import com.hgyl.nonsan_message.data.dto.UserDto;
-import com.hgyl.nonsan_message.data.entity.Message;
+import com.hgyl.nonsan_message.data.entity.ReceiveMessage;
 import com.hgyl.nonsan_message.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -22,6 +20,9 @@ public class MessageController {
 
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    HttpSession session;
 
     private Map<String, String> userList = new HashMap<>();
 
@@ -39,17 +40,7 @@ public class MessageController {
     //채팅리스트 화면
     @GetMapping("/receivelist")
     public String rooms(@RequestParam String uid, Model model) throws Exception {
-        /*String nick = "";
-        while (!userList.isEmpty()) {
-            Set<String> uidList = userList.keySet();
-            if(uidList.contains(uid)){
-                nick = userList.get(uid);
-                break;
-            }
-        }
-        model.addAttribute("uid", uid);
-        model.addAttribute("nickName", nick);*/
-        //return "/chat/room";
+
         System.out.println(uid);
 
         model.addAttribute("list", messageService.receiveList(uid));
@@ -60,13 +51,18 @@ public class MessageController {
     // 메시지 전송 폼으로 이동
     @GetMapping("/message/send")
     public String sendForm() {
+
         return "message/send";
     }
 
     // 메시지 전송 처리
     @PostMapping("/send")
-    public String send(Message message) throws Exception {
+    public String send(ReceiveMessage message) throws Exception {
+
+        
+
         // 전송 값 테스트 콘솔 출력
+        System.out.println("발신아이디: " +message.getSendId());
         System.out.println("수신아이디: "+message.getReceiveId());
         System.out.println("발신제목: " +message.getTitle());
         System.out.println("발신내용: " +message.getContent());

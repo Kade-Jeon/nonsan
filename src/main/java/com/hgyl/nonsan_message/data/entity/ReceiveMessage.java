@@ -5,14 +5,14 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 /**
  * DB table Message
  * id : auto_increment 고유번호
- * uid : 로그인 아이디
  * sendId : 발송아이디
- * receiveId : 수신아이디 (로그인 사용자 조회 값)
+ * receiveId : 수신아이디
  * title : 제목
  * content : 내용
  * sendDate : 발신시간
@@ -27,19 +27,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
-public class Message {
+public class ReceiveMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String uid;
-
     @Column(nullable = false)
+    @NotBlank
     private String sendId;
 
     @Column(nullable = false)
+    @NotBlank
     private String receiveId;
 
     @Column(nullable = false)

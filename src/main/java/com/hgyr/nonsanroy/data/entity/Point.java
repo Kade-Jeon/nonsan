@@ -1,4 +1,4 @@
-package com.hgyl.nonsanroy.data.entity;
+package com.hgyr.nonsanroy.data.entity;
 
 
 import lombok.AllArgsConstructor;

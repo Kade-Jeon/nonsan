@@ -1,4 +1,4 @@
-package com.hgyl.nonsanroy;
+package com.hgyr.nonsanroy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

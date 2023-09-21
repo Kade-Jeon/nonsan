@@ -1,4 +1,4 @@
-package com.hgyl.nonsanroy;
+package com.hgyr.nonsanroy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

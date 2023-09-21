@@ -1,6 +1,8 @@
-package com.hgyl.nonsanroy.service;
+package com.hgyr.nonsanroy.service;
 
-import com.hgyl.nonsanroy.data.entity.bet.Match;
+import com.hgyr.nonsanroy.data.entity.bet.Match;
+
+import java.util.List;
 
 /**
  * @classNote BetService
@@ -9,6 +11,14 @@ import com.hgyl.nonsanroy.data.entity.bet.Match;
  * @author 명원식
  */
 public interface BetService {
+
+	/**
+	 * @methodDeclarationNote getMatch (경기 선택하기)
+	 * @purpose
+	 * @requiredFor
+	 * @author 명원식
+	 */
+	Match getMatch(Integer matchNo);
 
 	/**
 	 * @methodDeclarationNote addMatchForm (경기 추가 메뉴로 이동)
@@ -28,10 +38,11 @@ public interface BetService {
 
 	/**
 	 * @methodDeclarationNote removeMatch (경기 정보 제거)
-	 * @purpose
+	 * @purpose 이름 변경 필요할듯
 	 * @requiredFor
 	 * @author 명원식
 	 */
 	void removeMatch(Integer matchNo);
 
+	List<Match> getAllMatches();
 }

@@ -1,4 +1,4 @@
-package com.hgyl.nonsanroy.data.dto.bet;
+package com.hgyr.nonsanroy.data.dto.bet;
 
 import lombok.*;
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
-package com.hgyl.nonsanroy.data.repository;
+package com.hgyr.nonsanroy.data.repository;
 
-import com.hgyl.nonsanroy.data.entity.bet.Bet;
+import com.hgyr.nonsanroy.data.entity.bet.Bet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +13,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BetRepository extends JpaRepository<Bet, Integer> {
+
+	Bet findByPayout(double payout);
+
+	Bet getByBetNo(Integer betNo);
+
 }

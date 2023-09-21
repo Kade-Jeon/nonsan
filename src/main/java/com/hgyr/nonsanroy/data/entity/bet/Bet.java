@@ -1,6 +1,6 @@
-package com.hgyl.nonsanroy.data.entity.bet;
+package com.hgyr.nonsanroy.data.entity.bet;
 
-import com.hgyl.nonsanroy.data.entity.BaseEntity;
+import com.hgyr.nonsanroy.data.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,6 +1,6 @@
-package com.hgyl.nonsanroy.data.entity.bet;
+package com.hgyr.nonsanroy.data.entity.bet;
 
-import com.hgyl.nonsanroy.data.entity.BaseEntity;
+import com.hgyr.nonsanroy.data.entity.BaseEntity;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Table(name = "match")
+@Table(name = "sports_match")
 public class Match extends BaseEntity {
 
 	@Id
@@ -50,5 +50,14 @@ public class Match extends BaseEntity {
 
 	@Column(nullable = false)
 	private LocalDateTime matchEnd;
+
+	/**
+	 * @columnNote bettingTime (베팅 가능한 시간)
+	 * @purpose calculated in BetServiceImpl
+	 * @requiredFor might not be required at all
+	 * @author 명원식
+	 */
+	@Column(nullable = false)
+	private LocalDateTime bettingTime;
 
 }

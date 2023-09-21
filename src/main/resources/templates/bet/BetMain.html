@@ -12,6 +12,10 @@
 
         .container {
             display: flex; /* flex = 2열 레이아웃 */
+            margin: 0 auto;
+            align-content: center;
+            align-items: center;
+
         }
 
         .sidebar {
@@ -24,6 +28,17 @@
         .content {
             flex: 1; /* container 의 남은 공간 채우기 */
             padding: 20px;
+
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Collapse borders for a cleaner look */
+        }
+
+        th, td {
+            border: 1px solid #ccc; /* Add a border to table cells */
+            padding: 8px; /* Add padding inside table cells */
         }
     </style>
 </head>
@@ -31,7 +46,32 @@
 <h1>MATCH SCHEDULE</h1>
 <div class="container">
     <div class="content">
-        context text
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>경기일시</th>
+                <th>경기종료시</th>
+                <th>Sport</th>
+                <th>HOME</th>
+                <th>AWAY</th>
+                <th>Home Odds</th>
+                <th>Away Odds</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="match: ${matches}">
+                    <td th:text="${match.matchNo}"></td>
+                    <td th:text="${match.matchStart}"></td>
+                    <td th:text="${match.matchEnd}"></td>
+                    <td th:text="${match.matchType}"></td>
+                    <td th:text="${match.homeTeam}"></td>
+                    <td th:text="${match.awayTeam}"></td>
+                    <td th:text="${match.homeOdds}"></td>
+                    <td th:text="${match.awayOdds}"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="sidebar">
         side text

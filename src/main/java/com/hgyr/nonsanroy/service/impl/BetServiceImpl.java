@@ -1,16 +1,18 @@
-package com.hgyl.nonsanroy.service.impl;
+package com.hgyr.nonsanroy.service.impl;
 
-import com.hgyl.nonsanroy.data.entity.bet.Match;
-import com.hgyl.nonsanroy.data.repository.MatchRepository;
-import com.hgyl.nonsanroy.service.BetService;
+import com.hgyr.nonsanroy.data.entity.bet.Match;
+import com.hgyr.nonsanroy.data.repository.MatchRepository;
+import com.hgyr.nonsanroy.service.BetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
+ * @author 명원식
  * @classNote: BetServiceImpl
  * @purpose:
  * @requiredFor:
- * @author 명원식
  */
 @Service
 public class BetServiceImpl implements BetService {
@@ -37,22 +39,24 @@ public class BetServiceImpl implements BetService {
 		this.matchRepository = matchRepository;
 	}
 
-	public Match addMatchForm(Match match){
-	return match;
+	public Match getMatch(Integer matchNo) {
+		return getMatch(matchNo);
 	}
 
-	public Match addMatch(Match match){
-	return match;
+	public Match addMatchForm(Match match) {
+		return match;
 	}
 
-	/*
-	 * submitBetForm
-	 * submitBet
-	 *
-	 *
-	 */
+	public Match addMatch(Match match) {
+		return match;
+	}
 
 	public void removeMatch(Integer matchNo) {
 	}
+
+	public List<Match> getAllMatches() {
+		return matchRepository.findAll();
+	}
+
 
 }

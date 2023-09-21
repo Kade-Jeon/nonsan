@@ -20,7 +20,7 @@ import java.util.*;
 public class ChatRoomController {
 
     private final ChatRoomRepository chatRoomRepository;
-    private Set<Map<String, String>> userList = new HashSet<>();
+    private Map<String, String> userList = new HashMap<>();
 
     @Autowired
     private HttpSession userSession;
@@ -32,20 +32,16 @@ public class ChatRoomController {
         if(userDto == null){
             throw new Exception();
         }
-        Map<String, String> temp = new HashMap<>();
-        temp.put(userDto.getUid(), userDto.getNickName());
-        userList.add(temp);
+        userList.put(userDto.getUid(), userDto.getNickName());
     }
     //채팅리스트 화면
     @GetMapping("/room")
     public String rooms(@RequestParam String uid, Model model) {
         String nick = "";
-        Iterator iterator = userList.iterator();
-        while (iterator.hasNext()) {
-            Map<String,String> map = (Map<String, String>) iterator.next();
-            Set<String> uidList = map.keySet();
+        while (!userList.isEmpty()) {
+            Set<String> uidList = userList.keySet();
             if(uidList.contains(uid)){
-                nick = map.get(uid);
+                nick = userList.get(uid);
                 break;
             }
             }

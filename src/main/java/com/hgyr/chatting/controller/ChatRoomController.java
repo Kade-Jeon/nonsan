@@ -26,7 +26,7 @@ public class ChatRoomController {
     private HttpSession userSession;
 
     //유저 정보 받아오기
-    @PostMapping("/valid")
+    @PostMapping("/room/user/valid")
     @ResponseBody
     public void checkUser(@RequestBody UserDto userDto) throws Exception {
         if(userDto == null){
@@ -34,6 +34,7 @@ public class ChatRoomController {
         }
         userList.put(userDto.getUid(), userDto.getNickName());
     }
+
     //채팅리스트 화면
     @GetMapping("/room")
     public String rooms(@RequestParam String uid, Model model) {

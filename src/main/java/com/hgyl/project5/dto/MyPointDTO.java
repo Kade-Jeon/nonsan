@@ -1,11 +1,10 @@
 package com.hgyl.project5.dto;
 
-import com.hgyl.project5.entity.Point;
+import com.hgyl.project5.entity.MyPoint;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -41,13 +40,13 @@ public class MyPointDTO {
         this.insertDateTime = insertDateTime;
     }
 
-    public static MyPointDTO pointFactory(Point point) {
+    public static MyPointDTO pointFactory(MyPoint myPoint) {
         return MyPointDTO.builder()
-                .uid(point.getUid())
-                .point(point.getPoint())
-                .addPoint(point.getAddPoint())
-                .minusPoint(point.getMinusPoint())
-                .nickName(point.getNickName())
+                .uid(myPoint.getUid())
+                .point(myPoint.getPoint())
+                .addPoint(myPoint.getAddPoint())
+                .minusPoint(myPoint.getMinusPoint())
+                .nickName(myPoint.getNickName())
                 .insertDateTime(LocalTime.now())
                 .build();
     }

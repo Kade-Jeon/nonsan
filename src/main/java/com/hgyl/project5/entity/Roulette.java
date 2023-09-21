@@ -3,9 +3,7 @@ package com.hgyl.project5.entity;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -42,5 +40,9 @@ public class Roulette {
 
     @CreationTimestamp
     private LocalTime insertDateTime;
+
+    @OneToOne
+    @JoinColumn(name = "uid", referencedColumnName = "uid")
+    private MyPoint myPoint;
 
 }

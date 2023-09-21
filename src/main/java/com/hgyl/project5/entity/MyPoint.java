@@ -9,13 +9,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Point {
+public class MyPoint {
 
     @Id
     @Size(min = 4, max = 50)
@@ -41,4 +42,8 @@ public class Point {
 
     @CreationTimestamp
     private LocalTime insertDateTime;
+
+    // Point 엔티티와 Roulette 엔티티 간에 일대일 매핑
+    @OneToOne(mappedBy = "myPoint")
+    private Roulette roulette;
 }

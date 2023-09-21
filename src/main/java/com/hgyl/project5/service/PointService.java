@@ -1,9 +1,10 @@
 package com.hgyl.project5.service;
 
 import com.hgyl.project5.dto.MyPointDTO;
-import com.hgyl.project5.entity.Point;
+import com.hgyl.project5.entity.MyPoint;
 import com.hgyl.project5.repository.PointRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PointService {
@@ -15,16 +16,17 @@ public class PointService {
     }
 
     public MyPointDTO myPoint(String userId) {
-        Point point = pointRepository.findById(userId).orElse(new Point());
+        MyPoint myPoint = pointRepository.findById(userId).orElse(new MyPoint());
 
         return MyPointDTO.builder()
-                .uid(point.getUid())
-                .point(point.getPoint())
-                .addPoint(point.getAddPoint())
-                .nickName(point.getNickName())
+                .uid(myPoint.getUid())
+                .point(myPoint.getPoint())
+                .addPoint(myPoint.getAddPoint())
+                .nickName(myPoint.getNickName())
                 .build();
     }
 
+    @Transactional
     public void recharge(MyPointDTO myPointDTO) {
         String userId = myPointDTO.getUid();
         if (userId == null) {
@@ -32,56 +34,53 @@ public class PointService {
         }
 
         Long depositAmount = myPointDTO.getAddPoint();
-        Point existingPoint = pointRepository.findById(userId).orElse(new Point());
+        MyPoint existingPoint = pointRepository.findById(userId).orElse(new MyPoint());
 
         Long currentPoint = existingPoint.getPoint() != null ? existingPoint.getPoint() : 0;
         existingPoint.setPoint(currentPoint + depositAmount);
-
-        pointRepository.save(existingPoint);
     }
 
     public MyPointDTO deposit(String userId) {
-        Point point = pointRepository.findById(userId).orElse(new Point());
+        MyPoint myPoint = pointRepository.findById(userId).orElse(new MyPoint());
 
         return MyPointDTO.builder()
-                .uid(point.getUid())
-                .point(point.getPoint())
-                .nickName(point.getNickName())
+                .uid(myPoint.getUid())
+                .point(myPoint.getPoint())
+                .nickName(myPoint.getNickName())
                 .build();
 
 
     }
 
     public MyPointDTO withdrawPage(String userId) {
-        Point point = pointRepository.findById(userId).orElse(new Point());
+        MyPoint myPoint = pointRepository.findById(userId).orElse(new MyPoint());
 
         return MyPointDTO.builder()
-                .uid(point.getUid())
-                .point(point.getPoint())
-                .minusPoint(point.getMinusPoint())
-                .nickName(point.getNickName())
+                .uid(myPoint.getUid())
+                .point(myPoint.getPoint())
+                .minusPoint(myPoint.getMinusPoint())
+                .nickName(myPoint.getNickName())
                 .build();
     }
 
+    @Transactional
     public void withdraw(MyPointDTO myPointDTO) {
         String userId = myPointDTO.getUid();
         Long depositAmount = myPointDTO.getMinusPoint();
 
         // 기존 포인트 엔티티를 찾거나 새로 생성
-        Point existingPoint = pointRepository.findById(userId).orElse(new Point());
+        MyPoint existingPoint = pointRepository.findById(userId).orElse(new MyPoint());
 
         // 기존 포인트에 포인트 마이너스
         Long currentPoint = existingPoint.getPoint() != null ? existingPoint.getPoint() : 0;
         existingPoint.setPoint(currentPoint - depositAmount);
 
-        // 엔티티 저장
-        pointRepository.save(existingPoint);
     }
 
 
     public Long currentPoint(String userId) {
-        Point point = pointRepository.findById(userId).orElse(new Point());
-        return point.getPoint(); // 사용자의 현재 포인트 반환
+        MyPoint myPoint = pointRepository.findById(userId).orElse(new MyPoint());
+        return myPoint.getPoint(); // 사용자의 현재 포인트 반환
     }
 }
 

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,7 +20,7 @@ public class UserDto {
     private String nickName;
     private String password;
     private String name;
-    private Integer age;
+    private Date birthDate;
     private Integer point;
     private LocalDateTime joinDate;
     private LocalDateTime quitDate;
@@ -30,7 +31,7 @@ public class UserDto {
         this.nickName = user.getNickName();
         this.password = user.getPassword();
         this.name = user.getName();
-        this.age = user.getAge();
+        this.birthDate = user.getBirthDate();
         this.point = user.getPoint();
         this.joinDate = user.getJoinDate();
         this.quitDate = user.getQuitDate();

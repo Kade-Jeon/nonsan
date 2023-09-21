@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.sql.Date;
 
 @Entity
 @Builder
@@ -48,15 +49,8 @@ public class User extends BaseEntity{
     @NotBlank
     private String name;
 
-    /* null 허용 x, update 허용(수정불가)
-     *  "", " " 허용 x
-     * 양수만 허용
-     * 나이 최소값 0
-     * */
     @Column(nullable = false)
-    @PositiveOrZero
-    @Min(value = 0)
-    private Integer age;
+    private Date birthDate;
 
     @Column(nullable = false)
     @PositiveOrZero
@@ -68,7 +62,7 @@ public class User extends BaseEntity{
         this.nickName = userDto.getNickName();
         this.password = userDto.getPassword();
         this.name = userDto.getName();
-        this.age = userDto.getAge();
+        this.birthDate = userDto.getBirthDate();
         this.point = userDto.getPoint();
         return this;
     }

@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 /**
  * @classNote BetDto
  * @purpose
- * @requiredFor
  * @author 명원식
  */
 @Data

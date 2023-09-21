@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 /**
  * @classNote BetRepository
  * @purpose Repository pattern for interacting with DB (bet table)
- * @requiredFor
  * @author 명원식
  */
 

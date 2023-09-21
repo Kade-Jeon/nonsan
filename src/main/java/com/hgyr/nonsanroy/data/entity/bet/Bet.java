@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 /**
  * @classNote Bet (내기 추가 정보 관련 Entity)
  * @purpose
- * @requiredFor
  * @author 명원식
  */
 @Entity
@@ -25,7 +24,6 @@ public class Bet extends BaseEntity {
 	/**
 	 * @columnNote betNo
 	 * @purpose Primary Key
-	 * @requiredFor
 	 * @author 명원식
 	 */
 	@Id
@@ -50,7 +48,6 @@ public class Bet extends BaseEntity {
 	/**
 	 * @columnNote chosenResult
 	 * @purpose chosen result ex) Hometeam 패배
-	 * @requiredFor
 	 * @hidden
 	 * @author 명원식
 	 */
@@ -60,7 +57,6 @@ public class Bet extends BaseEntity {
 	/**
 	 * @columnNote matchResult
 	 * @purpose actual match result ex) Hometeam 승리
-	 * @requiredFor
 	 * @author 명원식
 	 */
 	@Column(nullable = false)
@@ -70,7 +66,7 @@ public class Bet extends BaseEntity {
 	 * @columnNote status
 	 * @purpose if chosenResult == matchResult, return status = correct
 	 * if chosenResult != matchResult, return status = incorrect
-	 * @requiredFor if status = correct, receive payout button appears
+	 * if status = correct, receive payout button appears
 	 * if payout is received, return status = correct + payout claimed
 	 * @author 명원식
 	 */

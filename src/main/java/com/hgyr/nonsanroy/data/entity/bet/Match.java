@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 /**
  * @classNote Match (스포츠 경기 및 내기 정보 관련 Entity)
  * @purpose
- * @requiredFor
  * @author 명원식
  */
 @Entity
@@ -33,7 +32,6 @@ public class Match extends BaseEntity {
 	/**
 	 * @columnNote awayOdds (Hometeam 패배 확률)
 	 * @purpose
-	 * @requiredFor
 	 * @author 명원식
 	 */
 	@Column(nullable = false)
@@ -50,14 +48,5 @@ public class Match extends BaseEntity {
 
 	@Column(nullable = false)
 	private LocalDateTime matchEnd;
-
-	/**
-	 * @columnNote bettingTime (베팅 가능한 시간)
-	 * @purpose calculated in BetServiceImpl
-	 * @requiredFor might not be required at all
-	 * @author 명원식
-	 */
-	@Column(nullable = false)
-	private LocalDateTime bettingTime;
 
 }

@@ -9,10 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author 명원식
  * @classNote: BetServiceImpl
  * @purpose:
- * @requiredFor:
+ * @author 명원식
  */
 @Service
 public class BetServiceImpl implements BetService {
@@ -22,7 +21,6 @@ public class BetServiceImpl implements BetService {
 	 * @purpose holds the reference to an instance of matchRepository
 	 * @otherNote (private)Accessible only in this class and (final)value cannot be changed
 	 * Should not be autowired due to testing and maintenance purposes
-	 * @requiredFor
 	 * @author 명원식
 	 */
 	private final MatchRepository matchRepository;
@@ -31,7 +29,6 @@ public class BetServiceImpl implements BetService {
 	 * @constructorNote BetServiceImpl Constructor
 	 * @purpose inject MatchRepository dependency into BetServiceImpl
 	 * Autowired annotation allows Spring to automatically provide an instance of MatchRepository
-	 * @requiredFor
 	 * @author 명원식
 	 */
 	@Autowired
@@ -53,6 +50,7 @@ public class BetServiceImpl implements BetService {
 
 	public void removeMatch(Integer matchNo) {
 	}
+
 
 	public List<Match> getAllMatches() {
 		return matchRepository.findAll();

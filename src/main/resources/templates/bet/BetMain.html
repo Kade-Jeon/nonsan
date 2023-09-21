@@ -18,17 +18,24 @@
 
         }
 
-        .sidebar {
-            width: 250px; /* 사이드 메뉴 (구매) 넓이 */
-            background-color: #333; /* 사이드 메뉴 배경색 */
-            color: #fff; /* 사이드 메뉴 글자색 */
+        .cart {
+            height: 500px;
+            width: 250px;
+            background-color: #333;
+            color: #fff;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-button {
+            display: flex;
+            justify-content: center;
         }
 
         .content {
             flex: 1; /* container 의 남은 공간 채우기 */
             padding: 20px;
-
         }
 
         table {
@@ -39,8 +46,29 @@
         th, td {
             border: 1px solid #ccc; /* Add a border to table cells */
             padding: 8px; /* Add padding inside table cells */
+            text-align: center;
         }
+
     </style>
+    <script>
+        function moveToCart(matchNo, odds, teamName) {
+            console.log(matchNo);
+            console.log(odds);
+            console.log(teamName);
+
+            document.getElementById("matchNoCart").value = matchNo;
+            document.getElementById("oddsCart").value = odds;
+            document.getElementById("teamNameCart").value = teamName;
+
+            let cart = document.querySelector('.cart');  // Get the cart element by its class name
+
+            let contentElement = document.createElement('p'); // Create a new <p> element to display the odds
+
+            contentElement.textContent = matchNo + " " + teamName + ' Wins: ' + odds; // Set the content of the <p> element based on the odds and type
+
+            cart.appendChild(contentElement); // Append the <p> element to the cart
+        }
+    </script>
 </head>
 <body>
 <h1>MATCH SCHEDULE</h1>
@@ -60,21 +88,33 @@
             </tr>
             </thead>
             <tbody>
-                <tr th:each="match: ${matches}">
-                    <td th:text="${match.matchNo}"></td>
-                    <td th:text="${match.matchStart}"></td>
-                    <td th:text="${match.matchEnd}"></td>
-                    <td th:text="${match.matchType}"></td>
-                    <td th:text="${match.homeTeam}"></td>
-                    <td th:text="${match.awayTeam}"></td>
-                    <td th:text="${match.homeOdds}"></td>
-                    <td th:text="${match.awayOdds}"></td>
-                </tr>
+            <tr th:each="match: ${matches}">
+                <td th:text="${match.matchNo}"></td>
+                <td th:text="${#temporals.format(match.matchStart, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#temporals.format(match.matchEnd, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${match.matchType}"></td>
+                <td th:text="${match.homeTeam}"></td>
+                <td th:text="${match.awayTeam}"></td>
+                <td><a th:id="'homeOdds_' + ${match.matchNo}"
+                       th:text="${match.homeOdds}"
+                       th:attr="onclick='moveToCart(\'' + ${match.matchNo} + '\', \'' + ${match.homeOdds} + '\', \'' + ${match.homeTeam} + '\')'"></a>
+                </td>
+                <td><a th:id="'awayOdds_' + ${match.matchNo}"
+                       th:text="${match.awayOdds}"
+                       th:attr="onclick='moveToCart(\'' + ${match.matchNo} + '\', \'' + ${match.awayOdds} + '\', \'' + ${match.awayTeam} + '\')'"></a>
+            </tr>
             </tbody>
         </table>
     </div>
-    <div class="sidebar">
-        side text
+    <div class="cart">
+        <div class = "cart-button">
+         <form action="BetCart.html" method="post">
+         <input type = "hidden" name="matchNo" id="matchNoCart">
+         <input type = "hidden" name="odds" id="oddsCart">
+         <input type = "hidden" name="teamName" id="teamNameCart">
+            <button type="submit" >결제</button>
+         </form>
+        </div>
     </div>
 </div>
 </body>

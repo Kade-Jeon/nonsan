@@ -23,9 +23,6 @@ public class MainRestService {
     * 컨트롤러로 String결과 리턴
     * */
     public String postSave(UserDto userDto){
-        int age = LocalDateTime.now().getYear() - userDto.getDate().toLocalDate().getYear();
-        userDto.setAge(age);
-
         URI uri = UriComponentsBuilder
                 .fromUriString("http://localhost:1777")
                 .path("/valid/join")

@@ -8,6 +8,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" th:inline="javascript">
     let appName = /*[[${appName}]]*/;
+    let age = /*[[${age}]]*/;
     let backUrl ="/hgyr";
     let fwdUrl = "";
     if(appName == "blog"){
@@ -25,7 +26,11 @@
         alert("쪽지 이동할 코드 추가");
         document.location = backUrl;
     }
-    if(appName == "bet"){
+
+    if(appName == "bet" && age < 19){
+        alert("미성년자는 이용불가한 서비스입니다.")
+        document.location = backUrl;
+    } else{
         alert("베팅 이동할 코드 추가");
         document.location = backUrl;
     }
@@ -51,27 +56,4 @@
     }); // function END
 
 </script>
-
-
-<!--
-<script type="text/javascript" th:inline="javascript">
-    var appName = /*[[${appName}]]*/;
-    window.onload = function (){
-        if(appName == "blog"){
-            alert("블로그 이동할 코드 추가");
-        }
-        if(appName == "game"){
-            alert("게임 이동할 코드 추가");
-        }
-        if(appName == "sport"){
-            location.href ="http://localhost:8099/chat/room"
-        }
-        if(appName == "msg"){
-            alert("쪽지 이동할 코드 추가");
-        }
-        if(appName == "bet"){
-            alert("베팅 이동할 코드 추가");
-        }
-    }
-</script>-->
 </html>

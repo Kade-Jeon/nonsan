@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class LogCheckFilter implements Filter {
+public class LoginCheckFilter implements Filter {
 
-    private static final String[] whiteList = {"/", "/hgyr", "/hgyr/join", "/hgyr/login", "/error", "/style.css"};
+    private static final String[] whiteList = {"/", "/hgyr", "/hgyr/join", "/hgyr/login", "/error", "/style.css","/img/*"};
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -24,9 +24,7 @@ public class LogCheckFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-
         String requestURI = httpServletRequest.getRequestURI();
-        System.out.println(requestURI);
         if(isLoginCheckPath(requestURI)){
             HttpSession session = httpServletRequest.getSession();
             if(session.getAttribute("user") == null){

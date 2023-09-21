@@ -13,33 +13,41 @@
     let fwdUrl = "";
     if(appName == "blog"){
         alert("블로그 이동할 코드 추가");
-        document.location = backUrl;
+        fwdUrl ="http://localhost:2111";
     }
-    if(appName == "game"){
+
+    if(appName == "game" && age < 19){
+        alert("미성년자는 이용불가한 서비스입니다.")
+        document.location = backUrl;
+    } else if(appName == "bet" && age >= 19){
         alert("게임 이동할 코드 추가");
-        document.location = backUrl;
+        fwdUrl ="http://localhost:2112/minigame";
     }
+
     if(appName == "sport"){
-        fwdUrl ="http://localhost:8099/chat/room";
+        fwdUrl ="http://localhost:1999/chat/room";
     }
+
     if(appName == "msg"){
         alert("쪽지 이동할 코드 추가");
-        document.location = backUrl;
+        fwdUrl ="http://localhost:2113/receivelist";
     }
 
     if(appName == "bet" && age < 19){
         alert("미성년자는 이용불가한 서비스입니다.")
         document.location = backUrl;
-    } else{
+    } else if(appName == "bet" && age >= 19){
         alert("베팅 이동할 코드 추가");
-        document.location = backUrl;
+        fwdUrl ="http://localhost:2114/bet/main";
     }
     $(function(){
-        alert(appName);
+
             var user = /*[[${session.user}]]*/;
+        alert(appName);
+        alert(user);
             $.ajax({
                 type : "POST",
-                url : "http://localhost:8099/chat/valid", // 1. 요청
+                url : fwdUrl+"/user/valid", // 1. 요청
                 contentType : "application/json",
                 data : JSON.stringify(user),    // 2. JSON을 문자열로 반환
                 success: function(data, textStatus){

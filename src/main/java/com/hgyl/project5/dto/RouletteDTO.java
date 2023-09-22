@@ -16,14 +16,14 @@ public class RouletteDTO {
     private String uid;
 
     @Min(value = 0, message = "point 는 음수 불가.")
-    private Long point;
+    private Double point;
 
     private String nickName;
 
     private Integer count;
 
         @Builder
-        public RouletteDTO(String uid, Long point, String nickName, Integer count) {
+        public RouletteDTO(String uid, Double point, String nickName, Integer count) {
             this.uid = uid;
             this.point = point;
             this.nickName = nickName;
@@ -33,8 +33,6 @@ public class RouletteDTO {
         public static RouletteDTO pointFactory(Roulette roulette){
            return RouletteDTO.builder()
                    .uid(roulette.getUid())
-                   .point(roulette.getPoint())
-                   .nickName(roulette.getNickName())
                    .count(roulette.getCount())
                    .build();
        }

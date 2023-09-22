@@ -8,14 +8,14 @@ var rouletter = {
     },
     start: function () {
         var btn = document.querySelector(".rouletter-btn");
-        var panel = document.querySelector(".rouletter-wacu");
+        var panel = document.querySelector(".item-wrapper");
 
         panel.classList.add("on");
         btn.innerText = "stop";
     },
     stop: function () {
         var btn = document.querySelector(".rouletter-btn");
-        var panel = document.querySelector(".rouletter-wacu");
+        var panel = document.querySelector(".item-wrapper");
         var deg = [60, 120, 180, 240, 300, 360];
 
         panel.style.transform = "rotate(" + deg[rouletter.random()] + "deg)";
@@ -34,7 +34,7 @@ document.addEventListener("click", function (e) {
 document.getElementById("app").innerHTML = `
 <div class="rouletter">
     <div class="rouletter-bg">
-        <div class="rouletter-wacu"></div>
+        <div class="item-wrapper"></div>
     </div>
     <div class="rouletter-arrow"></div>
     <button class="rouletter-btn">start</button>

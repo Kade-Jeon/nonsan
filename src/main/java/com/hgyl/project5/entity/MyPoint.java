@@ -20,30 +20,22 @@ public class MyPoint {
 
     @Id
     @Size(min = 4, max = 50)
+    @Column(name = "my_point_uid")
     private String uid;
 
     @NonNull // point 필드를 필수 필드로 지정
     // 추후 유효성 검사로 코드 고급화
    /* @PositiveOrZero(message = "Point must be a non-negative value")*/
-    @Column
-    private Long point;
+    private Double point;
 
     @Builder.Default // addPoint 필드의 기본값을 0L로 설정
-
-    private Long addPoint = 0L;
+    private Double addPoint = Double.valueOf(0L);
 
     @Builder.Default // minusPoint 필드의 기본값을 0L로 설정
-    private Long minusPoint = 0L;
+    private Double minusPoint = Double.valueOf(0L);
 
     @NonNull // nickName 필드를 필수 필드로 지정
     @Column
     @NotBlank
     private String nickName;
-
-    @CreationTimestamp
-    private LocalTime insertDateTime;
-
-    // Point 엔티티와 Roulette 엔티티 간에 일대일 매핑
-    @OneToOne(mappedBy = "myPoint")
-    private Roulette roulette;
 }

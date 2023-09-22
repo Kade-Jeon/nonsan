@@ -118,165 +118,134 @@
 
     </style>
 </head>
-    <body>
+<body>
 
-    <form method="post" action="/minigame/selectItem" >
+<form method="post" action="/minigame/selectItem" >
 
-        <!-- JavaScript 스크립트 실행 -->
-        <script th:inline="javascript">
-            /*[[${script}]]*/
-        </script>
-
-        <!-- 메시지 표시 -->
-        <p th:text="${message}"></p>
-
-        <div id="app">
-            <h1>인생은 한방</h1>
-        </div>
-
-        <div id="count">
-            <input type="hidden" name="uid" th:value="${roulette.uid}">
-            <span style="color: orange;" th:text="${roulette.nickName + ' 님'}"></span>
-            <div data-th-text="${#numbers.formatInteger(roulette.point, 3, 'COMMA') +' 포인트' }"></div>
-            <br>
-            남은 횟수: <span style="color: red" th:text="${roulette.count}"></span>번
-        </div>
-        <!-- 룰렛 바깥 영역 -->
-        <div class="roulette-outer">
-            <!-- 룰렛 핀 설정 -->
-            <div class="roulette-pin"></div>
-            <!-- 룰렛판 설정 -->
-            <div class="roulette">
-                <!-- 룰렛판 글자 영역 -->
-                <div class="item-wrapper">
-                    <input type="hidden" name="selectedItem" id="selectedItem" value="">
-                    <div class="item" id="item1" name="item1">+ 1000 포인트</div>
-                    <div class="item" id="item2" name="item2">0점 </div>
-                    <div class="item" id="item3" name="item3">포인트 2배!!</div>
-                    <div class="item" id="item4" name="item4">-1000 포인트</div>
-                </div>
-
-                <!-- 룰렛 선 설정 -->
-                <div class="line-wrapper">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
-            </div>
-            <button type="button" id="rotateButton">돌려 돌려</button>
-            <button type="submit" id="confirmButton" style="display: none;">확정</button>
-        </div>
-    </form>
-    <script>
-        // roulette 룰렛 설정후 요소 할당
-        const roulette = document.querySelector('.roulette');
-        // 변수 초기화
-        let rotationAngle = 0;
-        let isSpinning = false;
-        let selectedItem = null;
-
-        // 돌리기 버튼 클릭 시
-        document.getElementById('rotateButton').addEventListener('click', function () {
-            if (!isSpinning) {
-                rotateRoulette();
-
-                // 룰렛 결과값(result)을 계산하거나 얻는 로직을 구현 (이 부분은 실제로 어떻게 결과값을 계산할지에 따라 다름)
-                const result = calculateResult(); // 예: 'item1', 'item2', 'item3', 'item4' 중 하나를 반환하는 함수
-
-                // 룰렛 결과값에 따라 아이템 선택
-                selectItem(result);
-
-                // selectedItem 값을 설정
-                selectedItem = document.querySelector('.item-wrapper .selected');
-                if (selectedItem) {
-                    document.getElementById('selectedItem').value = selectedItem.getAttribute('name');
-                }
-
-                // 확정 버튼 활성화
-                document.getElementById('confirmButton').style.display = 'block';
-
-                // 돌리기 버튼 비활성화
-                document.getElementById('rotateButton').disabled = true;
-            }
-        });
-
-        // 확정 버튼 클릭 시
-        document.getElementById('confirmButton').addEventListener('click', function () {
-            // 선택한 아이템 값을 hidden input에 설정
-            if (selectedItem) {
-                document.getElementById('selectedItem').value = selectedItem.getAttribute('name');
-            }
-        });
-
-        function calculateResult() {
-            // 여기에 룰렛 결과값을 계산하는 로직을 구현해야 함
-            // 예: 'item1', 'item2', 'item3', 'item4' 중 하나를 반환하는 함수
-            // 실제 로직에 따라 구현 필요
-            // 이 예제에서는 임시로 랜덤 결과를 반환
-            const randomResult = Math.floor(Math.random() * 4) + 1;
-            switch (randomResult) {
-                case 1:
-                    return 'item1';
-                case 2:
-                    return 'item2';
-                case 3:
-                    return 'item3';
-                case 4:
-                    return 'item4';
-                default:
-                    return 'item1';
-            }
-        }
-
-        function selectItem(result) {
-            const items = document.querySelectorAll('.item');
-
-            // 다른 아이템에서 선택 클래스 제거
-            items.forEach(item => {
-                item.classList.remove('selected');
-            });
-
-            // 룰렛 결과값(result)에 따라 선택된 아이템에 선택 클래스 추가
-            let selectedItemIndex;
-            switch (result) {
-                case 'item1':
-                    selectedItemIndex = 0; // 첫 번째 아이템 선택
-                    break;
-                case 'item2':
-                    selectedItemIndex = 1; // 두 번째 아이템 선택
-                    break;
-                case 'item3':
-                    selectedItemIndex = 2; // 세 번째 아이템 선택
-                    break;
-                case 'item4':
-                    selectedItemIndex = 3; // 네 번째 아이템 선택
-                    break;
-                default:
-                    selectedItemIndex = -1; // 아무 아이템도 선택되지 않음
-            }
-
-            if (selectedItemIndex >= 0) {
-                items[selectedItemIndex].classList.add('selected');
-            }
-        }
-
-
-
-        /*=========================룰렛 회전 기능============================= */
-        /*각도 회전*/
-        function rotateRoulette() {
-            if (!isSpinning) {
-                isSpinning = true;
-                rotationAngle += Math.floor(Math.random() * 360) + 3000; // 랜덤 각도를 추가하여 회전
-                roulette.style.transition = 'transform 5s ease-out';  // 시간 설정
-                roulette.style.transform = `rotate(${rotationAngle}deg)`; // 회전 각도 설정
-
-
-            }
-        }
-
-
-
+    <!-- JavaScript 스크립트 실행 -->
+    <script th:inline="javascript">
+        /*[[${script}]]*/
     </script>
-    </body>
+
+    <!-- 메시지 표시 -->
+    <p th:text="${message}"></p>
+
+    <div id="app">
+        <h1>인생은 한방</h1>
+    </div>
+
+    <div id="count">
+        <input type="hidden" name="uid" th:value="${roulette.uid}">
+        <span style="color: orange;" th:text="${roulette.nickName + ' 님'}"></span>
+        <div data-th-text="${roulette.point}"></div>
+        <br>
+        남은 횟수: <span style="color: red" th:text="${roulette.count}"></span>번
+    </div>
+    <!-- 룰렛 바깥 영역 -->
+    <div class="roulette-outer">
+        <!-- 룰렛 핀 설정 -->
+        <div class="roulette-pin"></div>
+        <!-- 룰렛판 설정 -->
+        <div class="roulette">
+            <!-- 룰렛판 글자 영역 -->
+            <div class="item-wrapper">
+                <input type="hidden" name="selectedItem" id="selectedItem" value="">
+                <div class="item" id="item1" data-name="item1">0.5배!!</div>
+                <div class="item" id="item2" data-name="item2">0원 ㅋ</div>
+                <div class="item" id="item3" data-name="item3">1.5배</div>
+                <div class="item" id="item4" data-name="item4">2배!!</div>
+            </div>
+
+            <!-- 룰렛 선 설정 -->
+            <div class="line-wrapper">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+        <button type="button" id="rotateButton">돌려 돌려</button>
+        <button type="submit" id="confirmButton" style="display: none;">확정</button>
+    </div>
+    <button type="button" onclick="location.href='/mypage'">포인트 페이지로 이동</button>
+</form>
+<script>
+    // roulette 룰렛 설정후 요소 할당
+    const roulette = document.querySelector('.roulette');
+    // 변수 초기화
+    let rotationAngle = 0;
+    let isSpinning = false;
+    let selectedItem = null;
+
+    // 돌리기 버튼 클릭 시
+    document.getElementById('rotateButton').addEventListener('click', function () {
+        if (!isSpinning) {
+            isSpinning = true;
+            rotationAngle += Math.floor(Math.random() * 360) + 3000; // 랜덤 각도를 추가하여 회전
+            roulette.style.transition = 'transform 3s ease-out';  // 시간 설정
+            roulette.style.transform = `rotate(${rotationAngle}deg)`; // 회전 각도 설정
+
+            // 핀이 가리키는 아이템을 계산
+            const pinItem = calculatePinItem(rotationAngle);
+
+            // 선택된 아이템 설정
+            selectItem(pinItem);
+
+            // selectedItem 값을 설정
+            selectedItem = document.querySelector(`[data-name="${pinItem}"]`);
+            if (selectedItem) {
+                document.getElementById('selectedItem').value = selectedItem.getAttribute('data-name');
+            }
+
+            // 확정 버튼 비활성화
+            document.getElementById('confirmButton').style.display = 'none';
+
+            // 돌리기 버튼 비활성화
+            document.getElementById('rotateButton').disabled = true;
+
+            // setTimeout을 사용하여 확정 버튼을 돌리기가 끝난 후에 활성화
+            setTimeout(function () {
+                document.getElementById('confirmButton').style.display = 'block';
+            }, 3000); // 여기서 3000은 룰렛 회전 시간을 고려한 값입니다. 필요에 따라 조정 가능합니다.
+        }
+    });
+
+    // 확정 버튼 클릭 시
+    document.getElementById('confirmButton').addEventListener('click', function () {
+        // 선택한 아이템 값을 hidden input에 설정
+        if (selectedItem) {
+            document.getElementById('selectedItem').value = selectedItem.getAttribute('data-name');
+        }
+    });
+
+    // 핀이 가리키는 아이템 계산
+    function calculatePinItem(angle) {
+        // 각도를 360으로 나눈 나머지를 이용하여 핀이 가리키는 아이템을 계산
+        const numItems = 4; // 아이템 개수
+        const degreesPerItem = 90; // 룰렛 선마다 90도씩 차이
+        const normalizedAngle = (angle + 360) % 360; // 음수 각도를 양수로 정규화
+        const pinItemIndex = Math.floor(normalizedAngle / degreesPerItem);
+
+        // 각 아이템에 대한 값 매핑
+        const itemMappings = ['item1', 'item2', 'item3', 'item4'];
+        return itemMappings[pinItemIndex];
+    }
+
+    function selectItem(result) {
+        const items = document.querySelectorAll('.item');
+
+        // 다른 아이템에서 선택 클래스 제거
+        items.forEach(item => {
+            item.classList.remove('selected');
+        });
+
+        // 룰렛 결과값(result)에 따라 선택된 아이템에 선택 클래스 추가
+        const selectedItem = document.querySelector(`[data-name="${result}"]`);
+        if (selectedItem) {
+            selectedItem.classList.add('selected');
+        }
+    }
+
+
+</script>
+</body>

@@ -20,7 +20,7 @@ public class UserDto {
     private String password;
     private String name;
     private Date Birthdate;
-    private Integer point;
+    private Double point;
     private LocalDateTime joinDate;
     private LocalDateTime quitDate;
 

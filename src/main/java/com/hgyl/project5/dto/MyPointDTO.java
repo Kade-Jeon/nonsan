@@ -18,20 +18,20 @@ public class MyPointDTO {
     private String uid;
 
     @Min(value = 0, message = " point 는 음수 불가.")
-    private Long point;
+    private Double point;
 
     @Max(value = 100_000_000L, message = "Point 최대값 100억.")
     @Min(value = 0, message = "Add point 는 음수 불가.")
-    private Long addPoint;
+    private Double addPoint;
 
     @Max(value = 100_000_000L, message = "Point 최대값 100억.")
     @Min(value = 0, message = "minus point 는 음수 불가.")
-    private Long minusPoint;
+    private Double minusPoint;
     private String nickName;
     private LocalTime insertDateTime;
 
     @Builder
-    public MyPointDTO(String uid, Long point, Long addPoint, Long minusPoint, String nickName, LocalTime insertDateTime) {
+    public MyPointDTO(String uid, Double point, Double addPoint, Double minusPoint, String nickName, LocalTime insertDateTime) {
         this.uid = uid;
         this.point = point;
         this.addPoint = addPoint;

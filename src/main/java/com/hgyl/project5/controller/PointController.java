@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -20,11 +21,16 @@ public class PointController {
 
     // 메인 페이지 - 충전
     @GetMapping("/mypage")
-    public String myPoint(@Valid Model model) {
+    public String myPoint(@Valid Model model, HttpSession session) {
 
         String userId = "uid1";
+        session.setAttribute("userId", userId);
+
+        String storedUserId = (String) session.getAttribute("userId");
+        if (storedUserId == null) {
+            // 세션에 userId가 없을 경우 처리
+        }
         MyPointDTO myPoint = pointService.myPoint(userId);
-        System.out.println(userId+"controller!!!");
 
         model.addAttribute("myPoint", myPoint);
 
@@ -33,16 +39,30 @@ public class PointController {
 
     // 충전 처리 메서드
     @PostMapping("/mypage/recharge")
-    public String rechargePoint(@ModelAttribute @Valid MyPointDTO myPointDTO) {
+    public String rechargePoint(@ModelAttribute @Valid MyPointDTO myPointDTO, HttpSession session) {
 
+        String userId = "uid1";
+        session.setAttribute("userId", userId);
+
+        String storedUserId = (String) session.getAttribute("userId");
+        if (storedUserId == null) {
+            // 세션에 userId가 없을 경우 처리
+        }
         pointService.recharge(myPointDTO);
         return "redirect:/mypage/";
     }
 
     // 입금 페이지
     @GetMapping("/mypage/depositPage")
-    public String deposit(@Valid Model model) {
+    public String deposit(@Valid Model model, HttpSession session) {
+
         String userId = "uid1";
+        session.setAttribute("userId", userId);
+
+        String storedUserId = (String) session.getAttribute("userId");
+        if (storedUserId == null) {
+            // 세션에 userId가 없을 경우 처리
+        }
         MyPointDTO deposit = pointService.deposit(userId);
         model.addAttribute("deposit", deposit);
 
@@ -52,10 +72,16 @@ public class PointController {
 
     // 출금 페이지
     @GetMapping("/mypage/withdrawPage")
-    public String withdrawPage(Model model) {
-        String userId = "uid1";
+    public String withdrawPage(Model model, HttpSession session) {
 
-        Long currentPoint = pointService.currentPoint(userId); // 현재 보유 머니 조회
+        String userId = "uid1";
+        session.setAttribute("userId", userId);
+
+        String storedUserId = (String) session.getAttribute("userId");
+        if (storedUserId == null) {
+            // 세션에 userId가 없을 경우 처리
+        }
+        Double currentPoint = pointService.currentPoint(userId); // 현재 보유 머니 조회
         MyPointDTO withdraw = pointService.withdrawPage(userId);
 
         model.addAttribute("currentPoint", currentPoint);
@@ -66,9 +92,16 @@ public class PointController {
 
     // 출금 처리 메서드
     @PostMapping("/mypage/withdraw")
-    public String withdraw(@ModelAttribute @Valid MyPointDTO myPointDTO, Model model) {
+    public String withdraw(@ModelAttribute @Valid MyPointDTO myPointDTO, Model model, HttpSession session) {
+
         String userId = "uid1";
-        Long currentPoint = pointService.currentPoint(userId);
+        session.setAttribute("userId", userId);
+
+        String storedUserId = (String) session.getAttribute("userId");
+        if (storedUserId == null) {
+            // 세션에 userId가 없을 경우 처리
+        }
+        Double currentPoint = pointService.currentPoint(userId);
 
         // 출금 금액이 현재 보유 머니를 초과하는지 검증
         if (myPointDTO.getMinusPoint() > currentPoint) {

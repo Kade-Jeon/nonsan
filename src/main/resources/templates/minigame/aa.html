@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .roulette-outer {
+            position: relative;
+            overflow: hidden;
+            width: 500px;
+            height: 500px;
+            font-size: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end; /* 룰렛 가운데 아래로 버튼을 배치 */
+        }
+        .roulette-outer > .roulette {
+            /* 가득 체우기 */
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            right: 5%;
+            bottom: 5%;
+            background: aqua;
+            border-radius: 50%;
+            border: 2px solid black;
+            transform-origin: center;
+            transition-timing-function: ease-in-out;
+            transition: 2s;
+        }
+        /*룰렛핀 설정*/
+        .roulette-outer > .roulette-pin {
+            position: absolute;
+            top: 3px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 23px 5px 0 5px;
+            border-color: #ff0000 transparent transparent transparent;
+            /* 룰렛핀 가운데로 이동 */
+            margin-left: -4.5px;
+        }
+
+        /* 요소 form */
+        .roulette-outer > .roulette > .item-wrapper > .item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-top: 10%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+        /*룰렛 버튼설정*/
+        .rouletter-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 80px;
+            background: #fff;
+            border-image: linear-gradient(to right, #fbfcb9be, #ffcdf3aa, #65d3ffaa);
+            border: 2px solid;
+        }
+
+        /* 글자 회전 처리 */
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(1) {
+            transform: rotate(0deg);
+        }
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(2) {
+            transform: rotate(60deg);
+        }
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(3) {
+            transform: rotate(120deg);
+        }
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(4) {
+            transform: rotate(180deg);
+        }
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(5) {
+            transform: rotate(240deg);
+        }
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(6) {
+            transform: rotate(300deg);
+        }
+
+        /* 룰렛 선 설정 */
+        .roulette-outer > .roulette > .line-wrapper > .line {
+            position: absolute;
+            top: 0;
+            bottom: 50%;
+            left: 50%;
+            width: 3px;
+            margin-left: -1px;
+            background: black;
+
+            /*회원 선 위치조정*/
+            transform-origin: bottom;
+        }
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(1){
+            transform: rotate(30deg);
+        }
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(2){
+            transform: rotate(90deg);
+        }
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(3){
+            transform: rotate(150deg);
+        }
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(4){
+            transform: rotate(210deg);
+        }
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(5){
+            transform: rotate(270deg);
+        }
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(6){
+            transform: rotate(330deg);
+        }
+
+
+        .hidden-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!--<form method="post" action="/minigame/selectItem" >-->
+
+<h1>미니 게임</h1>
+<div id="app">
+    <h1>인생은 한방</h1>
+</div>
+
+<div id="count">
+    <input type="hidden" name="uid" th:value="${roulette.uid}">
+    <span style="color: orange;" th:text="${roulette.nickName + ' 님'}"></span>
+    <div data-th-text="${roulette.point}"></div>
+    <br>
+    남은 횟수: <span style="color: red" th:text="${roulette.count}"></span>번
+</div>
+
+    <div class="roulette-outer">
+        <!-- 룰렛 핀 설정 -->
+        <div class="roulette-pin"></div>
+        <!-- 룰렛판 설정 -->
+        <div class="roulette">
+            <!-- 룰렛판 글자 영역 -->
+            <div class="item-wrapper">
+                <input type="hidden" name="selectedItem" id="selectedItem" value="">
+                <div class="item" id="item1" data-name="item1" >0.5배!!</div>
+                <div class="item" id="item2" data-name="item2" >0원 ㅋ</div>
+                <div class="item" id="item3" data-name="item3" >1.5배</div>
+                <div class="item" id="item4" data-name="item4" >2배!!</div>
+                <div class="item" id="item5" data-name="item5" >2배!!</div>
+                <div class="item" id="item6" data-name="item6" >2배!!</div>
+            </div>
+
+            <!-- 룰렛 선 설정 -->
+            <div class="line-wrapper">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+
+        <button class="rouletter-btn">start</button>
+    </div>
+
+<!--</form>-->
+<div class="rouletter">
+    <div class="rouletter-bg">
+        <div class="item-wrapper"></div>
+    </div>
+    <div class="rouletter-arrow"></div>
+
+</div>
+
+
+
+<script>
+    var rolLength = 6;
+    var setNum;
+    var hiddenInput = document.createElement("input");
+    hiddenInput.className = "hidden-input";
+
+    const rRandom = () => {
+        var min = Math.ceil(0);
+        var max = Math.floor(rolLength - 1);
+        return Math.floor(Math.random() * (max - min)) + min;
+    };
+
+    const rRotate = () => {
+        var panel = document.querySelector(".item-wrapper");
+        var btn = document.querySelector(".rouletter-btn");
+        var deg = [];
+        for (var i = 1, len = rolLength; i <= len; i++) {
+            deg.push((360 / len) * i);
+        }
+
+        var num = 0;
+        document.body.append(hiddenInput);
+        setNum = hiddenInput.value = rRandom();
+
+        var ani = setInterval(() => {
+            num++;
+            panel.style.transform = "rotate(" + 360 * num + "deg)";
+            btn.disabled = true; //button,input
+            btn.style.pointerEvents = "none"; //a 태그
+
+            if (num === 50) {
+                clearInterval(ani);
+                panel.style.transform = "rotate(" + deg[setNum] + "deg)";
+            }
+        }, 50);
+    };
+
+    const rLayerPopup = (num) => {
+        switch (num) {
+            case 1:
+                alert("당첨!! 스타벅스 아메리카노");
+                break;
+            case 3:
+                alert("당첨!! 햄버거 세트 교환권");
+                break;
+            case 5:
+                alert("당첨!! CU 3,000원 상품권");
+                break;
+            default:
+                alert("꽝! 다음기회에");
+        }
+    };
+
+    const rReset = (ele) => {
+        setTimeout(() => {
+            ele.disabled = false;
+            ele.style.pointerEvents = "auto";
+            rLayerPopup(setNum);
+            hiddenInput.remove();
+        }, 5500);
+    };
+
+    document.addEventListener("click", function (e) {
+        var target = e.target;
+        if (target.tagName === "BUTTON") {
+            rRotate();
+            rReset(target);
+        }
+    });
+
+</script>
+</body>
+</html>

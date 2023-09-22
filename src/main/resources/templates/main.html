@@ -17,8 +17,8 @@
                 <td class="headerTable3"><a th:href="@{/hgyr/login}">로그인</a><td>
                 <td class="headerTable4"><a th:href="@{/hgyr/join}">회원가입</a></td>
             </th:block>
-            <th:block th:unless="${session.user == null}">
-                <td class="headerTable3" th:text="|반갑습니다. ${session.user.name} 님|" /></td>
+                <th:block th:unless="${session.user == null}">
+                <td class="headerTable3" th:text="|반갑습니다. ${session.user} 님|" /></td>
                 <td class="headerTable4"><a th:href="@{/hgyr/logout}">로그아웃</a></td>
             </th:block>
         </tr>
@@ -36,11 +36,11 @@
     <table>
         <tr>
             <div>
-                <td><a th:href="@{/hgyr/service/blog}"><img src="./img/Artboard 1.png" class="icons" width="100px" /></a></td>
-                <td><a th:href="@{/hgyr/service/game}"><img src="./img/Artboard 2.png" class="icons" width="100px" /></a></td>
-                <td><a th:href="@{/hgyr/service/sport}"><img src="./img/Artboard 3.png" class="icons" width="100px" /></a></td>
-                <td><a th:href="@{/hgyr/service/msg}"><img src="./img/Artboard 4.png" class="icons" width="100px" /></a></td>
-                <td><a th:href="@{/hgyr/service/bet}"><img src="./img/Artboard 5.png" class="icons" width="100px" /></a></td>
+                <td><a th:href="@{http://localhost:2111}"><img src="./img/Artboard 1.png" class="icons" width="100px" /></a></td>
+                <td><a th:href="@{http://localhost:2112/minigame}"><img src="./img/Artboard 2.png" class="icons" width="100px" /></a></td>
+                <td><a th:href="@{http://localhost:1999/chat/room}"><img src="./img/Artboard 3.png" class="icons" width="100px" /></a></td>
+                <td><a th:href="@{http://localhost:2113/receivelist}"><img src="./img/Artboard 4.png" class="icons" width="100px" /></a></td>
+                <td><a th:href="@{/hgyr}"><img src="./img/Artboard 5.png" class="icons" width="100px" /></a></td>
             </div>
         </tr>
         <tr>

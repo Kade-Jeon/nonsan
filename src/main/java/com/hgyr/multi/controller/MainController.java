@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
@@ -23,7 +20,7 @@ public class MainController {
 
     private final Logger logger = LoggerFactory.getLogger(MainController.class);
 
-    @Autowired
+   @Autowired
     HttpSession session;
 
     MainRestService mainRestService;
@@ -51,15 +48,15 @@ public class MainController {
         return "login";
     }
 
-    /*각 서비스 누를 시 각 서비스로 이동*/
-    @GetMapping("/service/{app}")
+   /* *//*각 서비스 누를 시 각 서비스로 이동*//*
+    @GetMapping("/hgyr/service/{app}")
     public String moveToService(@PathVariable String app, Model model) {
         UserDto userInfo = (UserDto) session.getAttribute("user");
         int age = Period.between(userInfo.getBirthDate().toLocalDate(), LocalDate.now()).getYears();
         model.addAttribute("appName",app);
         model.addAttribute("age", age);
         return "app";
-    }
+    }*/
 
     /*회원가입 페이지에서 정보 입력 후 제출하면 서버로 전송 후 결과리턴
     * 메인으로 이동되면 정상완료*/
@@ -77,11 +74,12 @@ public class MainController {
     * 로그인 완료되면 메인페이지로 이동, 세션 정보 저장
     * 실패하면 에러 페이지로 이동*/
     @PostMapping("/login")
-    public String login(UserDto userDto){
+    public String login(UserDto userDto, Model model){
         UserDto userInfo = mainRestService.login(userDto);
         if(userInfo != null){
             logger.info("[Port:1888][MainController] 로그인 : "+userDto);
-            session.setAttribute("user", userInfo);
+            System.out.println(userInfo.getUid());
+            session.setAttribute("user", userInfo.getUid()); //수정
             return "redirect:/hgyr";
         }
         return "error";
@@ -92,4 +90,5 @@ public class MainController {
         session.invalidate();
         return "redirect:/hgyr";
     }
+
 }

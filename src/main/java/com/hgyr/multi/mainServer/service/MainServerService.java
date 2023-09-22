@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class MainServerService {
 
-
     UserRepository userRepository;
     PasswordEncoder passwordEncoder;
     @Autowired
@@ -49,7 +48,7 @@ public class MainServerService {
         return UserDto.entityToDto(user);
     }
 
-    /*[테스트용] 유저 아이디 던지면 잘 넘어오는지 */
+    /* 각 서비스에서 userDto 정보 받기 */
     public UserDto findByUId(String uId){
         return UserDto.entityToDto(userRepository.findByUid(uId));
     }

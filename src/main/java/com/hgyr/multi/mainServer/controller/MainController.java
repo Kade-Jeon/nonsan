@@ -9,9 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
-
 @RestController
 @RequestMapping("/valid")
 public class MainController {
@@ -43,7 +40,7 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK).body(checkedUser);
     }
 
-    /*[테스트용] uid 요청하면 dto리턴*/
+    /*각 서비스에서 uid를 통해 요청하면 dto리턴*/
     @PostMapping("/user/{uId}")
     public ResponseEntity<UserDto> userInfo(@PathVariable String uId){
         logger.info("[Port:1777] MainController : test " + uId);

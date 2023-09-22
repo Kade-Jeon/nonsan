@@ -55,7 +55,7 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     @PositiveOrZero
     @Min(value = 0)
-    private Integer point;
+    private Double point;
 
     public User fromDto(UserDto userDto){
         this.uid = userDto.getUid();

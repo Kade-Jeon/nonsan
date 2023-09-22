@@ -29,24 +29,56 @@ public class MessageController {
     //유저 정보 받아오기
     @PostMapping("/receivelist/user/valid")
     @ResponseBody
-    public void checkUser(@RequestBody UserDto userDto) throws Exception {
+    public void checkUser(@RequestBody UserDto userDto, HttpSession session) throws Exception {
         System.out.println(userDto);
-        if(userDto == null){
+        if(userDto == null) {
             throw new Exception();
         }
         userList.put(userDto.getUid(), userDto.getNickName());
+        System.out.println("user 인포 : "+userDto.getUid());
+
     }
 
-    // 메인페이지 (쪽지수신함)
+    /*// 메인페이지 (수신 쪽지 목록)
     @GetMapping("/receivelist")
-    public String rooms(@RequestParam String uid, Model model) throws Exception {
-        session.setAttribute("sendId", uid);
+    public String receiveList(Model model, HttpSession session) throws Exception {
+        // 세션에서 유저 정보 가져오기
+        UserDto userDto = (UserDto) session.getAttribute("userDto");
+        System.out.println(userDto);
 
-        System.out.println(uid);
+        // 유저 정보가 없다면 처리할 내용 추가
+
+        // 유저 정보가 있다면 처리
+        String uid = userDto.getUid();
+
+        // 새로운 ReceiveMessage 객체 생성 및 receiveId 설정
+        ReceiveMessage receiveMessage = new ReceiveMessage();
+        receiveMessage.setReceiveId(uid);
+
+        model.addAttribute("list", messageService.receiveList(receiveMessage));
+
+        return "/message/receiveList";
+    }*/
+
+    // 메인페이지 (수신 쪽지 목록)
+    @GetMapping("/receivelist")
+    public String receiveList(@RequestParam String uid, Model model) throws Exception {
+
+        session.setAttribute("uid", uid);
+        String msg = (String) session.getAttribute(uid);
+
+        System.out.println(msg);
 
         model.addAttribute("list", messageService.receiveList(uid));
 
         return "/message/receiveList";
+    }
+
+    // 수신 메시지 상세조회
+    @GetMapping("/receiveRead")
+    public String receiveRead(Model model, Long id){
+        model.addAttribute("receive",messageService.receiveRead(id));
+        return "/message/receiveRead";
     }
 
     // 메시지 전송 폼으로 이동
@@ -85,12 +117,25 @@ public class MessageController {
         return "/message/receiveList";
     }*/
 
-    // 수신 메시지 상세조회
-    @GetMapping("/receiveRead")
-    public String receiveRead(Model model, Long id){
-        model.addAttribute("receive",messageService.receiveRead(id));
-        return "/message/receiveRead";
+    // 발신 쪽지함 목록
+    @GetMapping("/sendlist")
+    public String sendList(@RequestParam String uid, Model model) throws Exception {
+        System.out.println(uid);
+
+        model.addAttribute("list", messageService.sendList(uid));
+
+        return "/message/sendlist";
     }
+
+    // 발신 쪽지 상세조회
+    @GetMapping("/sendRead")
+    public String sendRead(Model model, Long id) {
+        model.addAttribute("send", messageService.SendRead(id));
+        return "/message/sendRead";
+    }
+
+    // 목록에서 선택 삭제
+
 
     /*// 휴지통 목록 조회
     @GetMapping("/deletelist")

@@ -9,6 +9,7 @@ import com.hgyl.nonsan_message.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,31 +36,42 @@ public class MessageServiceImpl implements MessageService {
     // 메시지 발신 DB 기록
     @Override
     public String send(ResponseDTO message) throws Exception {
+        // 발신 DB에 저장
         SendMessage sendMessage = message.toSend();
         sendMsgRepository.save(sendMessage);
-
+        // 수신 DB에 저장
         ReceiveMessage receiveMessage = message.toReceive();
         messageRepository.save(receiveMessage);
-
-        /*messageRepository.save(message);
-        sendMsgRepository.save(message);*/
 
         return null;
     }
 
-    // 로그인 후 수신 메시지 조회
+    // 로그인 후 수신 메시지 목록 조회
     @Override
-    public List<ReceiveMessage> receiveList(String receiveId) throws Exception {
-        Boolean deleteStatus = false;
+    public List<ReceiveMessage> receiveList(String msgId) throws Exception {
 
-        return messageRepository.findAllByReceiveIdAndDeleteStatus(receiveId, deleteStatus);
+        return messageRepository.findAllByReceiveIdAndDeleteStatus(msgId, false, Sort.by(Sort.Direction.DESC, "sendDate"));
     }
 
-    // 수신 메시지 목록 -> 수신 메시지 상세조회
+    // 수신 메시지 상세조회
     @Override
     public ReceiveMessage receiveRead(Long id) {
         return messageRepository.findById(id).get();
     }
+
+    // 발신 메시지 목록
+    @Override
+    public List<SendMessage> sendList(String sendId) throws Exception {
+
+        return sendMsgRepository.findAllBySendIdAndDeleteStatus(sendId, false, Sort.by(Sort.Direction.DESC, "sendDate"));
+    }
+
+    // 발신 메시지 상세조회
+    @Override
+    public SendMessage SendRead(Long id) {
+        return sendMsgRepository.findById(id).get();
+    }
+
 
     /*// 휴지통 목록
     @Override

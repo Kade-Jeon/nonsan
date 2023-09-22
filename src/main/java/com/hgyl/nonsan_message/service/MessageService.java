@@ -2,6 +2,7 @@ package com.hgyl.nonsan_message.service;
 
 import com.hgyl.nonsan_message.data.dto.ResponseDTO;
 import com.hgyl.nonsan_message.data.entity.ReceiveMessage;
+import com.hgyl.nonsan_message.data.entity.SendMessage;
 
 import java.util.List;
 
@@ -15,6 +16,12 @@ public interface MessageService {
 
     // 수신 메시지 상세보기
     ReceiveMessage receiveRead(Long id);
+
+    // 발신 메시지 목록
+    List<SendMessage> sendList(String uId) throws Exception;
+
+    // 발신 메시지 상세보기
+    SendMessage SendRead(Long id);
 
     /*// 휴지통 목록
     List<ReceiveMessage> deleteList(String receiveId) throws Exception;

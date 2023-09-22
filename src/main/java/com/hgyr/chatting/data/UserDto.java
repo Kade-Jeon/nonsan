@@ -19,7 +19,7 @@ public class UserDto {
     private String nickName;
     private String password;
     private String name;
-    private Date Birthdate;
+    private Date birthDate;
     private Double point;
     private LocalDateTime joinDate;
     private LocalDateTime quitDate;

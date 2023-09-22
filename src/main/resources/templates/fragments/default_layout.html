@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 xmlns:layout="http://www.ultrq.net.nz/thymeleaf/layout">
+<style>
+    /*화면 전체 가로길이*/
+    #default-main{
+        width: 1200px;
+        margin: 0 auto;
+    }
+    /*네비게이션 바 아래 body 기본 높이*/
+    #default-body{
+        min-height: 500px;
+    }
+</style>
+<div id="default-main">
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
-    <body>
+    <div id="default-body">
+        <body>
         <th:block layout:fragment="content"></th:block>
-    </body>
+        </body>
+    </div>
 <th:block th:replace="fragments/footer" :: footerFragment></th:block>
+</div>
+
 </html>

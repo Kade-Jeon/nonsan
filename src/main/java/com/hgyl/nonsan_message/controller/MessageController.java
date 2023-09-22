@@ -37,7 +37,7 @@ public class MessageController {
         userList.put(userDto.getUid(), userDto.getNickName());
     }
 
-    //채팅리스트 화면
+    // 메인페이지 (쪽지수신함)
     @GetMapping("/receivelist")
     public String rooms(@RequestParam String uid, Model model) throws Exception {
         session.setAttribute("sendId", uid);
@@ -76,7 +76,7 @@ public class MessageController {
         return "redirect:/receivelist?uid="+id;
     }
 
-    // 수신 메시지 목록
+    // (구)수신 메시지 목록
     /*@GetMapping("/receivelist")
     public String receiveList(Model model) throws Exception{
 

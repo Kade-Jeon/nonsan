@@ -4,9 +4,66 @@
     <meta charset="UTF-8">
     <title>구매하기</title>
 </head>
-<body>
-<form method="post" action="/submitBet">
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse; /* Collapse borders for a cleaner look */
+    }
 
+    th, td {
+        border: 1px solid #ccc; /* Add a border to table cells */
+        padding: 8px; /* Add padding inside table cells */
+        text-align: center;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function calculatePayout() {
+        let bettingAmount = parseFloat(document.getElementById("bettingAmount").value);
+        let odds = parseFloat(document.getElementById('odds').textContent); // jquery
+        let payout = bettingAmount * odds;
+        document.getElementById("payout").value = payout.toFixed(2);
+    }
+    function enforceMultipleOf100(inputElement) {
+        let value = inputElement.value;
+        let newValue = Math.round(value / 100) * 100;
+        inputElement.value = newValue;
+        calculatePayout(); // Recalculate the payout
+    }
+</script>
+<body>
+<form method="post" action="/bet/submitBet">
+    <table>
+        <thead>
+        <tr>
+            <th>베팅 번호</th>
+            <th>경기 번호</th>
+            <th>Sport</th>
+            <th colspan="2">HOME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AWAY</th>
+            <th>배당률</th>
+            <th>베팅금액 (P)</th>
+            <th>가능한 상금 (P)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>betNo placeholder</td>
+            <td th:text="${getCartDataMap.matchNo}"></td>
+            <td th:text="${getCartDataMap.matchType}"></td>
+            <td th:text="${getCartDataMap.teamName}"></td>
+            <td th:text="${getCartDataMap.teamName2}"></td>
+            <td id="odds" th:text="${getCartDataMap.odds}"></td>
+            <td>
+                <input type="number" id="bettingAmount" name="bettingAmount" step="1000" value = 10000
+                       onchange="enforceMultipleOf100(this); calculatePayout();">
+            </td>
+            <td>
+                <input type="text" id="payout" name="payout" readonly>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     <button type="submit">결제</button>
+</form>
 </body>
 </html>

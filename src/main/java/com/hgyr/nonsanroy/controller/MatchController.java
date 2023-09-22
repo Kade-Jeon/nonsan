@@ -1,37 +1,52 @@
 package com.hgyr.nonsanroy.controller;
 
 import com.hgyr.nonsanroy.data.dto.UserDto;
+import com.hgyr.nonsanroy.data.dto.bet.BetCartDto;
+import com.hgyr.nonsanroy.data.dto.bet.BetDto;
+import com.hgyr.nonsanroy.data.entity.bet.Bet;
 import com.hgyr.nonsanroy.data.entity.bet.Match;
 import com.hgyr.nonsanroy.service.BetService;
+import com.hgyr.nonsanroy.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.servlet.http.HttpSession;
+import java.net.URI;
 import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /**
+ * @author 명원식
  * @classNote MatchController
  * @purpose
- * @author 명원식
  */
 @Controller
 @RequestMapping("/bet")
 public class MatchController {
 
+	private final PointService pointService;
 	private final BetService betService;
 
 	@Autowired
-	public MatchController(BetService betService) {
+	public MatchController(PointService pointService, BetService betService) {
+		this.pointService = pointService;
 		this.betService = betService;
 	}
 
+	/**
+	 * @param model
+	 * @methodNote navigateBetMain
+	 * @purpose
+	 * @author 명원식
+	 */
 	@GetMapping("/BetMain")
-	public String showBetMain(Model model) {
+	public String navigateBetMain(Model model) {
 		List<Match> matches = betService.getAllMatches();
-
-		// LocalDateTime localDateTime = LocalDateTime.now();
 		/**
 		 * @declarationNote dateTimeFormatter
 		 * @purpose appears as 2023-09-21T12:00 Prior to adding dates.format.
@@ -41,27 +56,64 @@ public class MatchController {
 		 * @author 명원식
 		 */
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		//String formattedDateTime = localDateTime.format(formatter);
-		//model.addAttribute("formattedDateTime", formattedDateTime);
 
-		System.out.println("Match Controller: matches :" + matches);
 		model.addAttribute("matches", matches);
-		return "bet/BetMain"; // templates/bet/BetMain.html
+		return "/bet/BetMain"; // templates/bet/BetMain.html
 	}
 
-	private Set<Map<String, String>> userList = new HashSet<>();
-	//유저 정보 받아오기
-	@PostMapping("/valid")
-	@ResponseBody
-	public void checkUser(@RequestBody UserDto userDto) throws Exception {
-		System.out.println(userDto);
-		if(userDto == null){
-			throw new Exception();
-		}
-		Map<String, String> temp = new HashMap<>();
-		temp.put(userDto.getUid(), userDto.getNickName());
-		System.out.println(temp);
-		userList.add(temp);
+	/**
+	 * @param cartData, betDto, model
+	 * @methodNote navigateBetCart
+	 * @purpose
+	 * @otherNote Cannot use just @ModelAttribute while giving the tag to the map method in the Dto
+	 * (Method Parameter Level vs Method Level)
+	 * @author 명원식
+	 */
+	@PostMapping("/betCart")
+	public String navigateBetCart(@ModelAttribute("getCartDataMap") BetCartDto cartData, BetDto betDto, Model model) {
+
+		// model.addAllAttributes(cartData.getCartDataMap());
+		model.addAttribute("cartData", cartData);
+
+		double bettingAmount = betDto.getBetAmount();
+		double odds = cartData.getOdds();
+		double payout = bettingAmount * odds;
+		betDto.setPayout(payout);
+
+		model.addAttribute("betDto", betDto);
+
+		System.out.println("Match Controller(navigateBetCart) cartData" + cartData);
+
+		return "bet/BetCart";
 	}
 
+	@PostMapping("/submitBet")
+	public String submitBet(@ModelAttribute BetDto betDto) {
+		betService.saveBet(betDto);
+
+		return "redirect:/bet/BetCart";
+	}
+
+	//다른 서버에서 넘어올 때 유저 정보 조회하고 메인으로 넘깁니다.
+	@GetMapping("/room")
+	public String rooms(HttpSession session, Model model) {
+
+		String sid = session.getId();
+		String uid = (String) session.getAttribute("user");
+		System.out.println(sid + "::::::::" + uid);
+
+		URI uri = UriComponentsBuilder
+				.fromUriString("http://localhost:2114")
+				.path("/valid/user/" + uid)
+				.encode()
+				.build()
+				.toUri();
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<UserDto> responseEntity = restTemplate.postForEntity(uri, uid, UserDto.class);
+		model.addAttribute("nickName", responseEntity.getBody().getNickName());
+		// logger.info("[Port:1999] ChatRoomController");
+		return "/chat/room";
+
+	}
 }

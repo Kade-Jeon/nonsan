@@ -1,6 +1,9 @@
 package com.hgyr.nonsanroy.service.impl;
 
+import com.hgyr.nonsanroy.data.dto.bet.BetDto;
+import com.hgyr.nonsanroy.data.entity.bet.Bet;
 import com.hgyr.nonsanroy.data.entity.bet.Match;
+import com.hgyr.nonsanroy.data.repository.BetRepository;
 import com.hgyr.nonsanroy.data.repository.MatchRepository;
 import com.hgyr.nonsanroy.service.BetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +27,26 @@ public class BetServiceImpl implements BetService {
 	 * @author 명원식
 	 */
 	private final MatchRepository matchRepository;
-
+	/**
+	 * @fieldDeclarationNote matchRepository
+	 * @purpose holds the reference to an instance of matchRepository
+	 * @otherNote (private)Accessible only in this class and (final)value cannot be changed
+	 * Should not be autowired due to testing and maintenance purposes
+	 * @author 명원식
+	 */
+	private final BetRepository betRepository;
 	/**
 	 * @constructorNote BetServiceImpl Constructor
-	 * @purpose inject MatchRepository dependency into BetServiceImpl
-	 * Autowired annotation allows Spring to automatically provide an instance of MatchRepository
+	 * @purpose inject Match/Bet Repository dependency into BetServiceImpl
+	 * Autowired annotation allows Spring to automatically provide an instance of Match/Bet Repository
 	 * @author 명원식
 	 */
 	@Autowired
-	public BetServiceImpl(MatchRepository matchRepository) {
+	public BetServiceImpl(MatchRepository matchRepository,BetRepository betRepository) {
 		this.matchRepository = matchRepository;
+		this.betRepository = betRepository;
 	}
+
 
 	public Match getMatch(Integer matchNo) {
 		return getMatch(matchNo);
@@ -51,10 +63,21 @@ public class BetServiceImpl implements BetService {
 	public void removeMatch(Integer matchNo) {
 	}
 
-
 	public List<Match> getAllMatches() {
 		return matchRepository.findAll();
 	}
 
+	public List<Bet> getAllBets() {
+		return betRepository.findAll();
+	}
 
+	public void saveBet(BetDto betDto) {
+		Bet bet = new Bet();
+		bet.setBetNo(betDto.getBetNo());
+		// bet.setMatchNo(betDto.getBetNo());
+		bet.setBetAmount(betDto.getBetAmount());
+		bet.setPayout(betDto.getPayout());
+
+		betRepository.save(bet);
+	}
 }

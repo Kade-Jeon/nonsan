@@ -1,5 +1,7 @@
 package com.hgyr.nonsanroy.service;
 
+import com.hgyr.nonsanroy.data.dto.bet.BetDto;
+import com.hgyr.nonsanroy.data.entity.bet.Bet;
 import com.hgyr.nonsanroy.data.entity.bet.Match;
 
 import java.util.List;
@@ -40,4 +42,8 @@ public interface BetService {
 	void removeMatch(Integer matchNo);
 
 	List<Match> getAllMatches();
+
+	List<Bet> getAllBets();
+	void saveBet(BetDto betDto);
+
 }

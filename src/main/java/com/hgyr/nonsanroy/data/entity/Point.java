@@ -19,6 +19,7 @@ import java.time.LocalTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "my_point")
 public class Point { 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +28,11 @@ public class Point {
 	@Column(length = 100)
 	private String uid;
 
-	private Long point;
+	private Double point;
 
-	private Long addPoint;
+	private Double addPoint;
 
-	private Long minusPoint;
+	private Double minusPoint;
 
 	@Column(length = 300)
 	private String nickName;

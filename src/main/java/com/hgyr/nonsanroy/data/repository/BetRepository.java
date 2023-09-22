@@ -1,8 +1,13 @@
 package com.hgyr.nonsanroy.data.repository;
 
+import com.hgyr.nonsanroy.data.dto.bet.BetDto;
 import com.hgyr.nonsanroy.data.entity.bet.Bet;
+import com.hgyr.nonsanroy.data.entity.bet.Match;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.thymeleaf.processor.element.AbstractElementTagProcessor;
+
+import java.util.List;
 
 /**
  * @classNote BetRepository
@@ -13,8 +18,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BetRepository extends JpaRepository<Bet, Integer> {
 
-	Bet findByPayout(double payout);
+	Bet getPayout(double payout);
 
-	Bet getByBetNo(Integer betNo);
+	Bet getBetNo(Integer betNo);
+
+	Bet saveBet(BetDto betDto);
+
+	List<Bet> findAll();
 
 }

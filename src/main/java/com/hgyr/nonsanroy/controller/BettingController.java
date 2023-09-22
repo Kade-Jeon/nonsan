@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/betting")
 public class BettingController {
 
+	// remove and change MatchController to BettingController
+
 }
 
 

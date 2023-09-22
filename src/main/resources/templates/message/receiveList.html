@@ -25,6 +25,7 @@
       </tr>
       </thead>
       <tbody>
+      <form id="temp">
       <tr th:each="message : ${list}">
         <!--<td th:text="${message.id}"></td>-->
         <td th:text="${message.sendId}"></td>
@@ -32,14 +33,45 @@
           <a th:href="@{/receiveRead(id=${message.id})}" th:text="${message.title}"></a>
         </td>
         <td th:text="${message.sendDate}"></td>
-        <td >check</td>
+        <td ><input type="checkbox" class="form-check-input" id="check" name="id" th:value="${message.id}"></td>
       </tr>
+      </form>
       </tbody>
     </table>
-    <a th:href="@{/message/send}" class="btn btn-warning" >쪽지 보내기</a>
+    <!--<a th:href="@{/message/send}" class="btn btn-warning" >쪽지 보내기</a>-->
  <!-- </div> 내용 끝나는 부분 -->
+            <div class="form-group d-flex justify-content-end align-items-center">
+              <div class="mb-3">
+                <div class="text-right">
+                  <button type="button" class="btn btn-outline-secondary" onclick="action('delete')">삭제</button>
+                  <button type="button" class="btn btn-warning" onclick="action('archive')">보관하기</button>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
+        <!-- 체크박스 기능 동작 -->
+        <script>
+          function action(action){
+            const form = document.getElementById('temp');
+            const checkboxes = form.querySelectorAll('input[name="id"]:checked');
+
+            /*체크한게 없으면 리턴*/
+            if (checkboxes.length === 0) {
+              alert('쪽지를 선택해 주세요.')
+              return;
+            }
+
+            /*체크한 글 모으기*/
+            const selectedId = [];
+            checkboxes.forEach(checkbox =>{
+              selectedId.push(checkbox.value);
+            });
+
+
+          }
+        </script>
       </div>
     </div>
   </div>

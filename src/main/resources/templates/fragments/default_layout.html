@@ -4,6 +4,7 @@ xmlns:layout="http://www.ultrq.net.nz/thymeleaf/layout">
 <style>
     /*화면 전체 가로길이*/
     #default-main{
+        position: -ms-device-fixed;
         width: 1200px;
         margin: 0 auto;
     }
@@ -12,14 +13,14 @@ xmlns:layout="http://www.ultrq.net.nz/thymeleaf/layout">
         min-height: 500px;
     }
 </style>
-<div id="default-main">
+<!--<div class="justify-content-center" id="default-main">-->
 <th:block th:replace="fragments/header :: headerFragment"></th:block>
-    <div id="default-body">
+    <!--<div class="justify-content-center" id="default-body">-->
         <body>
         <th:block layout:fragment="content"></th:block>
         </body>
-    </div>
+    <!--</div>-->
 <th:block th:replace="fragments/footer" :: footerFragment></th:block>
-</div>
+<!--</div>-->
 
 </html>

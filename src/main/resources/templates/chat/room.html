@@ -13,7 +13,6 @@
         }
     </style>
     <script type="text/javascript" th:inline="javascript">
-        var uid = /*[[${uid}]]*/;
         var nickName = /*[[${nickName}]]*/;
     </script>
 </head>
@@ -24,7 +23,7 @@
             <h3>채팅방 리스트</h3>
         </div>
     </div>
-    <th:block th:if="${uid == 'admin'}">
+    <th:block th:if="${session.user == 'admin'}">
     <div class="input-group">
         <div class="input-group-prepend">
             <label class="input-group-text">방제목</label>

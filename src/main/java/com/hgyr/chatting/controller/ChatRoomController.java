@@ -4,13 +4,20 @@ import com.hgyr.chatting.data.ChatRoom;
 import com.hgyr.chatting.data.UserDto;
 import com.hgyr.chatting.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 
 import javax.servlet.http.HttpSession;
+import java.net.URI;
 import java.util.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -19,40 +26,10 @@ import java.util.*;
 @RequestMapping("/chat")
 public class ChatRoomController {
 
+    private Logger logger = LoggerFactory.getLogger(ChatRoomController.class);
     private final ChatRoomRepository chatRoomRepository;
     private Map<String, String> userList = new HashMap<>();
-
-    @Autowired
-    private HttpSession userSession;
-
-    //유저 정보 받아오기
-    @PostMapping("/room/user/valid")
-    @ResponseBody
-    public void checkUser(@RequestBody UserDto userDto) throws Exception {
-        if(userDto == null){
-            throw new Exception();
-        }
-        userList.put(userDto.getUid(), userDto.getNickName());
-    }
-
-    //채팅리스트 화면
-    @GetMapping("/room")
-    public String rooms(@RequestParam String uid, Model model) {
-        String nick = "";
-        while (!userList.isEmpty()) {
-            Set<String> uidList = userList.keySet();
-            if(uidList.contains(uid)){
-                nick = userList.get(uid);
-                break;
-            }
-            }
-        model.addAttribute("uid", uid);
-        model.addAttribute("nickName", nick);
-       return "/chat/room";
-            }
-
-
-
+   // private HttpSession serviceSession;
 
 
     //모든 채팅방 목록 반환
@@ -81,5 +58,27 @@ public class ChatRoomController {
     @ResponseBody
     public ChatRoom roomInfo(@PathVariable String roomId) {
         return chatRoomRepository.findRoomById(roomId);
+    }
+
+    //다른 서버에서 넘어올 때 유저 정보 조회하고 메인으로 넘깁니다.
+    @GetMapping("/room")
+    public String rooms(HttpSession session, Model model){
+
+        String sid = session.getId();
+        String uid = (String) session.getAttribute("user");
+        System.out.println(sid + "::::::::" + uid);
+
+        URI uri = UriComponentsBuilder
+                .fromUriString("http://localhost:1777")
+                .path("/valid/user/"+uid)
+                .encode()
+                .build()
+                .toUri();
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<UserDto> responseEntity = restTemplate.postForEntity(uri, uid, UserDto.class);
+        model.addAttribute("nickName", responseEntity.getBody().getNickName());
+        logger.info("[Port:1999] ChatRoomContorller");
+        return "/chat/room";
     }
 }

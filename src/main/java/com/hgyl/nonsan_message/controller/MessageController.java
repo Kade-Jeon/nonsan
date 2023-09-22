@@ -4,12 +4,18 @@ import com.hgyl.nonsan_message.data.dto.ResponseDTO;
 import com.hgyl.nonsan_message.data.dto.UserDto;
 import com.hgyl.nonsan_message.data.entity.ReceiveMessage;
 import com.hgyl.nonsan_message.service.MessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpSession;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,12 +24,12 @@ import java.util.Map;
 @Controller
 public class MessageController {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
+
     @Autowired
     private MessageService messageService;
-
     @Autowired
     HttpSession session;
-
     private Map<String, String> userList = new HashMap<>();
 
     //유저 정보 받아오기
@@ -72,6 +78,29 @@ public class MessageController {
         model.addAttribute("list", messageService.receiveList(uid));
 
         return "/message/receiveList";
+    }
+
+    //다른 서버에서 넘어올 때 유저 정보 조회하고 메인으로 넘깁니다.
+    @GetMapping("/receivelist")
+    public String rooms(HttpSession session, Model model) throws Exception {
+
+        String sid = session.getId();
+        String uid = (String) session.getAttribute("user");
+        System.out.println(sid + "::::::::" + uid);
+
+        URI uri = UriComponentsBuilder
+                .fromUriString("http://localhost:1777")
+                .path("/valid/user/" + uid)
+                .encode()
+                .build()
+                .toUri();
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<UserDto> responseEntity = restTemplate.postForEntity(uri, uid, UserDto.class);
+        model.addAttribute("uid", responseEntity.getBody().getUid());
+        model.addAttribute("list", messageService.receiveList(responseEntity.getBody().getUid()));
+        LOGGER.info("[Port:2113] MessageContorller");
+        return "/message/receivelist";
     }
 
     // 수신 메시지 상세조회

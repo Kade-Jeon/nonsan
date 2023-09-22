@@ -12,7 +12,7 @@ public interface MessageService {
     String send(ResponseDTO message) throws Exception;
 
     // 수신 메시지 목록
-    List<ReceiveMessage> receiveList(String receiveId) throws Exception;
+    List<ReceiveMessage> receiveList(String uid) throws Exception;
 
     // 수신 메시지 상세보기
     ReceiveMessage receiveRead(Long id);

@@ -8,7 +8,7 @@
         <version>2.5.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.hgyl</groupId>
+    <groupId>com.hgyr</groupId>
     <artifactId>nonsan_message</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>nonsan_message</name>

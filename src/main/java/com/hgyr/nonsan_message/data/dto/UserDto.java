@@ -1,4 +1,4 @@
-package com.hgyl.nonsan_message.data.dto;
+package com.hgyr.nonsan_message.data.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.hgyl.nonsan_message.data.entity;
+package com.hgyr.nonsan_message.data.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
-public class ReceiveMessage {
+public class SendMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

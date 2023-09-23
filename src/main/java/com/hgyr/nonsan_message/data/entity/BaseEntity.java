@@ -1,4 +1,4 @@
-package com.hgyl.nonsan_message.data.entity;
+package com.hgyr.nonsan_message.data.entity;
 
 import lombok.Getter;
 import lombok.Setter;

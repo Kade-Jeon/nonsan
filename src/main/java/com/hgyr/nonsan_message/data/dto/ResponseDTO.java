@@ -1,7 +1,7 @@
-package com.hgyl.nonsan_message.data.dto;
+package com.hgyr.nonsan_message.data.dto;
 
-import com.hgyl.nonsan_message.data.entity.ReceiveMessage;
-import com.hgyl.nonsan_message.data.entity.SendMessage;
+import com.hgyr.nonsan_message.data.entity.ReceiveMessage;
+import com.hgyr.nonsan_message.data.entity.SendMessage;
 import lombok.*;
 import org.springframework.stereotype.Component;
 

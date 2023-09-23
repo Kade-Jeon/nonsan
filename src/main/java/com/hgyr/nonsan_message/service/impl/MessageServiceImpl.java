@@ -1,11 +1,11 @@
-package com.hgyl.nonsan_message.service.impl;
+package com.hgyr.nonsan_message.service.impl;
 
-import com.hgyl.nonsan_message.data.dto.ResponseDTO;
-import com.hgyl.nonsan_message.data.entity.ReceiveMessage;
-import com.hgyl.nonsan_message.data.entity.SendMessage;
-import com.hgyl.nonsan_message.data.repository.ReceiveMsgRepository;
-import com.hgyl.nonsan_message.data.repository.SendMsgRepository;
-import com.hgyl.nonsan_message.service.MessageService;
+import com.hgyr.nonsan_message.data.dto.ResponseDTO;
+import com.hgyr.nonsan_message.data.entity.ReceiveMessage;
+import com.hgyr.nonsan_message.data.entity.SendMessage;
+import com.hgyr.nonsan_message.data.repository.ReceiveMsgRepository;
+import com.hgyr.nonsan_message.data.repository.SendMsgRepository;
+import com.hgyr.nonsan_message.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

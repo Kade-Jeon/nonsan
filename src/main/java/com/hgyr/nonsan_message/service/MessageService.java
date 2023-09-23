@@ -1,8 +1,8 @@
-package com.hgyl.nonsan_message.service;
+package com.hgyr.nonsan_message.service;
 
-import com.hgyl.nonsan_message.data.dto.ResponseDTO;
-import com.hgyl.nonsan_message.data.entity.ReceiveMessage;
-import com.hgyl.nonsan_message.data.entity.SendMessage;
+import com.hgyr.nonsan_message.data.dto.ResponseDTO;
+import com.hgyr.nonsan_message.data.entity.ReceiveMessage;
+import com.hgyr.nonsan_message.data.entity.SendMessage;
 
 import java.util.List;
 

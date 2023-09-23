@@ -1,7 +1,6 @@
-package com.hgyl.nonsan_message.data.repository;
+package com.hgyr.nonsan_message.data.repository;
 
-import com.hgyl.nonsan_message.data.dto.ResponseDTO;
-import com.hgyl.nonsan_message.data.entity.ReceiveMessage;
+import com.hgyr.nonsan_message.data.entity.ReceiveMessage;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

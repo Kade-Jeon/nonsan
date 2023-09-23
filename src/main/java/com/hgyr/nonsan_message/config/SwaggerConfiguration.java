@@ -1,4 +1,4 @@
-package com.hgyl.nonsan_message.config;
+package com.hgyr.nonsan_message.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
             .apiInfo(apiInfo())
             .select()
-            .apis(RequestHandlerSelectors.basePackage("com.hgyl.nonsan_message"))
+            .apis(RequestHandlerSelectors.basePackage("com.hgyr.nonsan_message"))
             .paths(PathSelectors.any())
             .build();
     }

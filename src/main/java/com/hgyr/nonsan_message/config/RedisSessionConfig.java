@@ -1,4 +1,4 @@
-package com.hgyl.nonsan_message.config;
+package com.hgyr.nonsan_message.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.hgyl.nonsan_message;
+package com.hgyr.nonsan_message;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

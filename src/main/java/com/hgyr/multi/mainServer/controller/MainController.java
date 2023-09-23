@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLDataException;
+
 @RestController
 @RequestMapping("/valid")
 public class MainController {
@@ -41,11 +43,30 @@ public class MainController {
     }
 
     /*각 서비스에서 uid를 통해 요청하면 dto리턴*/
-    @PostMapping("/user/{uId}")
-    public ResponseEntity<UserDto> userInfo(@PathVariable String uId){
-        logger.info("[Port:1777] MainController : test " + uId);
-        UserDto info = mainServerService.findByUId(uId);
+    @PostMapping("/user/{uid}")
+    public ResponseEntity<UserDto> userInfo(@PathVariable String uid){
+        logger.info("[Port:1777] MainController : userInfo " + uid);
+        UserDto info = mainServerService.findByUId(uid);
         return ResponseEntity.status(HttpStatus.OK).body(info);
-
     }
+
+    /* 게임 & 베팅 : 포인트 조회*/
+    @PostMapping("/point/{uid}")
+    public ResponseEntity<Double> getPoint(@PathVariable String uid){
+        logger.info("[Port:1777] MainController : getPoint " + uid);
+        Double point = mainServerService.getPoint(uid);
+        return ResponseEntity.status(HttpStatus.OK).body(point);
+    }
+
+    @PostMapping("/point/{uid}/{point}")
+    ResponseEntity<String> updatePoint(@PathVariable("uid") String uid, @PathVariable("point") String point) {
+           logger.info("[Port:1777] MainController : updatePoint " + uid + point);
+          String updatedPoint = mainServerService.updatePoint(uid, point);
+          if(updatedPoint == null){
+              return ResponseEntity.status(HttpStatus.OK).body("[Port:1777] MainController : updatePoint : Data update Error");
+          }
+        return ResponseEntity.status(HttpStatus.OK).body(updatedPoint);
+    }
+
+
 }

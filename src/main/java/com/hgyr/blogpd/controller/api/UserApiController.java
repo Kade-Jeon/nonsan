@@ -1,7 +1,7 @@
 package com.hgyr.blogpd.controller.api;
 
 import com.hgyr.blogpd.dto.ResponseDto;
-import com.hgyr.blogpd.model.User;
+import com.hgyr.blogpd.model.UserBlog;
 import com.hgyr.blogpd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +16,9 @@ public class UserApiController {
     private UserService userService;
 
     /* 회원가입 */
-    @PostMapping("/auth/joinProc")
-    public ResponseDto<Integer> save(@RequestBody User user) {
+//    @PostMapping("/auth/joinProc")
+    @PostMapping("/joinProc")
+    public ResponseDto<Integer> save(@RequestBody UserBlog user) {
         System.out.println("UserApiController : save 호출됨");
 //        user.setRole(RoleType.USER);
         userService.회원가입(user);

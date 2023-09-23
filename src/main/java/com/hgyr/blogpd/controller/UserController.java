@@ -19,21 +19,4 @@ public class UserController {
     public String loginForm() {
         return "user/loginForm";
     }
-
-
-    /*private Set<Map<String, String>> userList = new HashSet<>();
-
-    //유저 정보 받아오기
-    @PostMapping("/user/valid")
-    @ResponseBody
-    public void checkUser(@RequestBody UserDto userDto) throws Exception {
-        System.out.println(userDto);
-        if(userDto == null){
-            throw new Exception();
-        }
-        Map<String, String> temp = new HashMap<>();
-        temp.put(userDto.getUid(), userDto.getNickName());
-        System.out.println(temp);
-        userList.add(temp);
-    }*/
 }

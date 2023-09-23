@@ -1,8 +1,9 @@
 package com.hgyr.blogpd.service;
 
+import com.hgyr.blogpd.dto.UserDto;
 import com.hgyr.blogpd.model.Board;
 import com.hgyr.blogpd.model.Reply;
-import com.hgyr.blogpd.model.User;
+import com.hgyr.blogpd.model.UserBlog;
 import com.hgyr.blogpd.repository.BoardRepository;
 import com.hgyr.blogpd.repository.ReplyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,10 @@ public class BoardService {
     private ReplyRepository replyRepository;
 
     @Transactional
-    public void 글쓰기(Board board, User user) { // title, content
+    public void 글쓰기(Board board, String uid, String nickname) { // title, content
         board.setCount(0); // 조회수
-        board.setUser(user);
+        board.setUid(uid);
+        board.setNickname(nickname);
         boardRepository.save(board);
     }
 
@@ -49,8 +51,8 @@ public class BoardService {
 
         /*if (board.getUser().getId() != principal.getUser().getId()) {
             throw new IllegalStateException("글 삭제 실패 : 해당 글을 삭제할 권한이 없습니다.");
-        }
-        boardRepository.delete(board);*/
+        }*/
+        boardRepository.delete(board);
     }
 
     @Transactional
@@ -64,14 +66,14 @@ public class BoardService {
     }
 
     @Transactional
-    public void 댓글쓰기(User user, Long boardId, Reply requestReply) {
+    public void 댓글쓰기(String nickname, Long boardId, Reply requestReply) {
 
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()->{
                     return new IllegalArgumentException("댓글 쓰기 실패 : 게시글 id를 찾을 수 없습니다.");
                 }); // 영속화 완료
 
-        requestReply.setUser(user);
+        requestReply.setNickname(nickname);
         requestReply.setBoard(board);
 
         replyRepository.save(requestReply);

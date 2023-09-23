@@ -5,7 +5,7 @@
     <form>
         <input type="hidden" id="id" value="${board.id}" />
         <div class="form-group">
-            <input value="${board.title}" type="text" name="username" class="form-control" placeholder="Enter title" id="title">
+            <input value="${board.title}" type="text" name="uid" class="form-control" placeholder="Enter title" id="title">
         </div>
 
         <div class="form-group">

@@ -4,14 +4,14 @@
 <div class="container">
     <form>
         <div class="form-group">
-            <input type="text" name="username" class="form-control" placeholder="Enter title" id="title">
+            <input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요" id="title">
         </div>
 
         <div class="form-group">
             <textarea class="form-control summernote" rows="5" id="content"></textarea>
         </div>
     </form>
-    <button id="btn-save" class="btn btn-primary">글쓰기 완료</button>
+    <button id="btn-save" class="btn btn-primary">글 등록하기</button>
 </div>
 
 <%--썸머노트 사용을 위한 코드--%>

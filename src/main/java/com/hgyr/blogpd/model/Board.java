@@ -30,9 +30,9 @@ public class Board {
 
     private int count; // 조회수
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="userId")
-    private User user;
+    private String uid;
+
+    private String nickname;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) // 하나의 게시글은 여러개의 댓글을 가질 수 있음
     @JsonIgnoreProperties({"board"})

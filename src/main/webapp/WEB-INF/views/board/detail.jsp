@@ -3,17 +3,16 @@
 <%--글 상세보기--%>
 <div class="container">
     <button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
-    <%--로그인한 id와 동일한 유저가 작성한 글일 때만 삭제, 수정 버튼이 보이도록 if 추가
-        principal은 PrincipalDetail의 User의 id를 의미 --%>
-    <%--<c:if test="${board.user.id == principal.user.id}">--%>
-    <c:if test="${board.user.id == user.id}">
+    <%--<c:if test="${board.uid == principal.user.id}">
         <a href="/board/${board.id}/updateForm" class="btn btn-warning">수정</a>
         <button id="btn-delete" class="btn btn-danger">삭제</button>
-    </c:if>
+    </c:if>--%>
+    <a href="/board/${board.id}/updateForm" class="btn btn-warning">수정</a>
+    <button id="btn-delete" class="btn btn-danger">삭제</button>
     <br /><br />
     <div>
         글 번호 : <span id="id"><i>${board.id} </i></span>
-        작성자 : <span><i>${board.user.username} </i></span>
+        작성자 : <span><i>${board.nickname} </i></span>
     </div>
     <br />
     <div>
@@ -29,7 +28,7 @@
     <div class="card">
         <form>
             <%--<input type="hidden" id="userId" value="${principal.user.id}" />--%>
-            <input type="hidden" id="userId" value="${user.id}" />
+            <input type="hidden" id="nickname" value="${board.nickname}" />
             <input type="hidden" id="boardId" value="${board.id}" />
             <div class="card-body">
                 <textarea id="reply-content" class="form-control" rows="1"></textarea>
@@ -49,9 +48,10 @@
             <li id="reply-${reply.id}" class="list-group-item d-flex justify-content-between">
                 <div>${reply.content}</div>
                 <div class="d-flex">
-                    <div class="font-italic">작성자 : ${reply.user.username} &nbsp;</div>
+                    <h1>${board.nickname}, ${reply.nickname}, ${board.uid}</h1>
+                    <div class="font-italic">작성자 : ${reply.nickname} &nbsp;</div>
                     <%--<c:if test="${reply.user.id == principal.user.id}">--%>
-                    <c:if test="${reply.user.id == user.id}">
+                    <c:if test="${reply.nickname == board.nickname}">
                         <button onclick="index.replyDelete(${board.id}, ${reply.id})" class="badge">삭제</button>
                     </c:if>
                 </div>

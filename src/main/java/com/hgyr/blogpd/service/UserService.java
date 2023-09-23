@@ -1,7 +1,7 @@
 package com.hgyr.blogpd.service;
 
 import com.hgyr.blogpd.model.RoleType;
-import com.hgyr.blogpd.model.User;
+import com.hgyr.blogpd.model.UserBlog;
 import com.hgyr.blogpd.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,11 +19,10 @@ public class UserService {
 //    private BCryptPasswordEncoder encoder;
 
     @Transactional // 전체가 성공하면 commit, 실패하면 rollback
-    public void 회원가입(User user) {
-        String rawPassword = user.getPassword(); // 1234 원문
+    public void 회원가입(UserBlog user) {
+//        String rawPassword = user.getPassword(); // 1234 원문
 //        String encPassword = encoder.encode(rawPassword); // 해쉬화
-        String encPassword = "1234"; // 해쉬화
-        user.setPassword(encPassword);
+//        user.setPassword(encPassword);
         user.setRole(RoleType.USER);
         userRepository.save(user);
     }

@@ -26,9 +26,7 @@ public class Reply {
     @JoinColumn(name = "boardId")
     private Board board;
 
-    @ManyToOne // 여러개의 답변을 하나의 유저가 쓸 수 있음
-    @JoinColumn(name = "userId")
-    private User user;
+    private String nickname;
 
     @CreationTimestamp
     private Timestamp createDate;

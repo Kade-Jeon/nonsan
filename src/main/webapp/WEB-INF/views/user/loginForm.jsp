@@ -5,8 +5,8 @@
 <div class="container">
     <form action="/auth/loginProc" method="POST">
         <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" name="username" class="form-control" placeholder="Enter username" id="username">
+            <label for="uid">uid</label>
+            <input type="text" name="uid" class="form-control" placeholder="Enter uid" id="uid">
         </div>
 
         <div class="form-group">

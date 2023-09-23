@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, height=100%, initial-scale=1.0">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-neo.css" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <title>hgyr</title>
+</head>
+<header>
+    <table id="headerTableGrp">
+        <tr>
+            <td id="headerTable1" th:text="abc"></td>
+            <td id="headerTable2">abc</td>
+            <th:block th:if="${session.user == null}">
+                <td class="headerTable3"><a th:href="@{/hgyr/login}">로그인</a><td>
+                <td class="headerTable4"><a th:href="@{/hgyr/join}">회원가입</a></td>
+            </th:block>
+                <th:block th:unless="${session.user == null}">
+                <td class="headerTable3" th:text="|반갑습니다. ${session.user} 님|" /></td>
+                <td class="headerTable4"><a th:href="@{/hgyr/logout}">로그아웃</a></td>
+            </th:block>
+        </tr>
+    </table>
+</header>
+
+<body>
+    <div id="logo">
+        <p><a th:href="@{/hgyr}"><img src="./img/2main.png" width="350px" /></a></p>
+    </div>
+    <div class="search">
+        <p><input type="text" size="50" id="searchBar" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="검색" id="searchBtn"/></p>
+    </div>
+    <div id="serviceTable">
+    <table>
+        <tr>
+            <div>
+                <td><a th:href="@{http://localhost:2111}"><img src="./img/Artboard 1.png" class="icons" width="100px" /></a></td>
+                <td><a th:href="@{http://localhost:2112/minigame}"><img src="./img/Artboard 2.png" class="icons" width="100px" /></a></td>
+                <td><a th:href="@{http://localhost:1999/chat/room}"><img src="./img/Artboard 3.png" class="icons" width="100px" /></a></td>
+                <td><a th:href="@{http://localhost:2113/receivelist}"><img src="./img/Artboard 4.png" class="icons" width="100px" /></a></td>
+                <td><a th:href="@{/hgyr}"><img src="./img/Artboard 5.png" class="icons" width="100px" /></a></td>
+            </div>
+        </tr>
+        <tr>
+            <div>
+                <td class="apps">블로그</td>
+                <td class="apps">게임</td>
+                <td class="apps">스포츠</td>
+                <td class="apps">쪽지</td>
+                <td class="apps">베팅</td>
+            </div>
+        </tr>
+    </table>
+    </div>
+</body>
+<footer>
+    <p>김민지 명원식 박기철 전준형 전총명</p>
+    <p>
+        <a href="#">이용약관</a>
+        <a href="#">개인정보처리방침</a>
+        <a href="#">고객센터</a>
+    </p>
+</footer>
+</html>

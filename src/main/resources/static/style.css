@@ -28,7 +28,7 @@ table {
 
 #searchBtn {
     height: 40px;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .apps {
@@ -117,3 +117,4 @@ input[type="text"] {
 #serviceTable{
     padding-bottom: 20px;
 }
+

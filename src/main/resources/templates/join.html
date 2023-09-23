@@ -1,21 +1,103 @@
 <!DOCTYPE html>
-<html xmlns:th=”http://www.thymeleaf.org”>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>회원가입</title>
-</head>
-<body>
-    <h1>회원가입</h1>
-    <hr>
-    <form method="post">
-        <p><input type="text" name="uid" placeholder="아이디" required/></p>
-        <p><input type="password" name="password" placeholder="비밀번호" required/></p>
-        <p><input type="text" name="name" placeholder="이름" required /></p>
-        <p><input type="date" name="birthDate" placeholder="생년월일" required/></p>
-        <p><input type="text" name="nickName" placeholder="닉네임" required/></p>
-        <p><input type="hidden" name="point" value="0" /></p>
-        <p><input type="submit" value="가입하기"/></p>
-    </form>
-</body>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/default_layout">
+<meta charset="UTF-8">
+<th:block layout:fragment="content">
+  <style>
+
+    body {
+      background: white;
+
+    }
+
+    .card-img-left {
+      width: 45%;
+      /* Link to your background image using in the property below! */
+      background: scroll center url('https://t1.daumcdn.net/thumb/R720x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/7kAw/image/NdZke3e8nxMq8wJWUBqtBvbezuk.jpg');
+      background-size: cover;
+    }
+
+    .btn-login {
+      font-size: 0.9rem;
+      letter-spacing: 0.05rem;
+      padding: 0.75rem 1rem;
+    }
+
+    .btn-google {
+      color: white !important;
+      background-color: #ea4335;
+    }
+
+    .btn-facebook {
+      color: white !important;
+      background-color: #3b5998;
+    }
+
+  </style>
+  <body>
+
+  <!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
+  <div class="container" style="margin-top: 60px">
+
+    <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-xl-9 mx-auto">
+          <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+            <div class="card-img-left d-none d-md-flex">
+              <!-- Background image for card set in CSS! -->
+            </div>
+            <div class="card-body p-4 p-sm-5">
+              <h5 class="card-title text-center mb-5 fw-light fs-5">회원가입</h5>
+              <form method="post">
+
+                <div class="form-floating mb-3">
+                  <input type="text" name="uid" class="form-control" id="floatingInputUsername" placeholder="아이디" required autofocus>
+                  <label for="floatingInputUsername">아이디</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                  <input type="password" name="password" class="form-control" id="floatingInputEmail" placeholder="비밀번호" required>
+                  <label for="floatingInputEmail">비밀번호</label>
+                </div>
+
+                <hr>
+
+                <div class="form-floating mb-3">
+                  <input type="text" name="name" class="form-control" id="floatingPassword" placeholder="이름" required>
+                  <label for="floatingPassword">이름</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                  <input type="date" name="birthDate" class="form-control" id="floatingPasswordConfirm" required>
+                  <label for="floatingPasswordConfirm">생년월일</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                  <input type="test" name="nickName" class="form-control" id="floatingPasswordConfirm2" placeholder="닉네임" required>
+                  <label for="floatingPasswordConfirm2">닉네임</label>
+                </div>
+                <input type="hidden" name="point" value="0" />
+
+
+                <div class="d-grid mb-2">
+                  <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">가입하기</button>
+                </div>
+
+                <a class="d-block text-center mt-2 small" th:href="@{/hgyr/login}">아이디가 있으세요? 로그인하기</a>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </body>
+
+
+  </div> <!-- 내용 끝나는 부분 -->
+
+  </body>
+</th:block>
 </html>

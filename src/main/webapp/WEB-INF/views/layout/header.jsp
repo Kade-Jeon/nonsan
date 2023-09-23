@@ -24,7 +24,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-        <a class="navbar-brand" href="/">Hazzokko</a>
+        <a class="navbar-brand" href="/">${board.nickname}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>

@@ -29,7 +29,7 @@ public class MessageController {
     private MessageService messageService;
     @Autowired
     HttpSession session;
-    private Map<String, String> userList = new HashMap<>();
+    //private Map<String, String> userList = new HashMap<>();
 
     /*//유저 정보 받아오기
     @PostMapping("/receivelist/user/valid")
@@ -79,9 +79,10 @@ public class MessageController {
         return "/message/receiveList";
     }*/
 
-    //다른 서버에서 넘어올 때 유저 정보 조회하고 메인으로 넘깁니다.
+    // 다른 서버에서 넘어올 때 유저 정보 조회하고 메인으로 넘깁니다.
+    // hgyr Main -> messageMain(receiveList 으로 이동 )
     @GetMapping("/receivelist")
-    public String rooms(HttpSession session, Model model) throws Exception {
+    public String receiveList(HttpSession session, Model model) throws Exception {
 
         String sid = session.getId();
         String uid = (String) session.getAttribute("user");
@@ -105,6 +106,7 @@ public class MessageController {
     // 수신 메시지 상세조회
     @GetMapping("/receiveRead")
     public String receiveRead(Model model, Long id){
+        LOGGER.info(session.getId());
         model.addAttribute("receive",messageService.receiveRead(id));
         return "/message/receiveRead";
     }
@@ -118,37 +120,36 @@ public class MessageController {
 
     // 메시지 전송 처리
     @PostMapping("/send")
-    public String send(ResponseDTO message) throws Exception {
+    public String send(ResponseDTO message, HttpSession session) throws Exception {
 
-        String id = message.getSendId();
+        String sendId = (String) session.getAttribute("user");
 
-        System.out.println(id);
-
-        // 전송 값 테스트 콘솔 출력
+        // 전송 값 테스트 콘솔 출력 (
+        System.out.println(sendId);
         System.out.println("발신아이디: " +message.getSendId());
         System.out.println("수신아이디: "+message.getReceiveId());
         System.out.println("발신제목: " +message.getTitle());
         System.out.println("발신내용: " +message.getContent());
 
-        // 반환값 아직 안 줬습니다.. (예외처리 미 구현..)
-        String result = messageService.send(message);
+        String status = messageService.send(message);
+        System.out.println(status);
+        String link = null;
 
-        return "redirect:/receivelist?uid="+id;
+        if ("true".equals(status)) {
+            link = "redirect:/receivelist";
+        } else {
+            link = "redirect:/message/error/error";
+        }
+
+        return link;
     }
-
-    // (구)수신 메시지 목록
-    /*@GetMapping("/receivelist")
-    public String receiveList(Model model) throws Exception{
-
-        model.addAttribute("list", messageService.receiveList("two"));
-
-        return "/message/receiveList";
-    }*/
 
     // 발신 쪽지함 목록
     @GetMapping("/sendlist")
-    public String sendList(@RequestParam String uid, Model model) throws Exception {
-        System.out.println(uid);
+    public String sendList(HttpSession session, Model model) throws Exception {
+        System.out.println(session.getId());
+
+        String uid = (String) session.getAttribute("user");
 
         model.addAttribute("list", messageService.sendList(uid));
 
@@ -180,5 +181,19 @@ public class MessageController {
         messageService.moveTrash(id);
 
         return "redirect:/deletelist";
-    }*/
+    }
+
+    @PostMapping("/login")
+    public String login(UserDto userDto, Model model){
+        UserDto userInfo = mainRestService.login(userDto);
+        if(userInfo != null){
+            logger.info("[Port:1888][MainController] 로그인 : "+userDto);
+            System.out.println(userInfo.getUid());
+            session.setAttribute("user", userInfo.getUid()); //수정
+            return "redirect:/hgyr";
+        }
+        return "error";
+    }
+
+    */
 }

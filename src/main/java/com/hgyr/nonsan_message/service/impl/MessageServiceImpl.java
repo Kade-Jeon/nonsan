@@ -33,19 +33,6 @@ public class MessageServiceImpl implements MessageService {
 
     }
 
-    // 메시지 발신 DB 기록
-    @Override
-    public String send(ResponseDTO message) throws Exception {
-        // 발신 DB에 저장
-        SendMessage sendMessage = message.toSend();
-        sendMsgRepository.save(sendMessage);
-        // 수신 DB에 저장
-        ReceiveMessage receiveMessage = message.toReceive();
-        messageRepository.save(receiveMessage);
-
-        return null;
-    }
-
     // 로그인 후 수신 메시지 목록 조회
     @Override
     public List<ReceiveMessage> receiveList(String msgId) throws Exception {
@@ -57,6 +44,25 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public ReceiveMessage receiveRead(Long id) {
         return messageRepository.findById(id).get();
+    }
+
+    // 메시지 발신 DB 기록
+    @Override
+    public String send(ResponseDTO message) throws Exception {
+        try{
+            // 발신 DB에 저장
+            SendMessage sendMessage = message.toSend();
+            sendMsgRepository.save(sendMessage);
+            // 수신 DB에 저장
+            ReceiveMessage receiveMessage = message.toReceive();
+            messageRepository.save(receiveMessage);
+        }catch(Exception e){
+            System.out.println("발신 Repository 기록 실패");
+            return "false";
+        }
+
+
+        return "true";
     }
 
     // 발신 메시지 목록

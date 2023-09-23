@@ -1,5 +1,6 @@
 package com.hgyr.chatting.controller;
 
+import ch.qos.logback.classic.turbo.MDCValueLevelPair;
 import com.hgyr.chatting.data.ChatRoom;
 import com.hgyr.chatting.data.UserDto;
 import com.hgyr.chatting.repository.ChatRoomRepository;
@@ -60,7 +61,7 @@ public class ChatRoomController {
         return chatRoomRepository.findRoomById(roomId);
     }
 
-    //다른 서버에서 넘어올 때 유저 정보 조회하고 메인으로 넘깁니다.
+    //다른 서버에서 넘어올 때 유저 세션 정보 조회하고 메인으로 넘깁니다.
     @GetMapping("/room")
     public String rooms(HttpSession session, Model model){
 
@@ -77,6 +78,7 @@ public class ChatRoomController {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<UserDto> responseEntity = restTemplate.postForEntity(uri, uid, UserDto.class);
+        UserDto rcvdDto = responseEntity.getBody();
         model.addAttribute("nickName", responseEntity.getBody().getNickName());
         logger.info("[Port:1999] ChatRoomContorller");
         return "/chat/room";

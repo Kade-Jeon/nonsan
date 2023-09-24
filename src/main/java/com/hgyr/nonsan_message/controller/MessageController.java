@@ -130,37 +130,5 @@ public class MessageController {
         return ResponseEntity.status(HttpStatus.OK).body("메시지가 삭제되었습니다");
     }
 
-    // 상세 글 -> 휴지통으로 이동
-    /*@GetMapping("/moveTrash")
-    public String moveTrash(Long id) {
-        messageService.moveTrash(id);
 
-        return "redirect:/receivelist";
-    }*/
-
-
-    /*// 휴지통 목록 조회
-    @GetMapping("/deletelist")
-    public String deleteList(Model model) throws Exception{
-
-        model.addAttribute("list", messageService.deleteList("two"));
-
-        return "/message/deleteList";
-    }
-
-
-
-    @PostMapping("/login")
-    public String login(UserDto userDto, Model model){
-        UserDto userInfo = mainRestService.login(userDto);
-        if(userInfo != null){
-            logger.info("[Port:1888][MainController] 로그인 : "+userDto);
-            System.out.println(userInfo.getUid());
-            session.setAttribute("user", userInfo.getUid()); //수정
-            return "redirect:/hgyr";
-        }
-        return "error";
-    }
-
-    */
 }

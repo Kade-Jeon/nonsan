@@ -37,7 +37,7 @@
         <td>
           <a th:href="@{/receiveRead(id=${message.id})}" th:text="${message.title}"></a>
         </td>
-        <td th:text="${message.sendDate}"></td>
+        <td th:text="${#temporals.format(message.sendDate, 'yyyy-MM-dd HH:mm')}"></td>
         <td ><input type="checkbox" class="form-check-input" id="check" name="id" th:value="${message.id}"></td>
       </tr>
 

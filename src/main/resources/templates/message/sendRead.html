@@ -23,7 +23,7 @@
 
                             <div class="form-group mb-3">
                                 <label for="sendDate">발신시간</label>
-                                <input type="text" id="sendDate" name="sendDate" class="form-control" th:value="${send.sendDate}" disabled />
+                                <input type="text" id="sendDate" name="sendDate" class="form-control" th:value="${#temporals.format(send.sendDate, 'yyyy-MM-dd HH:mm')}" disabled />
                             </div>
 
                             <div class="form-group mb-3">
@@ -39,7 +39,7 @@
                                 <div class="mb-3">
                                     <div class="text-right">
                                         <button type="button" class="btn btn-outline-secondary" id="back" onclick="goBack()">돌아가기</button>
-                                        <button class="btn btn-warning"  th:id="${send.id}" th:onclick="'confirmDelete(event, ' + ${send.id} + ')'" >삭제</button>
+                                        <button class="btn btn-secondary"  th:id="${send.id}" th:onclick="'confirmDelete(event, ' + ${send.id} + ')'" >삭제</button>
                                     </div>
                                 </div>
                             </div>

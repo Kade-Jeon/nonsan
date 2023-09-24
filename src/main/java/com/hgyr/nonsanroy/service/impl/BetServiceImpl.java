@@ -80,8 +80,12 @@ public class BetServiceImpl implements BetService {
 	public void saveBet(BetDto betDto) {
 		Bet bet = new Bet();
 
+		bet.setBetDate(LocalDateTime.now());
 		bet.setAwayScore(0); // 6
 		bet.setHomeScore(0); // 8
+		bet.setChosenResult("승"); // 기본값 - 나중에 수정 필요
+		bet.setMatchResult("진행중"); // 기본값 - 나중에 수정 필요
+		bet.setStatus("대기중"); // 기본값 - 나중에 수정 필요
 
 		bet.setBetNo(betDto.getBetNo()); // 1
 		bet.setBetAmount(betDto.getBetAmount()); // 9

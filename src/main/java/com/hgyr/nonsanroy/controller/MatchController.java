@@ -13,11 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import javax.servlet.http.HttpSession;
 import java.net.URI;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -99,40 +98,41 @@ public class MatchController {
 		return "bet/BetCart";
 	}
 
-	/* @GetMapping("/betIndex")
-	public String navigateBetIndex(Model model, @ModelAttribute("nonDateDto") BetDto nonDateDto) {
-	List<Bet> bets = betService.getAllBets();
-		System.out.println(bets);
-		model.addAttribute("bets", bets);
-		model.addAttribute("nonDateDto", nonDateDto);
+	@GetMapping("/betIndex")
+	public String navigateBetIndex(Model model, @ModelAttribute BetDto betDto) {
 
-		return "bet/BetIndex"; // templates/bet/BetMain.html
-} */
+		/* List<Bet> bets = betService.getAllBets();
+
+		model.addAttribute("bets", bets);
+		model.addAttribute("betDto", betDto);
+		betService.saveBet(betDto);
+
+		 */
+		return "bet/BetIndex"; // templates/bet/BetIndex.html
+	}
 
 	@PostMapping("/submitBet/{betNo}")
 	public String submitBet(@PathVariable Integer betNo, Model model, @ModelAttribute BetDto betDto) {
 
 		List<Bet> bets = betService.getAllBets();
-		Bet bet = new Bet();
-		bet.setBetDate(null);
 
 		model.addAttribute("bets", bets);
 		model.addAttribute("betDto", betDto);
 		System.out.println("bets :" + bets + "betDto + " + betDto);
 		betService.saveBet(betDto);
 
-		return "redirect:/bet/BetIndex/{betNo}";
+		return "redirect:/bet/betIndex/";
 	}
 
 	@GetMapping("/point/{uid}") //실제 작업시에는 Post 방식으로
-	public String getPoint(@PathVariable String uid){
+	public String getPoint(@PathVariable String uid) {
 		Double result = betService.getPoint(uid);
 		System.out.println(result);
 		return "redirect:/hgyr";
 	}
 
 	@GetMapping("/point/{uid}/{point}") //실제 작업시에는 Post 방식으로
-	public String updatePoint(@PathVariable("uid") String uid, @PathVariable("point") String point){
+	public String updatePoint(@PathVariable("uid") String uid, @PathVariable("point") String point) {
 		String result = betService.updatePoint(uid, point);
 		System.out.println(result);
 

@@ -45,6 +45,7 @@ public interface BetService {
 	List<Match> getAllMatches();
 
 	List<Bet> getAllBets();
+
 	void saveBet(BetDto betDto);
 
 	Double getPoint(String uid);

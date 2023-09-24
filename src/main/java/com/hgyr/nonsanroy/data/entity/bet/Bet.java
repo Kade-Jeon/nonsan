@@ -55,7 +55,7 @@ public class Bet {
 	 * @hidden
 	 * @author 명원식
 	 */
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String chosenResult;
 
 	/**
@@ -63,7 +63,7 @@ public class Bet {
 	 * @purpose actual match result ex) Hometeam 승리
 	 * @author 명원식
 	 */
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String matchResult;
 
 	/**

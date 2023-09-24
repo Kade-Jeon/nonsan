@@ -5,6 +5,7 @@ import com.hgyr.multi.service.MainRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -84,9 +85,11 @@ public class MainController {
     }
     /*로그아웃 클릭시 세션 삭제 후 메인페이지로 이동*/
     @GetMapping("/logout")
-    public String logout(){
+    public String logout(HttpSession session){
+        session.removeAttribute("user");
         session.invalidate();
         return "redirect:/hgyr";
     }
+
 
 }

@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -29,55 +30,6 @@ public class MessageController {
     private MessageService messageService;
     @Autowired
     HttpSession session;
-    //private Map<String, String> userList = new HashMap<>();
-
-    /*//유저 정보 받아오기
-    @PostMapping("/receivelist/user/valid")
-    @ResponseBody
-    public void checkUser(@RequestBody UserDto userDto, HttpSession session) throws Exception {
-        System.out.println(userDto);
-        if(userDto == null) {
-            throw new Exception();
-        }
-        userList.put(userDto.getUid(), userDto.getNickName());
-        System.out.println("user 인포 : "+userDto.getUid());
-
-    }
-
-    // 메인페이지 (수신 쪽지 목록)
-    @GetMapping("/receivelist")
-    public String receiveList(Model model, HttpSession session) throws Exception {
-        // 세션에서 유저 정보 가져오기
-        UserDto userDto = (UserDto) session.getAttribute("userDto");
-        System.out.println(userDto);
-
-        // 유저 정보가 없다면 처리할 내용 추가
-
-        // 유저 정보가 있다면 처리
-        String uid = userDto.getUid();
-
-        // 새로운 ReceiveMessage 객체 생성 및 receiveId 설정
-        ReceiveMessage receiveMessage = new ReceiveMessage();
-        receiveMessage.setReceiveId(uid);
-
-        model.addAttribute("list", messageService.receiveList(receiveMessage));
-
-        return "/message/receiveList";
-    }*/
-
-    // 메인페이지 (수신 쪽지 목록)
-    /*@GetMapping("/receivelist")
-    public String receiveList(@RequestParam String uid, Model model) throws Exception {
-
-        session.setAttribute("uid", uid);
-        String msg = (String) session.getAttribute(uid);
-
-        System.out.println(msg);
-
-        model.addAttribute("list", messageService.receiveList(uid));
-
-        return "/message/receiveList";
-    }*/
 
     // 다른 서버에서 넘어올 때 유저 정보 조회하고 메인으로 넘깁니다.
     // hgyr Main -> messageMain(receiveList 으로 이동 )
@@ -164,6 +116,11 @@ public class MessageController {
     }
 
     // 목록에서 선택 삭제
+    @PostMapping("/receiveDelete")
+    public ResponseEntity<String> receiveDelete(@RequestBody List<Long> id){
+        messageService.receiveDelete(id);
+        return ResponseEntity.ok("메시지가 삭제 되었습니다.");
+    }
 
 
     /*// 휴지통 목록 조회

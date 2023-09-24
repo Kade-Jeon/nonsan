@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * MessageService 인터페이스를 상속받은 클래스
@@ -37,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<ReceiveMessage> receiveList(String msgId) throws Exception {
 
-        return messageRepository.findAllByReceiveIdAndDeleteStatus(msgId, false, Sort.by(Sort.Direction.DESC, "sendDate"));
+        return messageRepository.findAllByReceiveIdAndArchiveStatus(msgId, false, Sort.by(Sort.Direction.DESC, "sendDate"));
     }
 
     // 수신 메시지 상세조회
@@ -69,13 +70,21 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<SendMessage> sendList(String sendId) throws Exception {
 
-        return sendMsgRepository.findAllBySendIdAndDeleteStatus(sendId, false, Sort.by(Sort.Direction.DESC, "sendDate"));
+        return sendMsgRepository.findAllBySendIdAndArchiveStatus(sendId, false, Sort.by(Sort.Direction.DESC, "sendDate"));
     }
 
     // 발신 메시지 상세조회
     @Override
     public SendMessage SendRead(Long id) {
         return sendMsgRepository.findById(id).get();
+    }
+
+    // 수신 메시지 삭제
+    @Override
+    public void receiveDelete(List<Long> ids) {
+        for (Long id : ids) {
+            messageRepository.deleteById(id);
+        }
     }
 
 

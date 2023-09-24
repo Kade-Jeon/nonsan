@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface SendMsgRepository extends JpaRepository<SendMessage, Long> {
 
-    List<SendMessage> findAllBySendIdAndDeleteStatus(String sendId, boolean deleteStatus, Sort sort);
+    List<SendMessage> findAllBySendIdAndArchiveStatus(String sendId, boolean archiveStatus, Sort sort);
 }

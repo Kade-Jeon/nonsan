@@ -55,7 +55,7 @@ public class SendMessage {
     private boolean readStatus;
 
     @Column
-    private boolean deleteStatus;
+    private boolean archiveStatus;
 
 
 }

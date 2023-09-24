@@ -30,7 +30,7 @@ public class ResponseDTO {
 
     private boolean readStatus;
 
-    private boolean deleteStatus;
+    private boolean archiveStatus;
 
     public SendMessage toSend() {
         return SendMessage.builder()
@@ -41,7 +41,7 @@ public class ResponseDTO {
                 .content(content)
                 .sendDate(sendDate)
                 .readStatus(readStatus)
-                .deleteStatus(deleteStatus)
+                .archiveStatus(archiveStatus)
                 .build();
     }
 
@@ -54,7 +54,7 @@ public class ResponseDTO {
                 .content(content)
                 .sendDate(sendDate)
                 .readStatus(readStatus)
-                .deleteStatus(deleteStatus)
+                .archiveStatus(archiveStatus)
                 .build();
     }
 }

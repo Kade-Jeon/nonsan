@@ -25,7 +25,7 @@
       </tr>
       </thead>
       <tbody>
-      <form id="temp">
+
       <tr th:each="message : ${list}">
         <!--<td th:text="${message.id}"></td>-->
         <td th:text="${message.sendId}"></td>
@@ -35,7 +35,7 @@
         <td th:text="${message.sendDate}"></td>
         <td ><input type="checkbox" class="form-check-input" id="check" name="id" th:value="${message.id}"></td>
       </tr>
-      </form>
+
       </tbody>
     </table>
     <!--<a th:href="@{/message/send}" class="btn btn-warning" >쪽지 보내기</a>-->
@@ -43,8 +43,8 @@
             <div class="form-group d-flex justify-content-end align-items-center">
               <div class="mb-3">
                 <div class="text-right">
-                  <button type="button" class="btn btn-outline-secondary" onclick="action('delete')">삭제</button>
-                  <button type="button" class="btn btn-warning" onclick="action('archive')">보관하기</button>
+                  <button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
+                  <button type="button" class="btn btn-warning" id="archive">보관하기</button>
                 </div>
               </div>
             </div>
@@ -53,25 +53,56 @@
         </div>
         <!-- 체크박스 기능 동작 -->
         <script>
-          function action(action){
-            const form = document.getElementById('temp');
-            const checkboxes = form.querySelectorAll('input[name="id"]:checked');
-
-            /*체크한게 없으면 리턴*/
-            if (checkboxes.length === 0) {
-              alert('쪽지를 선택해 주세요.')
-              return;
-            }
-
-            /*체크한 글 모으기*/
-            const selectedId = [];
-            checkboxes.forEach(checkbox =>{
-              selectedId.push(checkbox.value);
+          $(document).ready(function () {
+            // 삭제
+            $("#delete").click(function () {
+              performAction("delete");
             });
 
+            // 아카이브
+            $("#archive").click(function () {
+              performAction("archive");
+            });
 
+            function performAction(actionType) {
+              var ids = [];
 
-          }
+              $(".form-check-input:checked").each(function () {
+                ids.push(parseInt($(this).val()));
+              });
+
+              if (ids.length === 0) {
+                alert("쪽지를 선택해 주세요.");
+                return;
+              }
+
+              var dataToSend = JSON.stringify({ids: ids});
+
+              var url;
+              if (actionType === "delete") {
+                url = "/receiveDelete";
+              }else if (actionType === "archive"){
+                url = "/archive";
+              }else {
+                alert("잘못된 접근 경로 입니다.");
+                return;
+              }
+
+              $.ajax({
+                type: "POST",
+                url: url,
+                contentType: "application/json",
+                data: dataToSend,
+                success: function(data, textStatus) {
+                  // 성공 처리
+                  window.location.href = "/receiveList";
+                },
+                error: function(data, testStatus) {
+                  alert("에러가 발생했습니다.");
+                }
+              });
+            }
+          });
         </script>
       </div>
     </div>

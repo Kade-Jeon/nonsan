@@ -80,7 +80,21 @@ public class BoardController {
 
     /* 글 상세보기 */
     @GetMapping("/board/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    public String findById(@PathVariable Long id, Model model, HttpSession session) {
+        String sid = session.getId();
+        String uid = (String) session.getAttribute("user");
+        URI uri = UriComponentsBuilder
+                .fromUriString("http://localhost:1777")
+                .path("/valid/user/"+uid)
+                .encode()
+                .build()
+                .toUri();
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<UserDto> responseEntity = restTemplate.postForEntity(uri, uid, UserDto.class);
+        model.addAttribute("uid", uid);
+        model.addAttribute("nickName", responseEntity.getBody().getNickName());
+
         model.addAttribute("board", boardService.글상세보기(id));
         return "board/detail";
     }

@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%
+    session = request.getSession();
+    String uid = (String) session.getAttribute("uid");
+    String nickName = (String) session.getAttribute("nickName");
+%>
 <%--<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <sec:authorize access="isAuthenticated()">
@@ -9,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Hazzokko Blog</title>
+    <title>Blog</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -24,7 +30,8 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-        <a class="navbar-brand" href="/">${board.nickname}</a>
+        <a class="navbar-brand" href="/">${uid}</a>
+        <%--<a class="navbar-brand" href="/">${board.uid}</a>--%>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>

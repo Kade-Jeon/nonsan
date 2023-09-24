@@ -85,7 +85,7 @@ public class MainController {
     }
     /*로그아웃 클릭시 세션 삭제 후 메인페이지로 이동*/
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session){ //redis 세션 처리 위해 파라미터로 HttpSession을 받습니다.
         session.removeAttribute("user");
         session.invalidate();
         return "redirect:/hgyr";

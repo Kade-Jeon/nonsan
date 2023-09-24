@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.UUID;
 
+/* 들어오는 요청에 대한 로그를 찍어 줍니다. */
 public class LogFilter implements Filter {
 
     private final Logger logger = LoggerFactory.getLogger(LogFilter.class);

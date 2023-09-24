@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class homeController {
 
+    /* 메인페이지로 연결 */
     @GetMapping
     public String home() {
         return "redirect:/hgyr";

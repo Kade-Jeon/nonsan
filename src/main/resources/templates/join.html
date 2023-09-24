@@ -39,7 +39,62 @@
 
   <!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
   <div class="container" style="margin-top: 60px">
+<script>
+  $(document).ready(function () {
+    $('#floatingInputUsername').keyup(function () {
+      var idLength = $('#floatingInputUsername').val().length;
+      if (idLength < 4) {
+        $('#submit').prop("disabled", true);
+        $('#idMsg').text("ID는 4글자 이상 입니다.");
+        $('#idMsg').addClass("red");
+      } else {
+        $('#submit').prop("disabled", false);
+        $('#idMsg').text("");
+      }
+    });
+  })
 
+
+  function fn_checkId() {
+    var inputId = $("#floatingInputUsername").val();
+    if (inputId == '') {
+      alert("ID를 입력하세요");
+      return; //fn_checkId()함수 종료
+    }
+   /* alert(inputId);*/
+    $.ajax({
+      type : "POST",
+      async : false,
+      url : "http://localhost:1777/valid/checkId",
+      dataType : "text", //리턴타입 문자열
+      data : {
+        uid : inputId
+      }, //전송 파라미터 (파라미터명 id : 값 )
+      success : function(result, textStatus) {
+ 		/*		alert(result);
+ 				alert(textStatus);*/
+
+        if (result == 'usable') {
+          $('#idMsg').text("사용할 수 있는 ID입니다.");
+          $('#btn-checkId').prop("disabled", true);
+          $('#inputId').addClass("blue");
+        } else {
+          $('#idMsg').text("사용할 수 없는 ID입니다.");
+          $('#inputId').addClass("red");
+        }
+      },
+      error : function(data, textStatus) {
+        alert("에러가 발생했습니다.");
+        ㅣ
+      },
+      complete : function(data, textStatus) {
+        //alert("작업을 완료 했습니다");
+      }
+    }); //end ajax
+
+
+  }
+</script>
     <body>
     <div class="container">
       <div class="row">
@@ -53,10 +108,13 @@
               <form method="post">
 
                 <div class="form-floating mb-3">
-                  <input type="text" name="uid" class="form-control" id="floatingInputUsername" placeholder="아이디" required autofocus>
+                  <input type="text" name="uid" class="form-control" id="floatingInputUsername" min="4" placeholder="아이디" required autofocus>
                   <label for="floatingInputUsername">아이디</label>
+                  <input class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" id="checkId" onclick="fn_checkId()" type="button" value="중복확인" />
                 </div>
-
+                <div>
+                  <p id="idMsg"></p>
+                </div>
                 <div class="form-floating mb-3">
                   <input type="password" name="password" class="form-control" id="floatingInputEmail" placeholder="비밀번호" required>
                   <label for="floatingInputEmail">비밀번호</label>
@@ -82,7 +140,7 @@
 
 
                 <div class="d-grid mb-2">
-                  <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">가입하기</button>
+                  <button class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" id="submit" type="submit" >가입하기</button>
                 </div>
 
                 <a class="d-block text-center mt-2 small" th:href="@{/hgyr/login}">아이디가 있으세요? 로그인하기</a>

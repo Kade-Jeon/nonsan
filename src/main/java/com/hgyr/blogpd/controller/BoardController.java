@@ -29,25 +29,6 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    // 레디스 세션정보 공통 메서드
-    /*public void sessionUid(Model model, HttpSession session) {
-        String sid = session.getId();
-        String uid = (String) session.getAttribute("user");
-        System.out.println(sid + "::::::::" + uid);
-
-        URI uri = UriComponentsBuilder
-                .fromUriString("http://localhost:1777")
-                .path("/valid/user/"+uid)
-                .encode()
-                .build()
-                .toUri();
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<UserDto> responseEntity = restTemplate.postForEntity(uri, uid, UserDto.class);
-        model.addAttribute("uid", uid);
-        model.addAttribute("nickName", responseEntity.getBody().getNickName());
-    }*/
-
     /* 글목록 */
     @GetMapping({"", "/"})
     public String index(Model model,
@@ -74,7 +55,21 @@ public class BoardController {
 
     /* 글쓰기 폼으로 이동 */
     @GetMapping("/board/saveForm")
-    public String saveForm() {
+    public String saveForm(Model model, HttpSession session) {
+        String sid = session.getId();
+        String uid = (String) session.getAttribute("user");
+        URI uri = UriComponentsBuilder
+                .fromUriString("http://localhost:1777")
+                .path("/valid/user/"+uid)
+                .encode()
+                .build()
+                .toUri();
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<UserDto> responseEntity = restTemplate.postForEntity(uri, uid, UserDto.class);
+        model.addAttribute("uid", uid);
+        model.addAttribute("nickName", responseEntity.getBody().getNickName());
+
         return "board/saveForm";
     }
 

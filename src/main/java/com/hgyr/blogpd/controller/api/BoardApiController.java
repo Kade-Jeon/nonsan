@@ -4,17 +4,14 @@ import com.hgyr.blogpd.dto.ResponseDto;
 import com.hgyr.blogpd.dto.UserDto;
 import com.hgyr.blogpd.model.Board;
 import com.hgyr.blogpd.model.Reply;
-import com.hgyr.blogpd.model.UserBlog;
 import com.hgyr.blogpd.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-//import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
 
@@ -46,26 +43,12 @@ public class BoardApiController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    /*public ResponseDto<Integer> save(
-            @RequestBody Board board,
-            @AuthenticationPrincipal PrincipalDetail principal) {
-        boardService.글쓰기(board, principal.getUser());
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-    }*/
-
     /* 글 삭제 */
     @DeleteMapping("/api/board/{id}")
     public ResponseDto<Integer> deleteById(@PathVariable Long id) {
         boardService.글삭제하기(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
-
-    /*public ResponseDto<Integer> deleteById(
-            @PathVariable Long id,
-            @AuthenticationPrincipal PrincipalDetail principal) {
-        boardService.글삭제하기(id, principal);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-    }*/
 
     /* 글 수정 */
     @PutMapping("/api/board/{id}")
@@ -100,17 +83,7 @@ public class BoardApiController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    /*public ResponseDto<Integer> replySave(
-            @PathVariable Long boardId,
-            @RequestBody Reply reply,
-            @AuthenticationPrincipal PrincipalDetail principal) {
-
-        boardService.댓글쓰기(principal.getUser(), boardId, reply);
-        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
-    }*/
-
     /* 댓글 삭제 */
-    // boardId 는 주소를 만들기 위해 파라미터로 받음 (replyId만 있으면 삭제 가능)
     @DeleteMapping("/api/board/{boardId}/reply/{replyId}")
     public ResponseDto<Integer> replyDelete(@PathVariable Long replyId) {
         boardService.댓글삭제(replyId);

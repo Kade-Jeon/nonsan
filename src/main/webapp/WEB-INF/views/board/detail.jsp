@@ -3,12 +3,11 @@
 <%--글 상세보기--%>
 <div class="container">
     <button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
-    <%--<c:if test="${board.uid == principal.user.id}">
+    <%--게시글 작성자의 uid와 세션의 uid가 동일한 경우에만 수정, 삭제 버튼이 보임--%>
+    <c:if test="${board.uid == uid}">
         <a href="/board/${board.id}/updateForm" class="btn btn-warning">수정</a>
         <button id="btn-delete" class="btn btn-danger">삭제</button>
-    </c:if>--%>
-    <a href="/board/${board.id}/updateForm" class="btn btn-warning">수정</a>
-    <button id="btn-delete" class="btn btn-danger">삭제</button>
+    </c:if>
     <br /><br />
     <div>
         글 번호 : <span id="id"><i>${board.id} </i></span>
@@ -27,7 +26,6 @@
     <%--댓글 기능 구현--%>
     <div class="card">
         <form>
-            <%--<input type="hidden" id="userId" value="${principal.user.id}" />--%>
             <input type="hidden" id="nickname" value="${board.nickname}" />
             <input type="hidden" id="nickname" value="${reply.nickname}" />
             <input type="hidden" id="boardId" value="${board.id}" />
@@ -50,7 +48,7 @@
                 <div>${reply.content}</div>
                 <div class="d-flex">
                     <div class="font-italic">작성자 : ${reply.nickname} &nbsp;</div>
-                    <%--<c:if test="${reply.user.id == principal.user.id}">--%>
+                    <%--게시글 작성자의 닉네임과 세션의 닉네임이 동일한 경우에만 댓글 삭제 버튼이 보임--%>
                     <c:if test="${reply.nickname == nickName}">
                         <button onclick="index.replyDelete(${board.id}, ${reply.id})" class="badge">삭제</button>
                     </c:if>

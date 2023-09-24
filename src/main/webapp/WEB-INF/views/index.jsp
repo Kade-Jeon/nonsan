@@ -2,10 +2,6 @@
 <%@ include file="layout/header.jsp"%>
 
 <div class="container">
-<%-- ${boards} : EL 표현식, Request 정보가 넘어올 때 jstl에서 boards를 받을 수 있음
-     페이징 구현 후 ${boards.content}로 수정--%>
-<%-- 톰켓의 4가지 Scope 영역중에 application, session, request, pageContext가 있다.
-     그 중에 pageContext 영역에 보관하고 EL표현식으로 찾아서 사용--%>
 <c:forEach var="board" items="${boards.content}">
     <div class="card m-2">
         <div class="card-body">
@@ -15,6 +11,7 @@
     </div>
 </c:forEach>
     <ul class="pagination justify-content-center">
+        <%--페이징 기능 구현--%>
         <c:choose>
             <c:when test="${boards.first}">
                 <li class="page-item disabled"><a class="page-link" href="?page=${boards.number - 1}">Previous</a></li>

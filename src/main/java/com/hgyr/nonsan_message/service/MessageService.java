@@ -26,6 +26,9 @@ public interface MessageService {
     // 수신 메시지 삭제
     void receiveDelete(List<Long> ids);
 
+    // 발신 메시지 삭제
+    void sendDelete(List<Long> ids);
+
     /*// 휴지통 목록
     List<ReceiveMessage> deleteList(String receiveId) throws Exception;
 

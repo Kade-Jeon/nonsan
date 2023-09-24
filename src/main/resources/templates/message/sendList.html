@@ -12,33 +12,101 @@
       <div class="col-lg-10">
         <div class="card border-0 rounded-3 shadow-lg">
           <div class="card-body p-4">
-            <!--<div class="container mt-3">-->
             <h2>발신 메시지</h2>
             <table class="table table-hover">
               <thead>
               <tr>
-                <!--<th>index</th>-->
                 <th>수신아이디</th>
                 <th>제목</th>
                 <th>수신시간</th>
-                <th>선택</th>
+                <th>선택<input type="checkbox" id="checkAll" onclick="checkBoxes()"></th>
               </tr>
               </thead>
               <tbody>
               <tr th:each="message : ${list}">
-                <!--<td th:text="${message.id}"></td>-->
+
                 <td th:text="${message.receiveId}"></td>
                 <td>
                   <a th:href="@{/sendRead(id=${message.id})}" th:text="${message.title}"></a>
                 </td>
                 <td th:text="${message.sendDate}"></td>
-                <td >check</td>
+                <td ><input type="checkbox" class="form-check-input" id="check" name="id" th:value="${message.id}"></td>
               </tr>
               </tbody>
             </table>
-            <a th:href="@{/message/send}" class="btn btn-warning" >쪽지 보내기</a>
-            <!-- </div> 내용 끝나는 부분 -->
+            <div class="form-group d-flex justify-content-end align-items-center">
+              <div class="mb-3">
+                <div class="text-right">
+                  <button type="button" class="btn btn-danger" id="delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+                  <!--<button type="button" class="btn btn-warning" id="archive" >보관하기</button>-->
+                </div>
+              </div>
+            </div>
           </div>
+          </div>
+
+        <!-- 체크박스 기능 동작 -->
+        <script>
+          function checkBoxes() {
+            var checkboxes = document.querySelectorAll('.form-check-input');
+            var checkAll = document.getElementById('checkAll');
+            checkboxes.forEach(function (checkbox) {
+              checkbox.checked = checkAll.checked;
+            })
+          }
+
+          $(document).ready(function () {
+            // 삭제
+            $("#delete").click(function () {
+              performAction("delete");
+            });
+
+            // 아카이브
+            /*$("#archive").click(function () {
+              performAction("archive");
+            });*/
+
+            function performAction(actionType) {
+              var ids = [];
+
+              $(".form-check-input:checked").each(function () {
+                ids.push(parseInt($(this).val()));
+              });
+
+              if (ids.length === 0) {
+                alert("쪽지를 선택해 주세요.");
+                return;
+              }
+
+              var dataToSend = JSON.stringify(ids);
+
+              var url;
+              if (actionType === "delete") {
+                url = "/sendDelete";
+              }else if (actionType === "archive"){
+                url = "/archive";
+              }else {
+                alert("잘못된 접근 경로 입니다.");
+                return;
+              }
+
+              $.ajax({
+                type: "POST",
+                url: url,
+                contentType: "application/json",
+                data: dataToSend,
+                success: function(data, textStatus) {
+                  // 성공 처리
+                  alert(data);
+                  window.location.reload();
+                },
+                error: function(data, testStatus) {
+                  alert("에러가 발생했습니다.");
+                }
+              });
+            }
+          });
+        </script>
         </div>
       </div>
     </div>

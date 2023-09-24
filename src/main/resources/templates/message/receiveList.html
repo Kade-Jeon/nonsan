@@ -21,13 +21,13 @@
         <th>발신아이디</th>
         <th>제목</th>
         <th>수신시간</th>
-        <th>선택</th>
+        <th>선택<input type="checkbox" id="checkAll" onclick="checkBoxes()"></th>
       </tr>
       </thead>
       <tbody>
 
       <tr th:each="message : ${list}">
-        <!--<td th:text="${message.id}"></td>-->
+
         <td th:text="${message.sendId}"></td>
         <td>
           <a th:href="@{/receiveRead(id=${message.id})}" th:text="${message.title}"></a>
@@ -43,8 +43,7 @@
             <div class="form-group d-flex justify-content-end align-items-center">
               <div class="mb-3">
                 <div class="text-right">
-                  <button type="button" class="btn btn-outline-secondary" id="delete">삭제</button>
-                  <button type="button" class="btn btn-warning" id="archive">보관하기</button>
+                  <button type="button" class="btn btn-danger" id="delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
                 </div>
               </div>
             </div>
@@ -53,6 +52,14 @@
         </div>
         <!-- 체크박스 기능 동작 -->
         <script>
+          function checkBoxes() {
+            var checkboxes = document.querySelectorAll('.form-check-input');
+            var checkAll = document.getElementById('checkAll');
+            checkboxes.forEach(function (checkbox) {
+              checkbox.checked = checkAll.checked;
+            })
+          }
+
           $(document).ready(function () {
             // 삭제
             $("#delete").click(function () {
@@ -76,7 +83,7 @@
                 return;
               }
 
-              var dataToSend = JSON.stringify({ids: ids});
+              var dataToSend = JSON.stringify(ids);
 
               var url;
               if (actionType === "delete") {
@@ -95,7 +102,8 @@
                 data: dataToSend,
                 success: function(data, textStatus) {
                   // 성공 처리
-                  window.location.href = "/receiveList";
+                  alert(data);
+                  window.location.reload();
                 },
                 error: function(data, testStatus) {
                   alert("에러가 발생했습니다.");

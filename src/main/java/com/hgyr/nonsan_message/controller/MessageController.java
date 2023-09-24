@@ -6,6 +6,7 @@ import com.hgyr.nonsan_message.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -115,11 +116,18 @@ public class MessageController {
         return "/message/sendRead";
     }
 
-    // 목록에서 선택 삭제
+    // 수신목록에서 선택 삭제
     @PostMapping("/receiveDelete")
-    public ResponseEntity<String> receiveDelete(@RequestBody List<Long> id){
-        messageService.receiveDelete(id);
-        return ResponseEntity.ok("메시지가 삭제 되었습니다.");
+    public ResponseEntity<String> receiveDelete(@RequestBody List<Long> ids){
+        messageService.receiveDelete(ids);
+        return ResponseEntity.status(HttpStatus.OK).body("메시지가 삭제되었습니다.");
+    }
+
+    // 발신목록에서 선택 삭제
+    @PostMapping("/sendDelete")
+    public ResponseEntity<String> sendDelete(@RequestBody List<Long> ids) {
+        messageService.sendDelete(ids);
+        return ResponseEntity.status(HttpStatus.OK).body("메시지가 삭제되었습니다");
     }
 
 

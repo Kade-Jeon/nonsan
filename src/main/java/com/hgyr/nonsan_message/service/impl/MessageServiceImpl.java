@@ -87,6 +87,14 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
+    // 발신 메시지 삭제
+    @Override
+    public void sendDelete(List<Long> ids) {
+        for (Long id : ids) {
+            sendMsgRepository.deleteById(id);
+        }
+    }
+
 
     /*// 휴지통 목록
     @Override

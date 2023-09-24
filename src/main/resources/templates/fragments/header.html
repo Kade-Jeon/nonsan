@@ -29,40 +29,40 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <div class="container">
-            <a class="navbar-brand" href="http://localhost:1888/hgyr"> HGYR
-                <!--<img src="https://placeholder.pics/svg/150x50/888888/EEE/Logo" alt="..." height="36">-->
-            </a>
+            <a class="navbar-brand" href="http://localhost:1888/hgyr">HGYR</a>
+            <a class="navbar-brand" href="http://localhost:2113/receivelist">message</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="btn btn-light" th:href="@{/message/send}">쪽지쓰기</a>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" th:href="@{/receivelist(uid=${session.uid})}">받은쪽지</a>
+                        <a class="btn btn-light" th:href="@{/message/send}">쪽지쓰기</a>
+                    </li>
+                    <li><p></p></li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/receivelist}">받은 메시지</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/sendlist}">보낸쪽지</a>
+                        <a class="nav-link" th:href="@{/sendlist}">보낸 메시지</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">휴지통</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/message/send}">쪽지 보내기</a>
-                    </li>
+                    <th:block th:unless="${session.user == null}">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
+                            [[|반갑습니다. ${session.user} 님|]]
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">마이페이지</a></li>
+                            <li><a class="dropdown-item" href="#">1:1 문의</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="http://localhost:1888/hgyr/logout" onclick="return confirm('로그아웃 하시겠습니까?');">로그아웃</a></li>
                         </ul>
                     </li>
+                    </th:block>
                 </ul>
             </div>
         </div>

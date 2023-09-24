@@ -8,11 +8,14 @@
 
   <!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
   <div class="container px-5 my-5">
+
     <div class="row justify-content-center">
-      <div class="col-lg-10">
+
+      <div class="col-md-8">
+        <h2>보낸 메시지</h2>
         <div class="card border-0 rounded-3 shadow-lg">
           <div class="card-body p-4">
-            <h2>발신 메시지</h2>
+
             <table class="table table-hover">
               <thead>
               <tr>
@@ -23,6 +26,11 @@
               </tr>
               </thead>
               <tbody>
+              <tr>
+                <td colspan="4" style="text-align: center;">
+                  <span th:if="${list.empty}">보낸 메시지가 없습니다.</span>
+                </td>
+              </tr>
               <tr th:each="message : ${list}">
 
                 <td th:text="${message.receiveId}"></td>
@@ -37,7 +45,7 @@
             <div class="form-group d-flex justify-content-end align-items-center">
               <div class="mb-3">
                 <div class="text-right">
-                  <button type="button" class="btn btn-danger" id="delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+                  <button type="button" class="btn btn-secondary" id="delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
                   <!--<button type="button" class="btn btn-warning" id="archive" >보관하기</button>-->
                 </div>
               </div>

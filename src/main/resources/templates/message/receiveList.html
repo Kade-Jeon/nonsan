@@ -9,15 +9,16 @@
   <!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
   <div class="container px-5 my-5">
     <div class="row justify-content-center">
-      <div class="col-lg-10">
+      <div class="col-md-8">
+        <h2>받은 메시지</h2>
         <div class="card border-0 rounded-3 shadow-lg">
           <div class="card-body p-4">
-  <!--<div class="container mt-3">-->
-    <h2>수신 메시지</h2>
+
+
     <table class="table table-hover">
       <thead>
       <tr>
-        <!--<th>index</th>-->
+
         <th>발신아이디</th>
         <th>제목</th>
         <th>수신시간</th>
@@ -25,7 +26,11 @@
       </tr>
       </thead>
       <tbody>
-
+      <tr>
+        <td colspan="4" style="text-align: center;">
+          <span th:if="${list.empty}">받은 메시지가 없습니다.</span>
+        </td>
+      </tr>
       <tr th:each="message : ${list}">
 
         <td th:text="${message.sendId}"></td>
@@ -43,7 +48,7 @@
             <div class="form-group d-flex justify-content-end align-items-center">
               <div class="mb-3">
                 <div class="text-right">
-                  <button type="button" class="btn btn-danger" id="delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+                  <button type="button" class="btn btn-secondary" id="delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
                 </div>
               </div>
             </div>

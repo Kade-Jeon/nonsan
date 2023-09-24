@@ -130,6 +130,14 @@ public class MessageController {
         return ResponseEntity.status(HttpStatus.OK).body("메시지가 삭제되었습니다");
     }
 
+    // 상세 글 -> 휴지통으로 이동
+    /*@GetMapping("/moveTrash")
+    public String moveTrash(Long id) {
+        messageService.moveTrash(id);
+
+        return "redirect:/receivelist";
+    }*/
+
 
     /*// 휴지통 목록 조회
     @GetMapping("/deletelist")
@@ -140,13 +148,7 @@ public class MessageController {
         return "/message/deleteList";
     }
 
-    // 상세 글 -> 휴지통으로 이동
-    @GetMapping("/moveTrash")
-    public String moveTrash(Long id) {
-        messageService.moveTrash(id);
 
-        return "redirect:/deletelist";
-    }
 
     @PostMapping("/login")
     public String login(UserDto userDto, Model model){

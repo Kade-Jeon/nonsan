@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/default_layout">
 <head>
     <meta charset="UTF-8">
     <title>Betting Main</title>
@@ -51,83 +53,143 @@
 
     </style>
     <script>
-        function moveToCart(matchNo, odds, teamName, teamName2, matchType) {
+        // function moveToCart(matchNo, odds, teamName, teamName2, matchType, matchEnd) {
+        function moveToCartHome(matchNo, odds, homeTeam, awayTeam, matchType, matchEnd) {
+
             console.log(matchNo);
             console.log(odds);
-            console.log(teamName);
+            console.log(homeTeam);
+
+            // document.getElementById("matchNoCart").value = matchNo;
+            // document.getElementById("oddsCart").value = odds;
+            // document.getElementById("teamNameCart").value = teamName;
+            // document.getElementById("teamName2Cart").value = teamName2;
+            // document.getElementById("matchTypeCart").value = matchType;
+            // document.getElementById("matchEndCart").value = matchEnd;
+            //
+            //
+            // let cart = document.querySelector('.cart');  // Get the cart element by its class name
+            // let contentElement = document.createElement('p'); // Create a new <p> element to display the odds
+            // contentElement.textContent = matchNo + " " + teamName + ' Wins: ' + odds; // Set the content of the <p> element based on the odds and type
+            //
+            // cart.appendChild(contentElement); // Append the <p> element to the cart
 
             document.getElementById("matchNoCart").value = matchNo;
             document.getElementById("oddsCart").value = odds;
-            document.getElementById("teamNameCart").value = teamName;
-            document.getElementById("teamName2Cart").value = teamName2;
+            document.getElementById("homeTeamCart").value = homeTeam;
+            document.getElementById("awayTeamCart").value = awayTeam;
             document.getElementById("matchTypeCart").value = matchType;
+            document.getElementById("matchEndCart").value = matchEnd;
+
 
             let cart = document.querySelector('.cart');  // Get the cart element by its class name
             let contentElement = document.createElement('p'); // Create a new <p> element to display the odds
-            contentElement.textContent = matchNo + " " + teamName + ' Wins: ' + odds; // Set the content of the <p> element based on the odds and type
+            contentElement.textContent = matchNo + " " + homeTeam + ' Wins: ' + odds; // Set the content of the <p> element based on the odds and type
+
+            cart.appendChild(contentElement); // Append the <p> element to the cart
+        }
+
+        function moveToCartAway(matchNo, odds, awayTeam, homeTeam, matchType, matchEnd) {
+
+            console.log(matchNo);
+            console.log(odds);
+            console.log(awayTeam);
+
+            // document.getElementById("matchNoCart").value = matchNo;
+            // document.getElementById("oddsCart").value = odds;
+            // document.getElementById("teamNameCart").value = teamName;
+            // document.getElementById("teamName2Cart").value = teamName2;
+            // document.getElementById("matchTypeCart").value = matchType;
+            // document.getElementById("matchEndCart").value = matchEnd;
+            //
+            //
+            // let cart = document.querySelector('.cart');  // Get the cart element by its class name
+            // let contentElement = document.createElement('p'); // Create a new <p> element to display the odds
+            // contentElement.textContent = matchNo + " " + teamName + ' Wins: ' + odds; // Set the content of the <p> element based on the odds and type
+            //
+            // cart.appendChild(contentElement); // Append the <p> element to the cart
+
+            document.getElementById("matchNoCart").value = matchNo;
+            document.getElementById("oddsCart").value = odds;
+            document.getElementById("homeTeamCart").value = homeTeam;
+            document.getElementById("awayTeamCart").value = awayTeam;
+            document.getElementById("matchTypeCart").value = matchType;
+            document.getElementById("matchEndCart").value = matchEnd;
+
+
+            let cart = document.querySelector('.cart');  // Get the cart element by its class name
+            let contentElement = document.createElement('p'); // Create a new <p> element to display the odds
+            contentElement.textContent = matchNo + " " + awayTeam + ' Wins: ' + odds; // Set the content of the <p> element based on the odds and type
 
             cart.appendChild(contentElement); // Append the <p> element to the cart
         }
     </script>
 </head>
-<body>
-<h1>MATCH SCHEDULE</h1>
-<div class="container">
-    <div class="content">
-        <table>
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>경기일시</th>
-                <th>경기종료시</th>
-                <th>Sport</th>
-                <th>HOME</th>
-                <th>AWAY</th>
-                <th>Home Odds</th>
-                <th>Away Odds</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="match: ${matches}">
-                <td th:text="${match.matchNo}"></td>
-                <td th:text="${#temporals.format(match.matchStart, 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${#temporals.format(match.matchEnd, 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${match.matchType}"></td>
-                <td th:text="${match.homeTeam}"></td>
-                <td th:text="${match.awayTeam}"></td>
-                <td><a th:id="'homeOdds_' + ${match.matchNo}"
-                       th:text="${match.homeOdds}"
-                       th:attr="onclick='moveToCart(\'' + ${match.matchNo} +
+<th:block layout:fragment="content">
+    <body>
+    <h1>MATCH SCHEDULE</h1>
+    <div class="container" style="margin-top: 60px">
+        <div class="content">
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>경기일시</th>
+                    <th>경기종료시</th>
+                    <th>Sport</th>
+                    <th>HOME</th>
+                    <th>AWAY</th>
+                    <th>Home Odds</th>
+                    <th>Away Odds</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="match: ${matches}">
+                    <td th:text="${match.matchNo}"></td>
+                    <td th:text="${match.matchStart}"></td>
+                    <td th:text="${match.matchEnd}"></td>
+                    <td th:text="${match.matchType}"></td>
+                    <td th:text="${match.homeTeam}"></td>
+                    <td th:text="${match.awayTeam}"></td>
+                    <td><a th:id="'homeOdds_' + ${match.matchNo}"
+                           th:text="${match.homeOdds}"
+                           th:attr="onclick='moveToCartHome(\'' + ${match.matchNo} +
                        '\', \'' + ${match.homeOdds} +
                        '\', \'' + ${match.homeTeam} +
                        '\', \'' + ${match.awayTeam} +
                        '\', \'' + ${match.matchType} +
+                       '\', \'' + ${match.matchEnd} +
                        '\')'"></a>
-                </td>
-                <td><a th:id="'awayOdds_' + ${match.matchNo}"
-                       th:text="${match.awayOdds}"
-                       th:attr="onclick='moveToCart(\'' + ${match.matchNo} +
+                    </td>
+                    <td><a th:id="'awayOdds_' + ${match.matchNo}"
+                           th:text="${match.awayOdds}"
+                           th:attr="onclick='moveToCartAway(\'' + ${match.matchNo} +
                        '\', \'' + ${match.awayOdds} +
                        '\', \'' + ${match.awayTeam} +
                        '\', \'' + ${match.homeTeam} +
                        '\', \'' + ${match.matchType} +
+                       '\', \'' + ${match.matchEnd} +
                        '\')'"></a>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="cart">
-        <div class="cart-button">
-            <form action="/bet/betCart" method="POST">
-                <input type="hidden" name="matchNo" id="matchNoCart">
-                <input type="hidden" name="odds" id="oddsCart">
-                <input type="hidden" name="teamName" id="teamNameCart">
-                <input type="hidden" name="matchType" id="matchTypeCart">
-                <input type="hidden" name="teamName2" id="teamName2Cart">
-                <button type="submit">결제</button>
-            </form>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cart">
+            <div class="cart-button">
+                <form action="/bet/betCart" method="POST">
+                    <input type="hidden" name="matchNo" id="matchNoCart">
+                    <input type="hidden" name="odds" id="oddsCart">
+                    <!--                    <input type="hidden" name="teamName" id="teamNameCart">-->
+                    <input type="hidden" name="homeTeam" id="homeTeamCart">
+                    <input type="hidden" name="awayTeam" id="awayTeamCart">
+                    <input type="hidden" name="matchType" id="matchTypeCart">
+                    <!--                    <input type="hidden" name="teamName2" id="teamName2Cart">-->
+                    <input type="hidden" name="matchEnd" id="matchEndCart">
+                    <button type="submit">결제</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-</body>
+    </body>
+</th:block>
 </html>

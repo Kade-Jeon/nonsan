@@ -2,8 +2,11 @@ package com.hgyr.nonsanroy.data.entity.bet;
 
 import com.hgyr.nonsanroy.data.entity.BaseEntity;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @classNote Match (스포츠 경기 및 내기 정보 관련 Entity)
@@ -19,6 +22,9 @@ import java.time.LocalDateTime;
 @Table(name = "sports_match")
 public class Match extends BaseEntity {
 
+	@OneToMany(mappedBy = "match")
+	private List<Bet> bet;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer matchNo;
@@ -32,7 +38,6 @@ public class Match extends BaseEntity {
 	/**
 	 * @columnNote awayOdds (Hometeam 패배 확률)
 	 * @purpose
-	 * @author 명원식
 	 */
 	@Column(nullable = false)
 	private double awayOdds;

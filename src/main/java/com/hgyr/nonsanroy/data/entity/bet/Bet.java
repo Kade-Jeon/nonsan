@@ -20,6 +20,9 @@ import java.time.LocalDateTime;
 @Table(name = "bet")
 public class Bet extends BaseEntity {
 
+	@ManyToOne
+	@JoinColumn(name = "matchColumn")
+	private Match match;
 
 	/**
 	 * @columnNote betNo
@@ -30,10 +33,10 @@ public class Bet extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer betNo;
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "integer DEFAULT 0")
 	private Integer awayScore;
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "integer DEFAULT 0")
 	private Integer homeScore;
 
 	@Column(nullable = false)
@@ -41,6 +44,9 @@ public class Bet extends BaseEntity {
 
 	@Column(nullable = false)
 	private long betAmount;
+
+	@Column(nullable = false)
+	private double odds;
 
 	@Column(nullable = false)
 	private LocalDateTime betDate;

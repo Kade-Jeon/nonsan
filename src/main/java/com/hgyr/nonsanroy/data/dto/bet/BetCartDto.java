@@ -1,6 +1,7 @@
 package com.hgyr.nonsanroy.data.dto.bet;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.time.LocalDateTime;
@@ -22,11 +23,18 @@ public class BetCartDto {
 
 	private double odds;
 
-	private String teamName;
+//	private String teamName;
+//
+//	private String teamName2;
 
-	private String teamName2;
+	private String homeTeam;
+
+	private String awayTeam;
 
 	private String matchType;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private LocalDateTime matchEnd;
 
 	/**
 	 * @constructorNote getCartDataMap
@@ -38,9 +46,12 @@ public class BetCartDto {
 		Map<String, Object> map = new HashMap<>();
 		map.put("matchNo", this.matchNo);
 		map.put("odds", this.odds);
-		map.put("teamName", this.teamName);
-		map.put("teamName2", this.teamName2);
+//		map.put("teamName", this.teamName);
+//		map.put("teamName2", this.teamName2);
+		map.put("homeTeam", this.homeTeam);
+		map.put("awayTeam", this.awayTeam);
 		map.put("matchType", this.matchType);
+		map.put("matchEnd", this.matchEnd);
 
 		return map;
 	}

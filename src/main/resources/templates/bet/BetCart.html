@@ -23,6 +23,7 @@
         let odds = parseFloat(document.getElementById('odds').textContent); // jquery
         let payout = bettingAmount * odds;
         document.getElementById("payout").value = payout.toFixed(2);
+        document.getElementById("visiblePayout").value = payout.toFixed(2); // need 2 as readonly values cannot be submitted
     }
     function enforceMultipleOf100(inputElement) {
         let value = inputElement.value;
@@ -30,9 +31,34 @@
         inputElement.value = newValue;
         calculatePayout(); // Recalculate the payout
     }
+
+    /** @functionNote enforceMultipleOf100
+     * @purpose To restrict betting to the amount of points you own
+     */
+    function enforceMaxBettingAmount(inputElement) {
+        let currentPoints = parseFloat(document.getElementById("userPoint.point").textContent);
+        let bettingAmount = parseFloat(inputElement.value);
+        if (bettingAmount > currentPoints) {
+            alert("Betting amount cannot exceed your current points.");
+            inputElement.value = currentPoints; // Reset the input value to the current points
+        }
+        calculatePayout();
+    }
+
+    /**
+     * @note EventListener
+     * @purpose HTML문서가 로드되면 bettingAmount default값으로 Payout을 바로 계산할수 있는 코드
+     * document: HTML 전체
+     * DOMContentLoaded: HTML 문서가 브라우저에 의해 완전히 로드되고 구문 분석되었을 때 실행되는 이벤트
+     * function() { calculatePayout(); } : DOMContentLoaded 이벤트 실행시 작동되는 function
+     */
+    document.addEventListener("DOMContentLoaded", function () {
+        calculatePayout();
+    });
 </script>
 <body>
 <form method="post" action="/bet/submitBet">
+    <p>Current Points: <span th:text="${userPoint.point}"></span></p>
     <table>
         <thead>
         <tr>
@@ -47,18 +73,20 @@
         </thead>
         <tbody>
         <tr>
-            <td>betNo placeholder</td>
+            <td th:text="${betDto.betNo}"></td>
             <td th:text="${getCartDataMap.matchNo}"></td>
             <td th:text="${getCartDataMap.matchType}"></td>
-            <td th:text="${getCartDataMap.teamName}"></td>
-            <td th:text="${getCartDataMap.teamName2}"></td>
+            <td th:text="${getCartDataMap.homeTeam}"></td>
+            <td th:text="${getCartDataMap.awayTeam}"></td>
             <td id="odds" th:text="${getCartDataMap.odds}"></td>
             <td>
                 <input type="number" id="bettingAmount" name="bettingAmount" step="1000" value = 10000
-                       onchange="enforceMultipleOf100(this); calculatePayout();">
+                       onchange="enforceMultipleOf100(this); calculatePayout(); enforceMaxBettingAmount(this)">
             </td>
             <td>
-                <input type="text" id="payout" name="payout" readonly>
+                <input type="text" id="visiblePayout" name="visiblePayout" readonly>
+                <input type="hidden" id="payout" name="payout">
+                <input type="hidden" name="matchEnd" value="${getCartDataMap.matchEnd}">
             </td>
         </tr>
         </tbody>

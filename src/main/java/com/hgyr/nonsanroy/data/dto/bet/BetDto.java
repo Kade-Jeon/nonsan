@@ -22,6 +22,8 @@ public class BetDto {
 
 	private double payout;
 
+	private double odds;
+
 	private long betAmount;
 
 	private LocalDateTime betDate;
@@ -31,4 +33,5 @@ public class BetDto {
 	private String matchResult;
 
 	private String status;
+
 }

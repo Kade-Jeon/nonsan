@@ -18,11 +18,9 @@ import java.util.List;
 @Repository
 public interface BetRepository extends JpaRepository<Bet, Integer> {
 
-	Bet getPayout(double payout);
+	// Bet getPayout(double payout);
 
-	Bet getBetNo(Integer betNo);
-
-	Bet saveBet(BetDto betDto);
+	// Bet getBetNo(Integer betNo);
 
 	List<Bet> findAll();
 

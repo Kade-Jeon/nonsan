@@ -73,10 +73,13 @@ public class BetServiceImpl implements BetService {
 
 	public void saveBet(BetDto betDto) {
 		Bet bet = new Bet();
-		bet.setBetNo(betDto.getBetNo());
-		// bet.setMatchNo(betDto.getBetNo());
-		bet.setBetAmount(betDto.getBetAmount());
-		bet.setPayout(betDto.getPayout());
+
+		betDto.setAwayScore(0); // 6
+		betDto.setHomeScore(0); // 8
+
+		bet.setBetNo(betDto.getBetNo()); // 1
+		bet.setBetAmount(betDto.getBetAmount()); // 9
+		bet.setPayout(betDto.getPayout()); // 10
 
 		betRepository.save(bet);
 	}

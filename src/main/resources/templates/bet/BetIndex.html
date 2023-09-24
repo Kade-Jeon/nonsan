@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>구매 내역</title>
+</head>
+<body>
+<form action="/claimPrize" method="post">
+    <div class="container">
+        <div class="content">
+            <table>
+                <thead>
+                <tr>
+                    <th>베팅 번호</th>
+                    <th>구매일시</th>
+                    <th>Sport</th>
+                    <th>경기종료시</th>
+                    <th>HOME</th>
+                    <th>Home Score</th>
+                    <th>AWAY</th>
+                    <th>Away Score</th>
+                    <th>베팅한 금액</th>
+                    <th>상금</th>
+                    <th>상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bet: ${bets}">
+                    <td th:text="${bet.betNo}"></td>
+                    <td th:text="${bet.betDate}"></td>
+                    <td th:text="${bet.match.matchEnd}"></td>
+                    <td th:text="${bet.match.matchType}"></td>
+                    <td th:text="${bet.match.homeTeam}"></td>
+                    <td th:text="${bet.homeScore}"></td>
+                    <td th:text="${bet.match.awayTeam}"></td>
+                    <td th:text="${bet.awayScore}"></td>
+                    <td th:text="${bet.betAmount}"></td>
+                    <td th:text="${bet.payout}"></td>
+                    <td th:text="${bet.status}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <button type="submit">상금 받기</button>
+</form>
+</body>
+</html>

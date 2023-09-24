@@ -1,5 +1,6 @@
 package com.hgyr.nonsanroy.data.dto.bet;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -26,6 +27,7 @@ public class BetDto {
 
 	private long betAmount;
 
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime betDate;
 
 	private String chosenResult;

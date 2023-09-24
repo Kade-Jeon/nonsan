@@ -76,7 +76,8 @@ public class Bet extends BaseEntity {
 	 * if payout is received, return status = correct + payout claimed
 	 * @author 명원식
 	 */
-	@Column(nullable = false)
+	// @Column(nullable = false) // test
+	@Column
 	private String status;
 
 }

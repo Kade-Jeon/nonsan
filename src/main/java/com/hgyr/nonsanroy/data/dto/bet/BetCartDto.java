@@ -23,10 +23,6 @@ public class BetCartDto {
 
 	private double odds;
 
-//	private String teamName;
-//
-//	private String teamName2;
-
 	private String homeTeam;
 
 	private String awayTeam;
@@ -46,8 +42,6 @@ public class BetCartDto {
 		Map<String, Object> map = new HashMap<>();
 		map.put("matchNo", this.matchNo);
 		map.put("odds", this.odds);
-//		map.put("teamName", this.teamName);
-//		map.put("teamName2", this.teamName2);
 		map.put("homeTeam", this.homeTeam);
 		map.put("awayTeam", this.awayTeam);
 		map.put("matchType", this.matchType);

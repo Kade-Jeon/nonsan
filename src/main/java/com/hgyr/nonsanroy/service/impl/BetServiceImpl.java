@@ -7,8 +7,12 @@ import com.hgyr.nonsanroy.data.repository.BetRepository;
 import com.hgyr.nonsanroy.data.repository.MatchRepository;
 import com.hgyr.nonsanroy.service.BetService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -74,13 +78,41 @@ public class BetServiceImpl implements BetService {
 	public void saveBet(BetDto betDto) {
 		Bet bet = new Bet();
 
-		betDto.setAwayScore(0); // 6
-		betDto.setHomeScore(0); // 8
+		bet.setAwayScore(0); // 6
+		bet.setHomeScore(0); // 8
 
 		bet.setBetNo(betDto.getBetNo()); // 1
 		bet.setBetAmount(betDto.getBetAmount()); // 9
 		bet.setPayout(betDto.getPayout()); // 10
 
 		betRepository.save(bet);
+	}
+
+	public Double getPoint(String uid){
+		URI uri = UriComponentsBuilder
+				.fromUriString("http://localhost:1777")
+				.path("/valid/point/{var1}")
+				.encode()
+				.build()
+				.expand(uid)
+				.toUri();
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<Double> responseEntity = restTemplate.postForEntity(uri, uid, Double.class);
+		return responseEntity.getBody();
+	}
+
+	public String updatePoint(String uid, String point){
+		URI uri = UriComponentsBuilder
+				.fromUriString("http://localhost:1777")
+				.path("/valid/point/{var1}/{var2}")
+				.encode()
+				.build()
+				.expand(uid, point)
+				.toUri();
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri, uid, String.class);
+		return responseEntity.getBody();
 	}
 }

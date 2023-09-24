@@ -3,11 +3,9 @@ package com.hgyr.nonsanroy.controller;
 import com.hgyr.nonsanroy.data.dto.UserDto;
 import com.hgyr.nonsanroy.data.dto.bet.BetCartDto;
 import com.hgyr.nonsanroy.data.dto.bet.BetDto;
-import com.hgyr.nonsanroy.data.dto.bet.PointDto;
 import com.hgyr.nonsanroy.data.entity.bet.Bet;
 import com.hgyr.nonsanroy.data.entity.bet.Match;
 import com.hgyr.nonsanroy.service.BetService;
-import com.hgyr.nonsanroy.service.PointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,12 +30,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RequestMapping("/bet")
 public class MatchController {
 
-	private final PointService pointService;
 	private final BetService betService;
 	private AtomicInteger latestBetNo = new AtomicInteger(1);
 
 	@Autowired
-	public MatchController(PointService pointService, BetService betService) {
+	public MatchController(BetService betService) {
 		this.pointService = pointService;
 		this.betService = betService;
 	}
@@ -52,15 +48,6 @@ public class MatchController {
 	@GetMapping("/betMain")
 	public String navigateBetMain(HttpServletRequest request, HttpServletResponse response, Model model) {
 		List<Match> matches = betService.getAllMatches();
-		/**
-		 * @declarationNote dateTimeFormatter
-		 * @purpose appears as 2023-09-21T12:00 Prior to adding dates.format.
-		 * Make use of thymeleaf: temporals.format in html
-		 * <td th:text="${#temporals.format(match.matchStart, 'yyyy-MM-dd HH:mm')}"></td>
-		 * <td th:text="${#temporals.format(match.matchEnd, 'yyyy-MM-dd HH:mm')}"></td>
-		 * @author 명원식
-		 */
-		// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("username");
 		String password = (String) session.getAttribute("password");
@@ -82,9 +69,8 @@ public class MatchController {
 
 		betDto.setBetNo(latestBetNo.incrementAndGet());
 
-		String userId = "uid1";
-		PointDto userPoint = pointService.myPoint(userId); // Retrieve user's current points
-		model.addAttribute("userPoint", userPoint);
+		PointDto uid = betService.getPoint(uid); // Retrieve user's current points
+		model.addAttribute("userPoint", uid);
 		model.addAttribute("cartData", cartData);
 		model.addAttribute("betDto", betDto);
 
@@ -103,9 +89,26 @@ public class MatchController {
 
 	@PostMapping("/submitBet")
 	public String submitBet(@ModelAttribute BetDto betDto) {
+		System.out.println("submitBet: " + betDto);
+
 		betService.saveBet(betDto);
 
 		return "redirect:/betIndex";
+	}
+
+	@GetMapping("/point/{uid}") //실제 작업시에는 Post 방식으로
+	public String getPoint(@PathVariable String uid){
+		Double result = betService.getPoint(uid);
+		System.out.println(result);
+		return "redirect:/hgyr";
+	}
+
+	@GetMapping("/point/{uid}/{point}") //실제 작업시에는 Post 방식으로
+	public String updatePoint(@PathVariable("uid") String uid, @PathVariable("point") String point){
+		String result = betService.updatePoint(uid, point);
+		System.out.println(result);
+
+		return "redirect:/hgyr";
 	}
 
 	//다른 서버에서 넘어올 때 유저 정보 조회하고 메인으로 넘깁니다.

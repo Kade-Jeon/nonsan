@@ -25,6 +25,7 @@
         document.getElementById("payout").value = payout.toFixed(2);
         document.getElementById("visiblePayout").value = payout.toFixed(2); // need 2 as readonly values cannot be submitted
     }
+
     function enforceMultipleOf100(inputElement) {
         let value = inputElement.value;
         let newValue = Math.round(value / 100) * 100;
@@ -32,7 +33,8 @@
         calculatePayout(); // Recalculate the payout
     }
 
-    /** @functionNote enforceMultipleOf100
+    /**
+     * @functionNote enforceMultipleOf100
      * @purpose To restrict betting to the amount of points you own
      */
     function enforceMaxBettingAmount(inputElement) {
@@ -45,6 +47,16 @@
         calculatePayout();
     }
 
+    document.addEventListener("DOMContentLoaded", function () {
+        const submitButton = document.querySelector('button[type="submit"]');
+        submitButton.addEventListener("click", function () {
+            const currentDate = new Date();
+            const currentDateTime = currentDate.toISOString().replace(/\.\d{3}Z$/, "");
+
+            document.getElementById("betDate").value = currentDateTime;
+        });
+
+    });
     /**
      * @note EventListener
      * @purpose HTML문서가 로드되면 bettingAmount default값으로 Payout을 바로 계산할수 있는 코드
@@ -80,13 +92,17 @@
             <td th:text="${getCartDataMap.awayTeam}"></td>
             <td id="odds" th:text="${getCartDataMap.odds}"></td>
             <td>
-                <input type="number" id="bettingAmount" name="bettingAmount" step="1000" value = 10000
+                <input type="number" id="bettingAmount" name="bettingAmount" step="1000" value=10000
                        onchange="enforceMultipleOf100(this); calculatePayout(); enforceMaxBettingAmount(this)">
             </td>
             <td>
+                <input type="hidden" id="betDate" name="betDate">
+                <input type="hidden" id="matchType" name="matchType">
+                <input type="hidden" id="homeTeam" name="homeTeam">
+                <input type="hidden" id="awayTeam" name="awayTeam">
                 <input type="text" id="visiblePayout" name="visiblePayout" readonly>
                 <input type="hidden" id="payout" name="payout">
-                <input type="hidden" name="matchEnd" value="${getCartDataMap.matchEnd}">
+                <input type="hidden" id="matchEnd" name="matchEnd" value="${getCartDataMap.matchEnd}">
             </td>
         </tr>
         </tbody>

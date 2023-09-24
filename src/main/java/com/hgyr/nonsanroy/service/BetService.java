@@ -46,4 +46,8 @@ public interface BetService {
 	List<Bet> getAllBets();
 	void saveBet(BetDto betDto);
 
-}
+	Double getPoint(String uid);
+
+	String updatePoint(String uid, String point);
+
+	}

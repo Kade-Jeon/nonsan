@@ -1,5 +1,6 @@
 package com.hgyr.nonsanroy.data.dto.bet;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -30,6 +31,7 @@ public class MatchDto {
 
 	private LocalDateTime matchStart;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime matchEnd;
 
 }

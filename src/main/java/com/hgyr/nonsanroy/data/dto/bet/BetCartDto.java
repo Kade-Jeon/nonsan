@@ -1,5 +1,6 @@
 package com.hgyr.nonsanroy.data.dto.bet;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,7 +46,7 @@ public class BetCartDto {
 		map.put("homeTeam", this.homeTeam);
 		map.put("awayTeam", this.awayTeam);
 		map.put("matchType", this.matchType);
-		map.put("matchEnd", this.matchEnd);
+		// map.put("matchEnd", this.matchEnd);
 
 		return map;
 	}

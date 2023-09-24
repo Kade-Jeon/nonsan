@@ -13,11 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -31,69 +30,98 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MatchController {
 
 	private final BetService betService;
-	private AtomicInteger latestBetNo = new AtomicInteger(1);
+	private final AtomicInteger latestBetNo = new AtomicInteger(1);
 
 	@Autowired
 	public MatchController(BetService betService) {
-		this.pointService = pointService;
 		this.betService = betService;
 	}
 
 	/**
-	 * @param model
 	 * @methodNote navigateBetMain
 	 * @purpose
 	 * @author 명원식
 	 */
 	@GetMapping("/betMain")
-	public String navigateBetMain(HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String navigateBetMain(HttpSession session, Model model) {
 		List<Match> matches = betService.getAllMatches();
-		HttpSession session = request.getSession();
-		String username = (String) session.getAttribute("username");
-		String password = (String) session.getAttribute("password");
-
 		model.addAttribute("matches", matches);
+
+		String sid = session.getId();
+		String uid = (String) session.getAttribute("user");
+
+		System.out.println(sid + "::::::::" + uid);
+
+		URI uri = UriComponentsBuilder
+				.fromUriString("http://localhost:1777")
+				.path("/valid/user/" + uid)
+				.encode()
+				.build()
+				.toUri();
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<UserDto> responseEntity = restTemplate.postForEntity(uri, uid, UserDto.class);
+		// model.addAttribute("nickName", responseEntity.getBody().getNickName());
+
+		Double userPoint = betService.getPoint(uid); // Retrieve user's current points
+		model.addAttribute("userPoint", userPoint);
+		model.addAttribute("uid", uid);
+
 		return "/bet/BetMain"; // templates/bet/BetMain.html
 	}
 
 	/**
-	 * @param cartData, betDto, model
 	 * @methodNote navigateBetCart
 	 * @purpose
-	 * @otherNote Cannot use just @ModelAttribute while giving the tag to the map method in the Dto
+	 * @otherNotes Cannot use just @ModelAttribute while giving the tag to the map method in the Dto
 	 * (Method Parameter Level vs Method Level)
 	 * @author 명원식
 	 */
-	@PostMapping("/betCart")
-	public String navigateBetCart(@ModelAttribute("getCartDataMap") BetCartDto cartData, BetDto betDto, Model model) {
+	@PostMapping("/betCart/{uid}")
+	public String navigateBetCart(@PathVariable String uid, @ModelAttribute("getCartDataMap") BetCartDto cartData, BetDto betDto, Model model, HttpSession session) {
 
-		betDto.setBetNo(latestBetNo.incrementAndGet());
+		uid = (String) session.getAttribute("user");
+		String sid = session.getId();
+		betDto.setBetNo(latestBetNo.incrementAndGet()); // bet# 초기값 설정
 
-		PointDto uid = betService.getPoint(uid); // Retrieve user's current points
-		model.addAttribute("userPoint", uid);
+		// LocalDateTime matchEnd = betService.findMatchEndByMatchNo(cartData.getMatchNo()); 포기
+
+		Double userPoint = betService.getPoint(uid); // Retrieve user's current points
+		model.addAttribute("userPoint", userPoint);
 		model.addAttribute("cartData", cartData);
+		// model.addAttribute("matchEnd", matchEnd);
 		model.addAttribute("betDto", betDto);
 
+		System.out.println("uid: " + uid);
+		System.out.println("userPoint: " + userPoint);
 		System.out.println("Match Controller(navigateBetCart) cartData" + cartData);
 
 		return "bet/BetCart";
 	}
 
-	@GetMapping("/betIndex")
-	public String navigateBetIndex(Model model) {
+	/* @GetMapping("/betIndex")
+	public String navigateBetIndex(Model model, @ModelAttribute("nonDateDto") BetDto nonDateDto) {
 	List<Bet> bets = betService.getAllBets();
 		System.out.println(bets);
 		model.addAttribute("bets", bets);
+		model.addAttribute("nonDateDto", nonDateDto);
+
 		return "bet/BetIndex"; // templates/bet/BetMain.html
-}
+} */
 
-	@PostMapping("/submitBet")
-	public String submitBet(@ModelAttribute BetDto betDto) {
-		System.out.println("submitBet: " + betDto);
+	@PostMapping("/submitBet/{betNo}")
+	public String submitBet(@PathVariable Integer betNo, Model model, @ModelAttribute BetDto betDto) {
 
+		List<Bet> bets = betService.getAllBets();
+		Bet bet = new Bet();
+		bet.setBetDate(null);
+
+		model.addAttribute("bets", bets);
+		model.addAttribute("betDto", betDto);
+		System.out.println("bets :" + bets + "betDto + " + betDto);
 		betService.saveBet(betDto);
 
-		return "redirect:/betIndex";
+		return "redirect:/bet/BetIndex/{betNo}";
 	}
 
 	@GetMapping("/point/{uid}") //실제 작업시에는 Post 방식으로
@@ -112,7 +140,7 @@ public class MatchController {
 	}
 
 	//다른 서버에서 넘어올 때 유저 정보 조회하고 메인으로 넘깁니다.
-	@GetMapping("/room")
+	/* @GetMapping("/room")
 	public String rooms(HttpSession session, Model model) {
 
 		String sid = session.getId();
@@ -133,4 +161,5 @@ public class MatchController {
 		return "/chat/room";
 
 	}
+	 */
 }

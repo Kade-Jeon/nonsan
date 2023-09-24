@@ -4,6 +4,7 @@ import com.hgyr.nonsanroy.data.dto.bet.BetDto;
 import com.hgyr.nonsanroy.data.entity.bet.Bet;
 import com.hgyr.nonsanroy.data.entity.bet.Match;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -50,4 +51,5 @@ public interface BetService {
 
 	String updatePoint(String uid, String point);
 
-	}
+	// LocalDateTime findMatchEndByMatchNo(Integer matchNo);
+}

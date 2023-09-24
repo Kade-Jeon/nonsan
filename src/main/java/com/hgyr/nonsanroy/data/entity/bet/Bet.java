@@ -1,8 +1,6 @@
 package com.hgyr.nonsanroy.data.entity.bet;
 
-import com.hgyr.nonsanroy.data.entity.BaseEntity;
 import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -18,7 +16,7 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode
 @Table(name = "bet")
-public class Bet extends BaseEntity {
+public class Bet {
 
 	@ManyToOne
 	@JoinColumn(name = "matchColumn")
@@ -48,7 +46,7 @@ public class Bet extends BaseEntity {
 	@Column(nullable = false)
 	private double odds;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private LocalDateTime betDate;
 
 	/**

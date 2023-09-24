@@ -2,7 +2,12 @@ package com.hgyr.nonsanroy.data.dto.bet;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @classNote BetDto
@@ -27,8 +32,8 @@ public class BetDto {
 
 	private long betAmount;
 
-	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-	private LocalDateTime betDate;
+//	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+//	private LocalDateTime betDate;
 
 	private String chosenResult;
 

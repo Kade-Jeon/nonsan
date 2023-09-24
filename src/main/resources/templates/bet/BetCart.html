@@ -69,8 +69,8 @@
     });
 </script>
 <body>
-<form method="post" action="/bet/submitBet">
-    <p>Current Points: <span th:text="${userPoint.point}"></span></p>
+<form method="post" th:action="@{'/bet/submitBet/' + ${betDto.betNo}}">
+    <span th:text="${session.user}"></span>의 Current Points: <span th:text="${userPoint}"></span>
     <table>
         <thead>
         <tr>

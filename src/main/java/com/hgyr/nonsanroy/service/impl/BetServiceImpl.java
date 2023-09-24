@@ -1,5 +1,6 @@
 package com.hgyr.nonsanroy.service.impl;
 
+import com.hgyr.nonsanroy.data.dto.bet.BetCartDto;
 import com.hgyr.nonsanroy.data.dto.bet.BetDto;
 import com.hgyr.nonsanroy.data.entity.bet.Bet;
 import com.hgyr.nonsanroy.data.entity.bet.Match;
@@ -13,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -115,4 +117,11 @@ public class BetServiceImpl implements BetService {
 		ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri, uid, String.class);
 		return responseEntity.getBody();
 	}
+
+	/* public LocalDateTime findMatchEndByMatchNo(Integer matchNo) {
+		return matchRepository.findMatchEndByMatchNo(matchNo);
+	} */
+
+
+
 }

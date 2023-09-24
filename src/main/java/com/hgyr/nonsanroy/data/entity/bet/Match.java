@@ -1,6 +1,5 @@
 package com.hgyr.nonsanroy.data.entity.bet;
 
-import com.hgyr.nonsanroy.data.entity.BaseEntity;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,7 +19,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Table(name = "sports_match")
-public class Match extends BaseEntity {
+public class Match {
 
 	@OneToMany(mappedBy = "match")
 	private List<Bet> bet;

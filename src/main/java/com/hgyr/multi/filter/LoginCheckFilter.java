@@ -13,7 +13,7 @@ import java.io.IOException;
 /* 로그인 없이 지정한 주소 외 접속 시 로그인 안내 문구 alert로 출력*/
 public class LoginCheckFilter implements Filter {
 
-    private static final String[] whiteList = {"/", "/hgyr", "/hgyr/join", "/hgyr/login", "/error", "/style.css","/img/*"};
+    private static final String[] whiteList = {"/", "/hgyr", "/hgyr/join", "/hgyr/login", "/error", "/style.css","/img/*", "/weather/*"};
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

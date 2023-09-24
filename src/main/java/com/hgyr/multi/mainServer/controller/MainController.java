@@ -1,5 +1,6 @@
 package com.hgyr.multi.mainServer.controller;
 
+import com.hgyr.multi.mainServer.data.Entity.User;
 import com.hgyr.multi.mainServer.data.dto.UserDto;
 import com.hgyr.multi.mainServer.service.MainServerService;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLDataException;
 
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/valid")
 public class MainController {
 
@@ -22,6 +24,17 @@ public class MainController {
     @Autowired
     public MainController(MainServerService mainServerService) {
         this.mainServerService = mainServerService;
+    }
+
+    /* 회원가입시 아이디 중복검사 */
+    @PostMapping("/checkId")
+    public String checkId(String uid){
+        System.out.println(uid);
+        UserDto result = mainServerService.findByUId(uid);
+        if(result != null){
+            return "usable";
+        }
+        return "unusable";
     }
 
     /*main으로부터 정보 받아 회원가입 처리*/
@@ -50,7 +63,7 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK).body(info);
     }
 
-    /* 게임 & 베팅 : 포인트 조회*/
+    /* 게임 & 베팅 : 포인트 조회 */
     @PostMapping("/point/{uid}")
     public ResponseEntity<Double> getPoint(@PathVariable String uid){
         logger.info("[Port:1777] MainController : getPoint " + uid);
@@ -58,6 +71,7 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK).body(point);
     }
 
+    /* 게임 & 베팅 : 포인트 업데이트(수정) */
     @PostMapping("/point/{uid}/{point}")
     ResponseEntity<String> updatePoint(@PathVariable("uid") String uid, @PathVariable("point") String point) {
            logger.info("[Port:1777] MainController : updatePoint " + uid + point);

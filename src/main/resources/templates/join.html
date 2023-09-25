@@ -74,13 +74,15 @@
  		/*		alert(result);
  				alert(textStatus);*/
 
-        if (result == 'usable') {
+        if(result == 'unusable') {
+          $('#idMsg').text("");
+          $('#idMsg').text("사용할 수 없는 ID입니다.");
+          $('#idMsg').addClass("red");
+        } else {
+          $('#idMsg').text("");
           $('#idMsg').text("사용할 수 있는 ID입니다.");
           $('#btn-checkId').prop("disabled", true);
-          $('#inputId').addClass("blue");
-        } else {
-          $('#idMsg').text("사용할 수 없는 ID입니다.");
-          $('#inputId').addClass("red");
+          $('#idMsg').addClass("blue");
         }
       },
       error : function(data, textStatus) {

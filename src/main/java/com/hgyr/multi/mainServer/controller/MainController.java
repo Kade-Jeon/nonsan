@@ -31,7 +31,7 @@ public class MainController {
     public String checkId(String uid){
         System.out.println(uid);
         UserDto result = mainServerService.findByUId(uid);
-        if(result != null){
+        if(result == null){
             return "usable";
         }
         return "unusable";

@@ -18,10 +18,13 @@
                                 <label for="receiveId">수신 아이디</label>
                                 <div class="input-group">
                                     <input type="text" id="receiveId" name="receiveId" class="form-control" required />
+                                    <!--<button type="button" class="btn btn-warning" id="btn-checkId" onclick="fn_checkId()">유효확인</button>-->
                                     <input type="hidden" name="sendId" th:value="${session.user}" />
                                 </div>
                             </div>
-
+                            <div class="form-group ">
+                                <p id="checkResult" style="color: blue;"></p>
+                            </div>
                             <div class="form-group mb-3">
                                 <label for="title">제목</label>
                                 <input type="text" id="title" name="title" class="form-control" required />
@@ -51,6 +54,46 @@
         function goBack() {
             window.history.back();
         }
+
+        //유효 아이디 체크
+        /*function fn_checkId() {
+            var receiveId = $("#receiveId").val();
+            if (receiveId == '') {
+                alert("ID를 입력하세요");
+                return; //fn_checkId()함수 종료
+            }
+
+            $.ajax({
+                type: "POST",
+                async: false,
+                url: "/checkId",
+                //dataType : "text", //리턴타입 문자열
+                data: {
+                    userId: receiveId
+                }, //전송 파라미터 (파라미터명 id : 값 )
+                success: function (result, textStatus) {
+// 				alert(result)
+// 				alert(textStatus) 확인용 메시지 추후 삭제할 것
+
+                    if (result == 'usable') {
+                        $('#checkResult').text("사용할 수 있는 ID입니다.");
+// 					$('#btn-checkId').prop("disabled", true);
+// 					$('#inputId').prop("readonly", true);  -> 처리 방법 찾으면 변경예정
+                        $('#receiveId').addClass("blue");
+                    } else {
+                        $('#checkResult').text("사용할 수 없는 ID입니다.");
+                        $('#receiveId').addClass("red");
+                    }
+                },
+                error: function (data, textStatus) {
+                    alert("에러가 발생했습니다.");
+                    ㅣ
+                },
+                complete: function (data, textStatus) {
+                    //alert("작업을 완료 했습니다");
+                }
+            }); //end ajax
+        }*/
     </script>
 
 

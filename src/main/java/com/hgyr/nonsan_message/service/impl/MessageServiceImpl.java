@@ -1,10 +1,12 @@
 package com.hgyr.nonsan_message.service.impl;
 
 import com.hgyr.nonsan_message.data.dto.ResponseDTO;
+import com.hgyr.nonsan_message.data.dto.UserDto;
 import com.hgyr.nonsan_message.data.entity.ReceiveMessage;
 import com.hgyr.nonsan_message.data.entity.SendMessage;
 import com.hgyr.nonsan_message.data.repository.ReceiveMsgRepository;
 import com.hgyr.nonsan_message.data.repository.SendMsgRepository;
+import com.hgyr.nonsan_message.data.repository.UserRepository;
 import com.hgyr.nonsan_message.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +27,15 @@ public class MessageServiceImpl implements MessageService {
     private final Logger LOGGER = LoggerFactory.getLogger(MessageServiceImpl.class);
     private ReceiveMsgRepository messageRepository;
     private SendMsgRepository sendMsgRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public MessageServiceImpl(ReceiveMsgRepository messageRepository,
-                              SendMsgRepository sendMsgRepository) {
+                              SendMsgRepository sendMsgRepository,
+                              UserRepository userRepository) {
         this.messageRepository = messageRepository;
         this.sendMsgRepository = sendMsgRepository;
+        this.userRepository = userRepository;
 
     }
 
@@ -94,6 +99,13 @@ public class MessageServiceImpl implements MessageService {
             sendMsgRepository.deleteById(id);
         }
     }
+
+    // 발신 아이디 유효체크
+    /*@Override
+    public boolean duplicatedId(String id) {
+        boolean result = userRepository.findByUid(id);
+        return result;
+    }*/
 
 
 }

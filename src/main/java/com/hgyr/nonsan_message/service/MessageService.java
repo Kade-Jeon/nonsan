@@ -29,5 +29,7 @@ public interface MessageService {
     // 발신 메시지 삭제
     void sendDelete(List<Long> ids);
 
+    // 발신 아이디 유효성 체크
+    //boolean duplicatedId(String id);
 
 }

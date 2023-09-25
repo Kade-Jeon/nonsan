@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.List;
@@ -130,5 +131,18 @@ public class MessageController {
         return ResponseEntity.status(HttpStatus.OK).body("메시지가 삭제되었습니다");
     }
 
+    // 발신 아이디 유효성 체크
+    /*@PostMapping("/checkId")
+    public ResponseEntity<String> checkId(@RequestBody String id) {
+        System.out.println(id);
+        boolean duplicatedId = messageService.duplicatedId(id);
+        String result;
+        if (duplicatedId == false) {
+            result = "not_usable";
+        } else {
+            result = "usable";
+        }
+        return ResponseEntity.ok(result);
+    }*/
 
 }

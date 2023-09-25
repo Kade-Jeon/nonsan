@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        function validateForm() {
+            var addPointField = document.getElementById("addPointField");
+            var addPointError = document.getElementById("addPointError");
+
+            // 입력값이 비어 있는지 확인
+            if (addPointField.value.trim() === "") {
+                addPointError.textContent = "포인트를 입력하세요";
+                return false; // 폼 제출 중지
+            }
+
+          /*  // 입력값이 최대 길이를 초과하는지 확인
+            if (addPointField.value.length > 11) {
+                addPointError.textContent = "최대 100억까지 가능합니다";
+                return false; // 폼 제출 중지
+            }*/
+
+            var maxValue = 10000000000;
+            var inputValue = parseInt(addPointField.value, 10);
+            if (inputValue > maxValue) {
+                addPointError.textContent = "최대 100억까지 가능합니다";
+                return false; // 폼 제출 중지
+            } else if (inputValue === maxValue) {
+                addPointError.textContent = "최대 100억까지 가능합니다"; // 최대값과 같을 때 경고 메시지
+                return false; // 폼 제출 중지
+            }
+
+            // 유효성 검사를 통과하면 오류 메시지 삭제
+            addPointError.textContent = "";
+            return true; // 폼 제출 허용
+        }
+    </script>
+</head>
+<body>
+<h1>포인트 충전</h1>
+<form method="POST" th:action="@{/mypage/recharge}" onsubmit="return validateForm()">
+    <!--id 값 명시해줘야한다-->
+    <input type="hidden" name="uid" th:value="${myPoint.uid}">
+    <span style="color: orange;" th:text="${myPoint.nickName}"></span>님 반갑습니다
+    &nbsp;&nbsp;&nbsp;
+    <button type="button" onclick="location.href='/mypage'">로그아웃</button> <br>
+    <!--천단위 컴마찍는 방법-->
+    보유 머니 : <div data-th-text="${#numbers.formatInteger(myPoint.point, 3, 'COMMA') + ' 포인트'}"></div>
+    <!--문자열 제거 number + 비어있는 값 + 최대 길이 설정-->
+    충전 머니: <input type="number" name="addPoint" min="0" id="addPointField">
+    <span id="addPointError" style="color: red;"></span>
+
+    <input type="submit" value="충전하기"><br>
+    <!--html 주소 설정-->
+    <button type="button" onclick="location.href='/mypage/depositPage'">입금하기</button> &nbsp;
+    <button type="button" onclick="location.href='/mypage/withdrawPage'">출금하기</button>
+    <button type="button" onclick="location.href='/minigame/roulette'">룰렛하러 가기</button>
+</form>
+</body>
+</html>

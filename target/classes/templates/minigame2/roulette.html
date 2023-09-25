@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Roulette</title>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #87CEEB; /* 배경색을 하늘 블루로 설정 */
+            color: white; /* 텍스트를 흰색으로 설정 */
+        }
+
+        h1 {
+            text-align: center; /* 헤더 가운데 정렬 */
+            background-color: #444; /* 헤더 배경색 */
+        }
+
+        /* 가운데 정렬을 위한 스타일 */
+        .centered-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Header 스타일 수정 */
+        #header {
+            font-size: 24px;
+            margin-bottom: 10px; /* 헤더와 텍스트 간격을 조정 */
+            text-align: center;
+            padding-top: 15px;
+        }
+
+        /* 룰렛 바깥 설정 css */
+        .roulette-outer {
+            position: relative;
+            overflow: hidden;
+            width: 400px;
+            height: 400px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            font-size: 25px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end; /* 룰렛 가운데 아래로 버튼을 배치 */
+        }
+
+        /* 룰렛판 css */
+        .roulette-outer > .roulette {
+            /* 가득 체우기 */
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            right: 5%;
+            bottom: 5%;
+            background: aqua;
+            border-radius: 50%;
+            border: 2px solid black;
+        }
+
+        .roulette-outer > .roulette > .item-wrapper > .item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-top: 10%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 글자 회전 처리 */
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(1) {
+            transform: rotate(0deg);
+        }
+
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(2) {
+            transform: rotate(90deg);
+        }
+
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(3) {
+            transform: rotate(180deg);
+        }
+
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(4) {
+            transform: rotate(270deg);
+        }
+
+        /* 룰렛 선 설정 */
+        .roulette-outer > .roulette > .line-wrapper > .line {
+            position: absolute;
+            top: 0;
+            bottom: 50%;
+            left: 50%;
+            width: 3px;
+            margin-left: -1px;
+            background: #444;
+
+            /*회원 선 위치조정*/
+            transform-origin: bottom;
+        }
+
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(1) {
+            transform: rotate(45deg);
+        }
+
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(2) {
+            transform: rotate(135deg);
+        }
+
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(3) {
+            transform: rotate(225deg);
+        }
+
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(4) {
+            transform: rotate(315deg);
+        }
+
+        /* 포인트 텍스트 스타일 수정 */
+        #userPoint {
+            color: red; /* 포인트 텍스트 색상을 빨간색으로 지정 */
+            position: absolute;
+            top: 20px; /* 룰렛 상단에 고정 */
+            left: 50%; /* 가운데 정렬 */
+            transform: translateX(-50%); /* 수평 가운데 정렬 */
+        }
+
+        /* 헤더 스타일 수정 */
+        #header {
+            font-size: 24px; /* 헤더 글자 크기 설정 */
+            text-align: center; /* 가운데 정렬 */
+        }
+
+        /* 유저 정보 및 포인트 스타일 수정 */
+        #user-info {
+            margin-top: 10px; /* 상단 여백을 줄임 */
+            position: relative; /* 포지션을 상대적으로 설정 */
+            text-align: center; /* 가운데 정렬 */
+        }
+
+        #user-info span {
+            color: #ff8000;
+            font-size: 20px;
+            margin-bottom: 10px; /* session.user와의 간격을 줄임 */
+        }
+
+        #userPoint {
+            color: red; /* 포인트 텍스트 색상을 빨간색으로 지정 */
+            font-size: 20px;
+            position: absolute; /* 포지션을 절대적으로 설정 */
+            top: 100%; /* 헤더 아래에 위치하도록 설정 */
+            left: 50%; /* 가운데 정렬 */
+            transform: translateX(-50%); /* 수평 가운데 정렬 */
+        }
+
+        /* 버튼 스타일 수정 */
+        button {
+            margin-top: 10px;
+            background-color: #34db50; /* 버튼 배경색을 파란색(#3498db)으로 지정 */
+            color: white; /* 버튼 텍스트 색상을 흰색으로 지정 */
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+
+        button:hover {
+            background-color: #f44336; /* 마우스 오버시 배경색 변경 */
+        }
+
+        #resultImage {
+            display: none;
+        }
+
+        #resultImg {
+            width: 150%; /* 이미지 크기를 1.5배로 키우기 */
+            max-width: 400px; /* 이미지의 최대 너비 설정 */
+            height: auto; /* 높이 자동 조정 */
+            position: absolute; /* 이미지 위치 설정 */
+            top: 10%; /* 룰렛 위에 위치하도록 조정 */
+            left: 50%; /* 가운데 정렬 */
+            transform: translateX(-50%);
+            z-index: 2; /* 이미지를 상위로 표시 */
+        }
+
+    </style>
+</head>
+
+<body>
+<form method="POST" th:action="@{/minigame2/selectItem}" >
+    <header>
+        <h1>인생은 한방</h1>
+    </header>
+
+    <div class="centered-container">
+        <!-- 유저 정보 및 포인트를 감싸는 div 추가 -->
+        <div id="user-info">
+            <span th:text="${session.user + ' 님'}"></span>
+            <div id="userPoint" data-th-text="${userPoint + '포인트'}">포인트</div>
+        </div>
+
+        <!-- 룰렛 바깥 영역 -->
+        <div class="roulette-outer">
+            <!-- 룰렛 핀 설정 -->
+            <div class="roulette-pin"></div>
+            <!-- 룰렛판 설정 -->
+            <div class="roulette">
+                <!-- 룰렛판 글자 영역 -->
+                <div class="item-wrapper">
+                    <input type="hidden" name="selectedItem" id="selectedItem" value="">
+                    <div class="item" id="item1" data-name="item1">0.5배!!</div>
+                    <div class="item" id="item2" data-name="item2">빵원 ㅋ</div>
+                    <div class="item" id="item3" data-name="item3">1.5배!!</div>
+                    <div class="item" id="item4" data-name="item4">2배!!</div>
+                </div>
+
+                <!-- 룰렛 선 설정 -->
+                <div class="line-wrapper">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+            <!--이미지 설정 -->
+            <img id="resultImg" alt="당첨 이미지" width="150%" style="position: absolute; top: 10%; left: 50%; transform: translateX(-50%); display: none;">
+        </div>
+        <button type="submit" id="rotateButton" disabled>돌려 돌려</button>
+        <button type="button" onclick="location.href='/mypage'">포인트 페이지로 이동</button>
+
+    </div>
+</form>
+<script>
+    // 포인트를 가져오는 함수
+    function getUserPoint() {
+        var userPointElement = document.getElementById('userPoint');
+        if (userPointElement) {
+            return parseFloat(userPointElement.innerText || userPointElement.textContent);
+        }
+        return 0;
+    }
+
+    var userPoint = getUserPoint();
+    var rotateButton = document.getElementById('rotateButton');
+
+    if (userPoint <= 0 || userPoint < 10000) {
+        document.getElementById('userPoint').style.color = 'red'; // 포인트 텍스트 색상을 빨간색으로 변경
+        alert('포인트가 부족합니다. 충전해 주세요!!'); // 알림 표시
+        rotateButton.disabled = true; // 버튼 비활성화
+    } else {
+        rotateButton.disabled = false; // 버튼 활성화
+    }
+
+    // roulette 룰렛 설정 후 요소 할당
+    const roulette = document.querySelector('.roulette');
+    // 변수 초기화
+    let isSpinning = false;
+    // 회전하는데 걸리는 시간 (초)
+    const rotationTime = 5;
+
+    /* selectItem의 구역을 설정 */
+    function getSelectedSection(angle) {
+        // 룰렛 섹션 구간 설정
+        const sections = [
+            {start: 0, end: 90, item: 'item1'},
+            {start: 90, end: 180, item: 'item2'},
+            {start: 180, end: 270, item: 'item3'},
+            {start: 270, end: 360, item: 'item4'},
+        ];
+
+        // 각 섹션을 확인하여 선택된 아이템을 결정
+        let selectedItem = null;
+        for (const section of sections) {
+            if ((angle >= section.start && angle < section.end) || (angle >= section.start && section.end === 360)) {
+                selectedItem = section.item;
+                break;
+            }
+        }
+
+        console.log(selectedItem+"아이템선택");
+        return selectedItem;
+    }
+
+    // 돌리기 버튼 클릭
+    rotateButton.addEventListener('click', function () {
+        rotateButton.disabled = true; // 버튼 비활성화
+        if (!isSpinning) {
+            isSpinning = true;
+            const randomRotation = Math.floor(Math.random() * 360); // 0부터 360 사이의 랜덤한 각도 선택
+            const totalRotation = 360 * 10 + randomRotation; // 회전 10바퀴 후 랜덤 각도 추가
+            console.log(totalRotation);
+            roulette.style.transition = `transform ${rotationTime}s ease-out`; // 회전 시간을 10초로 늘림
+            roulette.style.transform = `rotate(${totalRotation}deg)`; // 회전 각도 설정
+
+            const currentRotation = totalRotation % 360;
+            const selectedItem = getSelectedSection(currentRotation);
+
+            setTimeout(function () {
+                // 이미지 엘리먼트를 표시하는 함수 호출
+                showResultImage(selectedItem);
+
+                // 선택된 아이템 값을 폼 요소에 할당
+                document.getElementById('selectedItem').value = selectedItem;
+
+                setTimeout(function () {
+                    // 2초 후에 form을 전송
+                    document.querySelector('form').submit();
+                }, 2000); // 2초 후에 form 전송
+            }, 3000); // 3초 후에 이미지 표시
+        }
+    });
+
+    // 이미지 엘리먼트를 표시하는 함수
+    function showResultImage(selectedItem) {
+        var resultImg = document.getElementById('resultImg');
+
+        // 이미지 요소 확인
+        if (resultImg) {
+            // selectedItem 값을 사용하여 이미지 경로를 동적으로 설정
+            resultImg.src = '/static/images/' + selectedItem + '.png';
+            resultImg.alt = selectedItem + ' 이미지';
+
+
+            console.log(selectedItem+"이미지쪽");
+            // 이미지 엘리먼트를 보이도록 변경
+            resultImg.style.display = 'block';
+        } else {
+            console.error('이미지 엘리먼트를 찾을 수 없습니다.');
+        }
+    }
+
+</script>
+</body>
+</html>

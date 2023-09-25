@@ -1,0 +1,112 @@
+
+/* 룰렛 바깥 설정 css */
+.roulette-outer {
+    position: relative;
+    overflow: hidden;
+    width: 500px;
+    height: 500px;
+    font-size: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end; /* 룰렛 가운데 아래로 버튼을 배치 */
+}
+
+/* 룰렛판 css */
+.roulette-outer > .roulette {
+    /* 가득 체우기 */
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    right: 5%;
+    bottom: 5%;
+    background: aqua;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+/*룰렛핀 설정*/
+.roulette-outer > .roulette-pin {
+    position: absolute;
+    top: 3px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 23px 5px 0 5px;
+    border-color: #ff0000 transparent transparent transparent;
+    /* 룰렛핀 가운데로 이동 */
+    margin-left: -4.5px;
+}
+
+.roulette-outer > .roulette > .item-wrapper > .item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 10%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+/* 글자 회전 처리 */
+/* 글자 회전 처리 */
+.roulette-outer > .roulette > .item-wrapper > .item:nth-child(1) {
+    transform: rotate(0deg);
+}
+
+.roulette-outer > .roulette > .item-wrapper > .item:nth-child(2) {
+    transform: rotate(90deg);
+}
+
+.roulette-outer > .roulette > .item-wrapper > .item:nth-child(3) {
+    transform: rotate(180deg);
+}
+
+.roulette-outer > .roulette > .item-wrapper > .item:nth-child(4) {
+    transform: rotate(270deg);
+}
+
+/* 룰렛 선 설정 */
+.roulette-outer > .roulette > .line-wrapper > .line {
+    position: absolute;
+    top: 0;
+    bottom: 50%;
+    left: 50%;
+    width: 3px;
+    margin-left: -1px;
+    background: black;
+
+    /*회원 선 위치조정*/
+    transform-origin: bottom;
+}
+
+.roulette-outer > .roulette > .line-wrapper > .line:nth-child(1) {
+    transform: rotate(45deg);
+}
+
+.roulette-outer > .roulette > .line-wrapper > .line:nth-child(2) {
+    transform: rotate(135deg);
+}
+
+.roulette-outer > .roulette > .line-wrapper > .line:nth-child(3) {
+    transform: rotate(225deg);
+}
+
+.roulette-outer > .roulette > .line-wrapper > .line:nth-child(4) {
+    transform: rotate(315deg);
+}
+
+/* 버튼 스타일 */
+button {
+    margin-top: 20px; /* 버튼 위 여백 조정 */
+}
+
+body {
+    text-align: center; /* 텍스트를 수평 중앙 정렬 */
+    padding: 50px 0; /* 상단과 하단에 여백을 줌으로써 상단 가운데에 위치시킵니다. */
+}

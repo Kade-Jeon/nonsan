@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Roulette</title>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 룰렛 바깥 설정 css */
+        .roulette-outer {
+            position: relative;
+            overflow: hidden;
+            width: 500px;
+            height: 500px;
+            font-size: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end; /* 룰렛 가운데 아래로 버튼을 배치 */
+        }
+
+        /* 룰렛판 css */
+        .roulette-outer > .roulette {
+            /* 가득 체우기 */
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            right: 5%;
+            bottom: 5%;
+            background: aqua;
+            border-radius: 50%;
+            border: 2px solid black;
+        }
+
+        /*룰렛핀 설정*/
+        .roulette-outer > .roulette-pin {
+            position: absolute;
+            top: 3px;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 23px 5px 0 5px;
+            border-color: #ff0000 transparent transparent transparent;
+            /* 룰렛핀 가운데로 이동 */
+            margin-left: -4.5px;
+        }
+
+        .roulette-outer > .roulette > .item-wrapper > .item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-top: 10%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 글자 회전 처리 */
+        /* 글자 회전 처리 */
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(1) {
+            transform: rotate(0deg);
+        }
+
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(2) {
+            transform: rotate(90deg);
+        }
+
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(3) {
+            transform: rotate(180deg);
+        }
+
+        .roulette-outer > .roulette > .item-wrapper > .item:nth-child(4) {
+            transform: rotate(270deg);
+        }
+
+        /* 룰렛 선 설정 */
+        .roulette-outer > .roulette > .line-wrapper > .line {
+            position: absolute;
+            top: 0;
+            bottom: 50%;
+            left: 50%;
+            width: 3px;
+            margin-left: -1px;
+            background: black;
+
+            /*회원 선 위치조정*/
+            transform-origin: bottom;
+        }
+
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(1) {
+            transform: rotate(45deg);
+        }
+
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(2) {
+            transform: rotate(135deg);
+        }
+
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(3) {
+            transform: rotate(225deg);
+        }
+
+        .roulette-outer > .roulette > .line-wrapper > .line:nth-child(4) {
+            transform: rotate(315deg);
+        }
+
+        /* 버튼 스타일 */
+        button {
+            margin-top: 20px; /* 버튼 위 여백 조정 */
+        }
+
+        body {
+            text-align: center; /* 텍스트를 수평 중앙 정렬 */
+            padding: 50px 0; /* 상단과 하단에 여백을 줌으로써 상단 가운데에 위치시킵니다. */
+        }
+
+
+    </style>
+</head>
+<body>
+
+<form method="post" action="/minigame/selectItem">
+
+    <!-- JavaScript 스크립트 실행 -->
+    <script th:inline="javascript">
+        /*[[${script}]]*/
+    </script>
+
+    <!-- 메시지 표시 -->
+    <p th:text="${message}"></p>
+
+    <div id="app">
+        <h1>인생은 한방</h1>
+    </div>
+
+    <div id="count">
+        <input type="hidden" name="uid" th:value="${roulette.uid}">
+        <span style="color: orange;" th:text="${roulette.nickName + ' 님'}"></span>
+        <div data-th-text="${roulette.point}"></div>
+        <br>
+        남은 횟수: <span style="color: red" th:text="${roulette.count}"></span>번
+    </div>
+    <!-- 룰렛 바깥 영역 -->
+    <div class="roulette-outer">
+        <!-- 룰렛 핀 설정 -->
+        <div class="roulette-pin"></div>
+        <!-- 룰렛판 설정 -->
+        <div class="roulette">
+            <!-- 룰렛판 글자 영역 -->
+            <div class="item-wrapper">
+                <input type="hidden" name="selectedItem" id="selectedItem" value="">
+                <div class="item" id="item1" data-name="item1">0.5배!!</div>
+                <div class="item" id="item2" data-name="item2">0원 ㅋ</div>
+                <div class="item" id="item3" data-name="item3">1.5배</div>
+                <div class="item" id="item4" data-name="item4">2배</div>
+            </div>
+
+            <!-- 룰렛 선 설정 -->
+            <div class="line-wrapper">
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+                <div class="line"></div>
+            </div>
+        </div>
+
+        <!-- 이미지를 보여주기 위한 div 엘리먼트 -->
+        <div id="resultImage" style="display: none;">
+            <img src="" alt="당첨 이미지" id="resultImageElement">
+        </div>
+
+
+        <button type="submit" id="rotateButton">돌려 돌려</button>
+    </div>
+    <button type="button" onclick="location.href='/mypage'">포인트 페이지로 이동</button>
+</form>
+<script>
+    // roulette 룰렛 설정 후 요소 할당
+    const roulette = document.querySelector('.roulette');
+    // 변수 초기화
+    let isSpinning = false;
+    // 회전하는데 걸리는 시간 (초)
+    const rotationTime = 5;
+
+    /* selectItem의 구역을 설정 */
+    function getSelectedSection(angle) {
+        // 룰렛 섹션 구간 설정
+        const sections = [
+            {start: 0, end: 90, item: 'item1'},
+            {start: 90, end: 180, item: 'item2'},
+            {start: 180, end: 270, item: 'item3'},
+            {start: 270, end: 360, item: 'item4'},
+        ];
+
+        // 각 섹션을 확인하여 선택된 아이템을 결정
+        let selectedItem = null;
+        for (const section of sections) {
+            if ((angle >= section.start && angle < section.end) || (angle >= section.start && section.end === 360)) {
+                selectedItem = section.item;
+                break;
+            }
+        }
+
+        return selectedItem;
+    }
+
+    // 돌리기 버튼 클릭 시
+    document.getElementById('rotateButton').addEventListener('click', function () {
+        if (!isSpinning) {
+            isSpinning = true;
+            const randomRotation = Math.floor(Math.random() * 360); // 0부터 360 사이의 랜덤한 각도 선택
+            const totalRotation = 360 * 10 + randomRotation; // 회전 10바퀴 후 랜덤 각도 추가
+            console.log(totalRotation);
+            roulette.style.transition = `transform ${rotationTime}s ease-out`; // 회전 시간을 10초로 늘림
+            roulette.style.transform = `rotate(${totalRotation}deg)`; // 회전 각도 설정
+
+            // 돌려돌려 버튼 비활성화
+            document.getElementById('rotateButton').disabled = true;
+
+            // setTimeout을 사용하여 룰렛이 멈추면 결과를 이미지로 표시하고, 일정 시간(예: 2초) 후에 form을 서브밋
+            setTimeout(function () {
+                const currentRotation = totalRotation % 360;
+                const selectedItem = getSelectedSection(currentRotation);
+
+                // 이미지 엘리먼트를 표시하도록 변경
+                showResultImage(selectedItem);
+
+                // 선택된 아이템 값을 변경
+                document.getElementById('selectedItem').value = selectedItem;
+
+                // form 직접 서브밋
+                const form = document.querySelector('form');
+                form.submit();
+            }, 2000); // 2초 후에 이미지를 표시하고 form을 서브밋하도록 설정
+        }
+    });
+
+    // alert를 표시하는 함수
+    // 이미지를 표시하는 함수
+    function showResultImage(selectedItem) {
+        const resultImage = document.getElementById('resultImage');
+        const resultImageElement = document.getElementById('resultImageElement');
+
+        // 아이템에 따라 다른 이미지를 표시
+        switch (selectedItem) {
+            case 'item1':
+                resultImageElement.src = 'winning_image.jpg';
+                resultImageElement.alt = '0.5배 이미지';
+                break;
+            case 'item2':
+                resultImageElement.src = 'winning_image.jpg';
+                resultImageElement.alt = '빵 포인트 이미지';
+                break;
+            case 'item3':
+                resultImageElement.src = 'winning_image.jpg';
+                resultImageElement.alt = '1.5배 이미지';
+                break;
+            case 'item4':
+                resultImageElement.src = 'winning_image.jpg';
+                resultImageElement.alt = '2배 이미지';
+                break;
+            default:
+                // 기본 이미지 표시 (꽝)
+                resultImageElement.src = 'default_image.jpg';
+                resultImageElement.alt = '꽝 이미지';
+        }
+
+        // 이미지 엘리먼트를 보이도록 변경
+        resultImage.style.display = 'block';
+    }
+
+</script>
+</body>

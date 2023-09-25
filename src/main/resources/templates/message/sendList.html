@@ -45,7 +45,7 @@
             <div class="form-group d-flex justify-content-end align-items-center">
               <div class="mb-3">
                 <div class="text-right">
-                  <button type="button" class="btn btn-secondary" id="delete" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+                  <button type="button" class="btn btn-secondary" id="delete" >삭제</button>
                   <!--<button type="button" class="btn btn-warning" id="archive" >보관하기</button>-->
                 </div>
               </div>
@@ -66,7 +66,10 @@
           $(document).ready(function () {
             // 삭제
             $("#delete").click(function () {
-              performAction("delete");
+              var confirmation = confirm('정말 삭제하시겠습니까?');
+              if (confirmation) {
+                performAction("delete");
+              }
             });
 
             // 아카이브

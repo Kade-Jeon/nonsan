@@ -66,7 +66,7 @@
           var fwding = 'https://api.openweathermap.org/data/2.5/weather?lat='+a;
           fwding += '&lon='+b;
           fwding += '&appid=' + key;
-
+          var getTag = $('#weatherInfo').val();
           $.ajax({
             type : "GET",
             url : fwding, // 1. 요청
@@ -78,16 +78,16 @@
               var celsiusTemp = absoluteTemp - 273.15;
               $('#temperature').text(Math.floor(celsiusTemp)+"°C");
 
-              if(data.weather[0].main == 'Clear'){
-                $('#weatherInfo').text('<img th:src="@{/weahter/clear.png}" width="20px" />');
+              if(data.weather[0].main == 'Clouds'){
+                $('#weatherInfo').html('<img th:src="@{/weahter/clear.png}" width="20px" />');
               }
-              if(data.weather[0].main == 'few clouds'){
+              if(data.weather[0].main == 'clouds'){
                 $('#weatherInfo').text('<img th:src="@{weahter/few-clouds.png}" width="20px" />');
               }
-              if(data.weather[0].main == 'rain'){
+              if(data.weather[0].main == 'Rain'){
                 $('#weatherInfo').text('<img th:src="@{/weahter/rain.png}" width="20px" />');
               }
-              if(data.weather[0].main == 'overcast clouds'){
+              if(data.weather[0].main == 'Overcast clouds'){
                 $('#weatherInfo').text('<img th:src="@{/weahter/overcast-clouds.png}" width="20px" />');
               }
 

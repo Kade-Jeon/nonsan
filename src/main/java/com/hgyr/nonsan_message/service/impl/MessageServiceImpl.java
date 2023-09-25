@@ -96,22 +96,4 @@ public class MessageServiceImpl implements MessageService {
     }
 
 
-    /*// 휴지통 목록
-    @Override
-    public List<ReceiveMessage> deleteList(String receiveId) throws Exception {
-        Boolean deleteStatus = true;
-
-        return messageRepository.findAllByReceiveIdAndDeleteStatus(receiveId, deleteStatus);
-    }
-
-    // 글 -> 휴지통 목록으로 이동
-    @Override
-    public void moveTrash(long id) {
-        ReceiveMessage message = messageRepository.findById(id).get();
-
-        message.setDeleteStatus(true);
-        messageRepository.save(message);
-    }*/
-
-
 }

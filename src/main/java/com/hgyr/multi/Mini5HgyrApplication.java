@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class Mini5HgyrApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Mini5HgyrApplication.class, args);
-    }
+        SpringApplication.run(Mini5HgyrApplication.class, args);}
 
 }

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
 import java.sql.SQLDataException;
 import java.util.Optional;
 
@@ -39,7 +40,8 @@ public class MainServerService {
         userDto.setPassword(codedPwd);
         try{
             userRepository.save(User.dtoToEntity(userDto));
-        }catch (Exception e){
+        }catch (NullPointerException ne){
+           // throw new NullPointerException("[Port:1777] MainController : updatePoint Exception - 회원가입 정보에 null 값이 있습니다. ");
             return "error";
         }
         return "success";
@@ -63,7 +65,7 @@ public class MainServerService {
     }
 
     /* 포인트 정보 조회 */
-    public Double getPoint(String uid){
+    public Double getPoint(String uid) throws NullPointerException {
         return userRepository.findByUid(uid).getPoint();
     }
 

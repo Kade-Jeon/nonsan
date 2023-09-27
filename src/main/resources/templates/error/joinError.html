@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrq.net.nz/thymeleaf/layout"
+      layout:decorator="fragments/default_layout">
+<meta charset="UTF-8">
+
+<style>
+
+  body {
+    background: url('https://source.unsplash.com/twukN12EN7c/1920x1080') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+  }
+
+</style>
+<th:block layout:fragment="content">
+  <body>
+
+  <!-- 내용 시작. container에 크기를 지정하거나 추가 div 컨테이너 생성 후 제작하세요. -->
+  <div class="container" style="margin-top: 60px">
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="card border-0 shadow my-5">
+        <div class="card-body p-5">
+          <h1 class="fw-light">회원가입에 실패하였습니다.</h1><hr>
+          <p class="lead">회원가입 정보에 오류가 있습니다. 다시 시도해주세요.</p>
+          <p class="lead">문제가 계속된다면 관리자에게 문의해주세요.</p>
+          <img style="display: block; margin: 0 auto; width: 60%;" src="https://cdn-comfj.nitrocdn.com/MkymLdakcnlBcDFvASQUXSHaqvlvXdaC/assets/images/optimized/rev-ad8e8d5/www.swlattorneys.com/wp-content/uploads/2021/01/Firearm-Denial.png">
+          <br>
+          <p style="text-align: center;"><a th:href="@{/hgyr/login}">돌아가기</a></p>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- 내용 끝나는 부분 -->
+
+  </body>
+</th:block>
+</html>

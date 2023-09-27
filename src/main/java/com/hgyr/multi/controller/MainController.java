@@ -66,7 +66,7 @@ public class MainController {
         if(result.equals("main")){
             return "redirect:/hgyr";
         }
-        return "error";
+        return "/error/joinError";
     }
 
     /*로그인 내용 입력 후, 서버로 전송 후 결과 리턴
@@ -81,7 +81,7 @@ public class MainController {
             session.setAttribute("user", userInfo.getUid()); //수정
             return "redirect:/hgyr";
         }
-        return "error";
+        return "/error/passwordError";
     }
     /*로그아웃 클릭시 세션 삭제 후 메인페이지로 이동*/
     @GetMapping("/logout")

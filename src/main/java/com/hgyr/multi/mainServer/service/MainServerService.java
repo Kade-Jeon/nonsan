@@ -52,8 +52,7 @@ public class MainServerService {
     public UserDto login(UserDto userDto) throws RuntimeException{
         User user = userRepository.findByUid(userDto.getUid());
         if(!passwordEncoder.matches(userDto.getPassword(), user.getPassword())){
-            System.out.println("비밀번호가 다름");
-            throw new RuntimeException();
+            throw new RuntimeException("[Port:1777] MainController : login 비밀번호가 일치하지 않습니다.");
         }
         return UserDto.entityToDto(user);
     }

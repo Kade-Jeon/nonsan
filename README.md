@@ -6,7 +6,7 @@
 # 💻 개발환경
 - Springboot 2.5.6
 - Java opnejdk 11
-- Maira DB 10.6.5
+- Maria DB 10.6.5
 - Redis 3.0.504
 
 # ✋ 내가 담당한 부분
